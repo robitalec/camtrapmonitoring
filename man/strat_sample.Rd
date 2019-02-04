@@ -21,3 +21,12 @@ Either a \code{sf} object or a \code{data.table} with a \code{sfc} (simple featu
 \description{
 For each unique value in 'col', sample 'n' points and optionally return as a \code{data.table}.
 }
+\examples{
+
+data(densitygrid)
+
+pts <- strat_sample(densitygrid, 5, col = 'density', returnDT = FALSE)
+
+plot(densitygrid, reset = FALSE)
+plot(pts$geometry, add = TRUE)
+}

@@ -11,6 +11,13 @@
 #' @export
 #'
 #' @examples
+#'
+#' data(densitygrid)
+#'
+#' pts <- strat_sample(densitygrid, 5, col = 'density', returnDT = FALSE)
+#'
+#' plot(densitygrid, reset = FALSE)
+#' plot(pts$geometry, add = TRUE)
 strat_sample <- function(x, n, col, returnDT = TRUE) {
 	lvls <- unique(x[[col]])
 	DT <- lapply(lvls, function(l) {
