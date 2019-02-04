@@ -21,8 +21,9 @@
 strat_sample <- function(x, n, col, returnDT = TRUE) {
 	lvls <- unique(x[[col]])
 	DT <- lapply(lvls, function(l) {
-		sf::st_sf(col = l,
-							geometry = sf::st_sample(x[x[[col]] == l, ], n, type = 'random'))
+		s <- sf::st_sf(geometry = sf::st_sample(x[x[[col]] == l, ], n, type = 'random'))
+		s[[col]] <- l
+		return(s)
 	})
 
 	if (returnDT) {
