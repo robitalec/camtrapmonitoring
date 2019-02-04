@@ -1,6 +1,6 @@
-#' Camera grid
+#' Make camera trap grids
 #'
-#' Set up a camera grid around a focal point.
+#' Set up grids around focal points. For example, sample points in your study area and establish a grid of camera traps around each.
 #'
 #' @param DT data.table.
 #' @param id id of focal point.
@@ -17,8 +17,9 @@
 #' @export
 #'
 #' @examples
-#' grid <- camera_grid(DT, id = 'point', case = 'queen', distance = 250, coords = c('X', 'Y'))
-camera_grid <- function(DT, id, case, distance, coords) {
+#' grid <- make_grid(DT, id = 'point', case = 'queen', distance = 250, coords = c('X', 'Y'))
+#' # plot 3 types
+make_grid <- function(DT, id, case, distance, coords) {
 	# NSE
 	focal <- camX <- camY <- NULL;
 
