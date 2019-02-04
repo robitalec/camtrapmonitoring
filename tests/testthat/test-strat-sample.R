@@ -1,22 +1,21 @@
 context("test-strat-sample")
 
 data(densitygrid)
-
-pts <- strat_sample(densitygrid, 10,
-										col = 'density', returnDT = TRUE)
+col <- 'density'
+pts <- strat_sample(densitygrid, 10, col = col, returnDT = TRUE)
 
 test_that("basic checks with data.table return", {
 	pts <- strat_sample(densitygrid, 10,
-											col = 'density', returnDT = TRUE)
+											col = col, returnDT = TRUE)
 
-	expect_equivalent(unique(pts$col),
-										unique(densitygrid$density))
+	expect_equivalent(unique(pts[[col]]),
+										unique(densitygrid[[col]]))
 })
 
 test_that("basic checks with sf return", {
 	pts <- strat_sample(densitygrid, 10,
-											col = 'density', returnDT = FALSE)
+											col = col, returnDT = FALSE)
 
-	expect_equivalent(unique(pts$col),
-										unique(densitygrid$density))
+	expect_equivalent(unique(pts[[col]]),
+										unique(densitygrid[[col]]))
 })
