@@ -19,7 +19,16 @@
 #' plot(densitygrid, reset = FALSE)
 #' plot(pts$geometry, add = TRUE)
 strat_sample <- function(x, n, col, returnDT = TRUE) {
+	if (!(col %in% colnames(x))) {
+		stop('strata column not found in x')
+	}
+
 	lvls <- unique(x[[col]])
+
+	if (is.null(lvls)) {
+		stop('no strata found')
+	}
+
 	DT <- lapply(lvls, function(l) {
 		s <- sf::st_sf(geometry = sf::st_sample(x[x[[col]] == l, ], n, type = 'random'))
 		s[[col]] <- l
