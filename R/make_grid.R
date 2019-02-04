@@ -2,10 +2,10 @@
 #'
 #' Set up grids around focal points. For example, sample points in your study area and establish a grid of camera traps around each.
 #'
-#' @param DT data.table.
-#' @param id id of focal point.
+#' @param DT data.table or sf points.
 #' @param case "queen", "rook" or "bishop".
 #' @param distance distance in x and y between cameras. don't worry about the hypotenuse.
+#' @param id id of focal point.
 #' @param coords names of coordinate columns.
 #'
 #' @return
@@ -19,7 +19,11 @@
 #' @examples
 #' grid <- make_grid(DT, id = 'point', case = 'queen', distance = 250, coords = c('X', 'Y'))
 #' # plot 3 types
-make_grid <- function(DT, id, case, distance, coords) {
+make_grid <- function(x, case, distance, id, coords) {
+	UseMethod('make_grid', x)
+}
+
+make_grid.data.table <- function(x, case, distance, id, coords) {
 	# NSE
 	focal <- camX <- camY <- NULL;
 
@@ -40,4 +44,9 @@ make_grid <- function(DT, id, case, distance, coords) {
 		 by = id]
 	DT[camX == get(coords[[1]]) & camY == get(coords[[2]]),
 		 focal := TRUE]
+}
+
+
+make_grid.sf <- function(x, case, distance, id, coords) {
+
 }
