@@ -1,6 +1,8 @@
 #' Stratified polygon sampling
 #'
-#' For each unique value in 'col', sample 'n' points and optionally return as a \code{data.table}.
+#' For each mutually exclusive strata, sample random points.
+#'
+#' Polygons cannot be assigned to multiple strata. Strata are defined by values in 'col'. Optionally return a \code{data.table} if 'returnDT' is TRUE or an \code{sf} object if FALSE.
 #'
 #' @param x polygon object of class sf
 #' @param n number of random points
@@ -11,10 +13,11 @@
 #' @export
 #'
 #' @examples
-#'
+#' # Example polygons with density levels 1, 2 and 3.
 #' data(densitygrid)
 #'
-#' pts <- strat_sample(densitygrid, 5, col = 'density', returnDT = FALSE)
+#' # Randomly sample 5 points for each set of polygons in each strata.
+#' pts <- strat_sample(x = densitygrid, n = 5, col = 'density', returnDT = FALSE)
 #'
 #' plot(densitygrid, reset = FALSE)
 #' plot(pts$geometry, add = TRUE)

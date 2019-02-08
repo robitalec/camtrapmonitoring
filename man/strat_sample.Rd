@@ -19,13 +19,17 @@ strat_sample(x, n, col, returnDT = TRUE)
 Either a \code{sf} object or a \code{data.table} with a \code{sfc} (simple feature column).
 }
 \description{
-For each unique value in 'col', sample 'n' points and optionally return as a \code{data.table}.
+For each mutually exclusive strata, sample random points.
+}
+\details{
+Polygons cannot be assigned to multiple strata. Strata are defined by values in 'col'. Optionally return a \code{data.table} if 'returnDT' is TRUE or an \code{sf} object if FALSE.
 }
 \examples{
-
+# Example polygons with density levels 1, 2 and 3.
 data(densitygrid)
 
-pts <- strat_sample(densitygrid, 5, col = 'density', returnDT = FALSE)
+# Randomly sample 5 points for each set of polygons in each strata.
+pts <- strat_sample(x = densitygrid, n = 5, col = 'density', returnDT = FALSE)
 
 plot(densitygrid, reset = FALSE)
 plot(pts$geometry, add = TRUE)
