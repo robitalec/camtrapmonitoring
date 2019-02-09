@@ -4,7 +4,7 @@
 #' @export
 #'
 #' @examples
-eval_pt <- function(layer, pt, type, direction) {
+eval_pt <- function(DT, layer, type, direction) {
 
 }
 
@@ -14,7 +14,7 @@ eval_pt <- function(layer, pt, type, direction) {
 #' @export
 #'
 #' @examples
-eval_buffer <- function(layer, pt, buffersize, type, direction) {
+eval_buffer <- function(DT, layer, buffersize, type, direction) {
 
 }
 
@@ -24,6 +24,6 @@ eval_buffer <- function(layer, pt, buffersize, type, direction) {
 #' @export
 #'
 #' @examples
-eval_grid <- function(layer, pt, grid, type, direction) {
-
+eval_grid <- function(DT, layer, grid, type, direction) {
+	# build grid or expect grid?
 }
