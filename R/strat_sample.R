@@ -2,14 +2,14 @@
 #'
 #' For each mutually exclusive strata, sample random points.
 #'
-#' Polygons cannot be assigned to multiple strata. Strata are defined by values in 'col'. Optionally return a \code{data.table} if 'returnDT' is TRUE or an \code{sf} object if FALSE.
+#' Polygons cannot be assigned to multiple strata. Strata are defined by values in 'col'. Optionally return a `data.table` if 'returnDT' is TRUE or an `sf` object if FALSE.
 #'
-#' @param x polygon object of class sf
+#' @param x polygon object of class `sf`
 #' @param n number of random points
 #' @param col column in x indicating strata
-#' @param returnDT return a data.table (TRUE) or sf (FALSE) object
+#' @param returnDT return a `data.table` (TRUE) or `sf` (FALSE) object
 #'
-#' @return Either a \code{sf} object or a \code{data.table} with a \code{sfc} (simple feature column).
+#' @return Either a `sf` object or a `data.table` with a \code{sfc} (simple feature column).
 #' @export
 #'
 #' @examples
