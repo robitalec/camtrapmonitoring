@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-feat_dist_to <- function(x, y) {
+dist_to <- function(x, y) {
 	if (is.null(x) | is.null(y)) {
 		stop('please provide both x and y')
 	}
