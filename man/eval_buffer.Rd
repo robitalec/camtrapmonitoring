@@ -4,7 +4,7 @@
 \alias{eval_buffer}
 \title{Eval layers by point}
 \usage{
-eval_buffer(layer, pt, buffersize, type, direction)
+eval_buffer(DT, layer, buffersize, type, direction)
 }
 \description{
 Eval layers by point

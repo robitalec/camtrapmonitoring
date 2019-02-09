@@ -4,7 +4,7 @@
 \alias{eval_grid}
 \title{Eval layers by point}
 \usage{
-eval_grid(layer, pt, grid, type, direction)
+eval_grid(DT, layer, grid, type, direction)
 }
 \description{
 Eval layers by point

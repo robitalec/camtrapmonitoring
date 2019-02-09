@@ -4,7 +4,7 @@
 \alias{eval_pt}
 \title{Eval layers by point}
 \usage{
-eval_pt(layer, pt, type, direction)
+eval_pt(DT, layer, type, direction)
 }
 \description{
 Eval layers by point
