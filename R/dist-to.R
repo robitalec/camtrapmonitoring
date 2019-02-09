@@ -10,6 +10,10 @@
 #'
 #' @examples
 feat_dist_to <- function(x, y) {
+	if (is.null(x) | is.null(y)) {
+		stop('please provide both x and y')
+	}
+
 	sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
 									by_element = TRUE)
 }
