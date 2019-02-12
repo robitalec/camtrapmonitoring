@@ -14,3 +14,10 @@ You can install the development version of wildcam with:
 ``` r
 remotes::install_gitlab("robit.a/wildcam")
 ```
+
+This package depends on `data.table`, `sf`, `units`. System system
+dependencies include `udunits` ([see
+here](https://github.com/r-quantities/units#installation)), and GDAL,
+GEOS and PROJ4 ([see
+here](https://github.com/r-spatial/sf/#installing)). Windows users, make
+sure to use [RTools](https://cran.r-project.org/bin/windows/Rtools/).

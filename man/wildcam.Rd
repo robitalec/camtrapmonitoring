@@ -3,7 +3,6 @@
 \docType{package}
 \name{wildcam}
 \alias{wildcam}
-\alias{_PACKAGE}
 \alias{wildcam-package}
 \title{wildcam}
 \description{
