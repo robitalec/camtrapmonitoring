@@ -1,4 +1,4 @@
-#' Water polygons
+#' Example water polygons
 #'
 #' A dataset containing three polygons representing three lakes in Manitoba.
 #'
@@ -17,3 +17,20 @@
 #' data(water)
 #' plot(water)
 "water"
+
+
+#' Example points
+#'
+#' A dataset containing 5 random points nearby three lakes in Manitoba (`data(water)`).
+#'
+#' @format An `sf` object with 5 points and two variables:
+#'
+#' * ID: individual identifier, numeric type
+#' * geometry: `sfc` simple feature column
+#'
+#' The projection for this layer is UTM 14N WGS84. The proj4string for this layer is "+proj=utm +zone=14 +datum=WGS84 +units=m +no_defs", EPSG code 32614.
+#'
+#' @examples
+#' data(points)
+#' plot(points)
+"points"
