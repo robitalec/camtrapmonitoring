@@ -21,3 +21,20 @@ knitr::opts_chunk$set(
 * study area polygon
 * layers of relevant variables (e.g. roads, animal density, waterways, etc.)
 * camera trap protocol (how many cameras, placement strategy)
+
+
+
+# Selecting potential camera trap locations
+## Randomly sampling points in different regions (stratified sampling)
+
+```{r}
+# Example polygons with density levels 1, 2 and 3.
+data(densitygrid)
+#'
+# Randomly sample 5 points for each set of polygons in each strata.
+pts <- strat_sample(x = densitygrid, n = 5, col = 'density', returnDT = FALSE)
+#'
+plot(densitygrid, reset = FALSE)
+plot(pts$geometry, add = TRUE)
+
+```
