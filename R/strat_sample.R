@@ -41,11 +41,11 @@ strat_sample <- function(x, n, col, returnDT = TRUE) {
 
 	if (returnDT) {
 		out <- data.table::rbindlist(DT)
-		data.table::set(out, j = 'ID', value = 1:nrow(out))
+		data.table::set(out, j = 'ID', value = seq_along(out))
 		return(out)
 	} else {
 		out <- do.call(rbind, DT)
-		out$ID <- 1:nrow(out)
+		out$ID <- seq_along(out)
 		return(out)
 	}
 }
