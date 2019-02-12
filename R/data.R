@@ -9,6 +9,8 @@
 #' * AREA: area of the water body
 #' * geometry: `sfc` simple feature column
 #'
+#' The projection for this layer is UTM 14N WGS84. The proj4string for this layer is "+proj=utm +zone=14 +datum=WGS84 +units=m +no_defs", EPSG code 32614.
+#'
 #' @source [Manitoba Land Initiative](http://mli2.gov.mb.ca/roads_hwys/index.html)
 #'
 #' @examples

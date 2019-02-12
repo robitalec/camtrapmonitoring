@@ -10,7 +10,9 @@
 \item PERIMETER: perimeter of the water body
 \item AREA: area of the water body
 \item geometry: \code{sfc} simple feature column
-}}
+}
+
+The projection for this layer is UTM 14N WGS84. The proj4string for this layer is "+proj=utm +zone=14 +datum=WGS84 +units=m +no_defs", EPSG code 32614.}
 \source{
 \href{http://mli2.gov.mb.ca/roads_hwys/index.html}{Manitoba Land Initiative}
 }
