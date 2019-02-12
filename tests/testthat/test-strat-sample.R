@@ -31,3 +31,31 @@ test_that("with sf return", {
 	expect_equivalent(unique(pts[[col]]),
 										unique(densitygrid[[col]]))
 })
+
+
+test_that("type of col is well handled", {
+	# factor
+	densitygrid$tryfactor <- as.factor(densitygrid$density)
+	pts <- strat_sample(densitygrid, 10,
+											col = 'tryfactor', returnDT = FALSE)
+
+	expect_equivalent(unique(pts[['tryfactor']]),
+										unique(densitygrid[['tryfactor']]))
+
+	# numeric
+	densitygrid$trynum <- sample(1:3, size = 4, replace = TRUE)
+	pts <- strat_sample(densitygrid, 10,
+											col = 'trynum', returnDT = FALSE)
+
+	expect_equivalent(unique(pts[['trynum']]),
+										unique(densitygrid[['trynum']]))
+
+	# boolean
+	densitygrid$trybool <- sample(c(TRUE, FALSE), size = 4, replace = TRUE)
+	pts <- strat_sample(densitygrid, 10,
+											col = 'trybool', returnDT = FALSE)
+
+	expect_equivalent(unique(pts[['trybool']]),
+										unique(densitygrid[['trybool']]))
+
+})
