@@ -22,6 +22,10 @@ test_that("with data.table return", {
 
 	expect_equivalent(unique(pts[[col]]),
 										unique(densitygrid[[col]]))
+
+
+	expect_true('data.table' %in% class(pts))
+
 })
 
 test_that("with sf return", {
@@ -30,6 +34,8 @@ test_that("with sf return", {
 
 	expect_equivalent(unique(pts[[col]]),
 										unique(densitygrid[[col]]))
+
+	expect_true('sf' %in% class(pts))
 })
 
 
