@@ -2,7 +2,7 @@
 % Please edit documentation in R/dist-to.R
 \name{dist_to}
 \alias{dist_to}
-\title{Feature-based distance to}
+\title{Distance-to}
 \usage{
 dist_to(x, y)
 }
@@ -15,5 +15,14 @@ dist_to(x, y)
 Vector of distances between x and the nearest feature in y.
 }
 \description{
-To avoid the large overhead of creating distance to rasters for small/medium number of sample points, this "vector-based distance to" determines the nearest feature (y) to each x before calculating the distance.
+Calculate the distance from features in x to the nearest feature in y.
+}
+\details{
+To avoid the large overhead of creating distance to rasters for small/medium number of sample points, this vector-based distance to determines the nearest feature (y) to each x then calculates the distance between each pair.
+}
+\examples{
+data(water)
+data(points)
+
+dist_to(points, water)
 }
