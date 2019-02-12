@@ -7,22 +7,22 @@
 strat_sample(x, n, col, returnDT = TRUE)
 }
 \arguments{
-\item{x}{polygon object of class `sf`}
+\item{x}{polygon object of class \code{sf}}
 
 \item{n}{number of random points}
 
 \item{col}{column in x indicating strata}
 
-\item{returnDT}{return a `data.table` (TRUE) or `sf` (FALSE) object}
+\item{returnDT}{return a \code{data.table} (TRUE) or \code{sf} (FALSE) object}
 }
 \value{
-Either a `sf` object or a `data.table` with a \code{sfc} (simple feature column).
+Either a \code{sf} object or a \code{data.table} with a \code{sfc} (simple feature column).
 }
 \description{
 For each mutually exclusive strata, sample random points.
 }
 \details{
-Polygons cannot be assigned to multiple strata. Strata are defined by values in 'col'. Optionally return a `data.table` if 'returnDT' is TRUE or an `sf` object if FALSE.
+Polygons cannot be assigned to multiple strata. Strata are defined by values in 'col'. Optionally return a \code{data.table} if 'returnDT' is TRUE or an \code{sf} object if FALSE.
 }
 \examples{
 # Example polygons with density levels 1, 2 and 3.
