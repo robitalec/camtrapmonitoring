@@ -33,7 +33,8 @@ strat_sample <- function(x, n, col, returnDT = TRUE) {
 	}
 
 	DT <- lapply(lvls, function(l) {
-		s <- sf::st_sf(geometry = sf::st_sample(x[x[[col]] == l, ], n, type = 'random'))
+		s <- sf::st_sf(
+			geometry = sf::st_sample(x[x[[col]] == l, ], n, type = 'random'))
 		s[[col]] <- l
 		return(s)
 	})
