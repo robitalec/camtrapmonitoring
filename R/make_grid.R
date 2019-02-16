@@ -37,14 +37,16 @@
 #' grid <- make_grid(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
 make_grid <- function(x, case, distance, ...) {
 	if (case == 'queen') {
-		move <- data.table::CJ(c(-distance, 0, distance),
-													 c(-distance, 0, distance))
+		move <- data.table::CJ(c(0,-distance, distance),
+													 c(0,-distance, distance))
 	} else if (case == 'rook') {
-		move <- data.table::CJ(c(-distance, distance),
-													 c(-distance, distance))
+		move <- rbind(list(0, 0),
+									data.table::CJ(c(-distance, distance),
+																 c(-distance, distance)))
 	} else if (case == 'bishop') {
-		move <- data.table::data.table(c(0, distance, 0, -distance),
-																	 c(distance, 0, -distance, 0))
+		move <- rbind(list(0, 0),
+									data.table::data.table(c(0, distance, 0,-distance),
+																				 c(distance, 0,-distance, 0)))
 	} else {
 		stop('must provide case one of "queen", "rook" or "bishop"')
 	}
