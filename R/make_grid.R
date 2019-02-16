@@ -59,6 +59,10 @@ make_grid.data.table <- function(x, case, distance, id, coords) {
 	# NSE
 	focal <- camX <- camY <- NULL;
 
+	if (is.null(id) | is.null(coords)) {
+		stop('id and coords must be provided with x is a data.table')
+	}
+
 	if (!(id %in% colnames(x))) {
 		stop('id provided not found in colnames(x)')
 	}
@@ -89,7 +93,8 @@ make_grid.sf <- function(x, case, distance) {
 	r <- x[rep(1:nrow(x),  each = nrow(move)),]
 
 	out <- sf::st_as_sf(
-		data.frame(r[, colnames(r)[!(grepl('geometry', colnames(r)))]],
+		data.frame(r[, colnames(r)[!(grepl('geometry', colnames(r),
+																			 fixed = TRUE))]],
 							 st_coordinates(r) +
 							 	as.matrix(move[rep(1:.N, times = nrow(x))])),
 		coords = c('X', 'Y')
