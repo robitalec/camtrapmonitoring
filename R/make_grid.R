@@ -51,6 +51,10 @@ make_grid <- function(x, case, distance, ...) {
 
 	move <- move[order(abs(V1), abs(V2))]
 
+	if (distance < 0 | !is.numeric(distance)) {
+		stop('distance must be a numeric, greater than 0')
+	}
+
 	UseMethod('make_grid', x)
 }
 
