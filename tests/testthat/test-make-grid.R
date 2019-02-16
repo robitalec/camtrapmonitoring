@@ -61,7 +61,7 @@ test_that("... for data.table input", {
 
 	expect_error(
 		make_grid(DT, case = 'queen', distance = 100, id = 'potato',
-							coords = NULL),
+							coords = c('X', 'Y')),
 		'id provided not found in colnames', fixed = FALSE
 	)
 
