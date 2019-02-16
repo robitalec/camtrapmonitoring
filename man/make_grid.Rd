@@ -25,23 +25,3 @@ The logical 'focal' column indicates which point is the focal or center camera t
 \description{
 Set up grids around focal points. For example, sample points in your study area and use \code{make_grid} to establish a grid of camera traps around each.
 }
-\examples{
-# Point data (sf object)
-library(sf)
-data(points)
-plot(points)
-
-queen <- make_grid(points, case = 'queen', distance = 100)
-plot(queen)
-
-rook <- make_grid(points, case = 'rook', distance = 100)
-plot(rook)
-
-bishop <- make_grid(points, case = 'bishop', distance = 100)
-plot(bishop)
-
-# Or a data.table
-library(data.table)
-DT <- data.table(ID = points$ID, st_coordinates(points))
-make_grid(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
-}
