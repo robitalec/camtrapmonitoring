@@ -13,9 +13,9 @@ test_that('dist_to returns expected', {
 	expect_equal(typeof(result), 'double')
 	expect_equal(class(result), 'units')
 
-	expect_equal(nrow(result), nrow(points))
-	expect_equal(nrow(inverse), nrow(water))
-	expect_equal(nrow(inside), nrow(points))
+	expect_equal(length(result), nrow(points))
+	expect_equal(length(inverse), nrow(water))
+	expect_equal(length(inside), nrow(points))
 })
 
 
@@ -31,7 +31,7 @@ test_that('dist_to works from polygon to point', {
 test_that('dist_to doesnt return negative values', {
 	# since all points are within the densitygrid,
 	# this should be all zeroes
-	expect_gt(inside, 0)
+	expect_true(all(result > units::set_units(0, m)))
 
 	expect_true(all(inside == units::set_units(0, m)))
 })
