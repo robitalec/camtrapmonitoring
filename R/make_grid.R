@@ -17,16 +17,26 @@
 #' @export
 #'
 #' @examples
-#' grid <- make_grid(DT, id = 'point', case = 'queen', distance = 250, coords = c('X', 'Y'))
-#' # plot 3 types
-make_grid <- function(x, case, distance, id, coords) {
-	UseMethod('make_grid', x)
-}
-
-make_grid.data.table <- function(x, case, distance, id, coords) {
-	# NSE
-	focal <- camX <- camY <- NULL;
-
+#' # Load point data (sf object)
+#' data(points)
+#'
+#' queen <- make_grid(points, case = 'queen', distance = 250)
+#'
+#' rook <- make_grid(points, case = 'rook', distance = 250)
+#'
+#' bishop <- make_grid(points, case = 'bishop', distance = 250)
+#'
+#' plot(points$X)
+#' plot(queen)
+#' plot(rook)
+#' plot(bishop)
+#'
+#' # Or with a data.table
+#' setDT(points)
+#'
+#' make_grid(points, id = 'point', case = 'queen', distance = 250, coords = c('X', 'Y'))
+#'
+make_grid <- function(x, case, distance, ...) {
 	if (case == 'queen') {
 		move <- data.table::CJ(c(-distance, 0, distance),
 													 c(-distance, 0, distance))
