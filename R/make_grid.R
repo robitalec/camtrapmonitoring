@@ -34,7 +34,7 @@
 #' # Or a data.table
 #' library(data.table)
 #' DT <- data.table(ID = points$ID, st_coordinates(points))
-#' make_grid(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
+#' grid <- make_grid(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
 make_grid <- function(x, case, distance, ...) {
 	if (case == 'queen') {
 		move <- data.table::CJ(c(-distance, 0, distance),
@@ -76,11 +76,11 @@ make_grid.data.table <- function(x, case, distance, id, coords) {
 		stop('coords provided not found in colnames(x)')
 	}
 
-	out <- DT[rep(1:.N, times = nrow(move))]
+	out <- x[rep(1:.N, times = nrow(move))]
 	out[, c('X', 'Y') := .SD + move,
 		 .SDcols = coords, by = id]
 
-	out[1:nrow(DT), focal := TRUE]
+	out[1:nrow(x), focal := TRUE]
 	out[is.na(focal), focal := FALSE][]
 
 	return(out)
