@@ -17,7 +17,7 @@
 #' @export
 #'
 #' @examples
-#' # Load point data (sf object)
+#' # Point data (sf object)
 #' data(points)
 #'
 #' queen <- make_grid(points, case = 'queen', distance = 250)
@@ -50,6 +50,8 @@ make_grid <- function(x, case, distance, ...) {
 		stop('must provide case one of "queen", "rook" or "bishop"')
 	}
 
+	move <- move[order(abs(V1), abs(V2))]
+
 	UseMethod('make_grid', x)
 }
 
@@ -71,16 +73,14 @@ make_grid.data.table <- function(x, case, distance, id, coords) {
 		stop('coords provided not found in colnames(x)')
 	}
 
-	DT <- DT[rep(1:.N, times = nrow(move))]
-	DT[, c('camX', 'camY') := .SD + move,
-		 .SDcols = coords,
-		 by = id]
+	out <- DT[rep(1:.N, times = nrow(move))]
+	out[, c('X', 'Y') := .SD + move,
+		 .SDcols = coords, by = id]
 
-	DT[camX == get(coords[[1]]) & camY == get(coords[[2]]),
-		 focal := TRUE]
-	DT[is.na(focal), focal := FALSE]
+	out[1:nrow(DT), focal := TRUE]
+	out[is.na(focal), focal := FALSE][]
 
-	return(DT)
+	return(out)
 }
 
 
