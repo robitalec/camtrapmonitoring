@@ -4,18 +4,18 @@
 \alias{make_grid}
 \title{Make camera trap grids}
 \usage{
-make_grid(x, case, distance, id, coords)
+make_grid(x, case, distance, ...)
 }
 \arguments{
 \item{case}{"queen", "rook" or "bishop".}
 
 \item{distance}{distance in x and y between cameras. don't worry about the hypotenuse.}
 
+\item{DT}{data.table or sf points.}
+
 \item{id}{id of focal point.}
 
 \item{coords}{names of coordinate columns.}
-
-\item{DT}{data.table or sf points.}
 }
 \value{
 Extended data.table either nine times the length of input DT for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case.
@@ -26,6 +26,23 @@ The logical 'focal' column indicates which point is the focal.
 Set up grids around focal points. For example, sample points in your study area and establish a grid of camera traps around each.
 }
 \examples{
-grid <- make_grid(DT, id = 'point', case = 'queen', distance = 250, coords = c('X', 'Y'))
-# plot 3 types
+# Load point data (sf object)
+data(points)
+
+queen <- make_grid(points, case = 'queen', distance = 250)
+
+rook <- make_grid(points, case = 'rook', distance = 250)
+
+bishop <- make_grid(points, case = 'bishop', distance = 250)
+
+plot(points$X)
+plot(queen)
+plot(rook)
+plot(bishop)
+
+# Or with a data.table
+setDT(points)
+
+make_grid(points, id = 'point', case = 'queen', distance = 250, coords = c('X', 'Y'))
+
 }
