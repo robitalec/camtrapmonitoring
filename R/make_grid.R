@@ -57,6 +57,11 @@ make_grid <- function(x, case, distance, ...) {
 }
 
 
-make_grid.sf <- function(x, case, distance, id, coords) {
+	if (is.null(sf::st_crs(x))) {
+		return(out)
+	} else {
+		sf::st_crs(out) <- sf::st_crs(x)
+		return(out)
+	}
 
 }
