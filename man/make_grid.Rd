@@ -7,23 +7,23 @@
 make_grid(x, case, distance, ...)
 }
 \arguments{
+\item{x}{data.table or sf points.}
+
 \item{case}{"queen", "rook" or "bishop".}
 
-\item{distance}{distance in x and y between cameras. don't worry about the hypotenuse.}
-
-\item{DT}{data.table or sf points.}
+\item{distance}{distance between adjacent camera traps. Don't worry about the hypotenuse.}
 
 \item{id}{id of focal point.}
 
 \item{coords}{names of coordinate columns.}
 }
 \value{
-Extended data.table either nine times the length of input DT for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case.
+Extended data.table either nine times the length of input DT for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case. See examples.
 
-The logical 'focal' column indicates which point is the focal.
+The logical 'focal' column indicates which point is the focal or center camera trap.
 }
 \description{
-Set up grids around focal points. For example, sample points in your study area and establish a grid of camera traps around each.
+Set up grids around focal points. For example, sample points in your study area and use \code{make_grid} to establish a grid of camera traps around each.
 }
 \examples{
 # Point data (sf object)
