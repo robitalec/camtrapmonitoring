@@ -38,3 +38,16 @@ plot(densitygrid, reset = FALSE)
 plot(pts$geometry, add = TRUE)
 
 ```
+
+## Grid around points
+
+```{r}
+queen <- make_grid(pts, case = 'queen', distance = 100)
+plot(queen)
+
+rook <- make_grid(pts, case = 'rook', distance = 100)
+plot(rook)
+
+bishop <- make_grid(pts, case = 'bishop', distance = 100)
+plot(bishop)
+```
