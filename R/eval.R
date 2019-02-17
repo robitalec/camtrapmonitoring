@@ -35,12 +35,14 @@ eval_pt.data.table <- function(x, layer, type, direction, coords) {
 	# if missing x and layer
 	# warn if no type and direction
 
-	raster::extract(layer, x[, data.table::.SD, .SDcols = coords],
+	raster::extract(layer, x[, .SD, .SDcols = coords],
 									na.rm = FALSE)
 }
 
 #' @export
 eval_pt.sf <- function(x, layer, type, direction) {
+	# if x isn't right type
+
 	raster::extract(layer, sf::st_coordinates(x))
 }
 
