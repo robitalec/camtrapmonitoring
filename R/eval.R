@@ -4,16 +4,16 @@
 #' @export
 #'
 #' @examples
-eval_pt <- function(x, layer, type, direction, ...) {
+eval_pt <- function(x, layer, type = NULL, direction = NULL, ...) {
 	if (is.null(x)) {
 		stop('x must be provided. either data.table or sf point object.')
 	}
 
-	if (is.null(layer) | !("raster" %in% class(layer))) {
+	if (is.null(layer) || !("RasterLayer" %in% class(layer))) {
 		stop('layer must be provided. expected type is raster.')
 	}
 
-	if (is.null(type) | is.null(direction)) {
+	if (is.null(type) || is.null(direction)) {
 		warning('missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.')
 	}
 
