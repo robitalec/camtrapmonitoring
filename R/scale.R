@@ -7,6 +7,6 @@
 #' @export
 #'
 #' @examples
-scale <- function(layer, roi) {
+scale_roi <- function(layer, roi) {
 
 }
