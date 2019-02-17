@@ -2,10 +2,10 @@
 % Please edit documentation in R/eval.R
 \name{eval_buffer}
 \alias{eval_buffer}
-\title{Eval layers by point}
+\title{Eval layers by buffered}
 \usage{
 eval_buffer(DT, layer, buffersize, type, direction)
 }
 \description{
-Eval layers by point
+Eval layers by buffered
 }
