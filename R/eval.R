@@ -17,6 +17,11 @@ eval_pt <- function(x, layer, type, direction, ...) {
 		warning('missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.')
 	}
 
+	# if type isn't one of
+	# if direction isn't one of
+
+	nm <- deparse(substitute(layer))
+
 	UseMethod('eval_pt', x)
 }
 
