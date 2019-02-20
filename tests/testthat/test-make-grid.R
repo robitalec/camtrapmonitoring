@@ -82,6 +82,12 @@ test_that("... for data.table input", {
 
 
 test_that("... for sf input", {
+	# nogeo <- data.frame(points$ID)
+	# expect_error(
+	# 	make_grid(nogeo, 'queen', 100),
+	# 	'geometry column not found in x'
+	# )
+
 	multipoints <- st_cast(points, 'MULTIPOINT')
 
 	expect_error(

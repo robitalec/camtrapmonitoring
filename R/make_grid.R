@@ -91,6 +91,11 @@ make_grid.data.table <- function(x, case, distance, id, coords) {
 
 #' @export
 make_grid.sf <- function(x, case, distance) {
+
+	if (!('geometry' %in% colnames(x))) {
+		stop('geometry column not found in x')
+	}
+
 	if (!('sfc_POINT' %in% class(x$geometry))) {
 		stop('class of geometry column must be sfc_POINT')
 	}

@@ -29,18 +29,18 @@ test_that("eval_pt, general", {
 		'missing type and/or direction', fixed = FALSE
 	)
 
-	expect_warning(
+	expect_error(
 		eval_pt(x = DT, layer = lc,
 						type = 'categorical', direction = 42,
 						coords = c('X', 'Y')),
-		'type and direction must be characters'
+		'type and direction must be of class character'
 	)
 
-	expect_warning(
+	expect_error(
 		eval_pt(x = DT, layer = lc,
 						type = 42, direction = 'positive',
 						coords = c('X', 'Y')),
-		'type and direction must be characters'
+		'type and direction must be of class character'
 	)
 
 })
@@ -65,6 +65,14 @@ test_that("eval_pt, data.table", {
 })
 
 test_that("eval_pt, sf", {
+	# nogeo <- data.frame(points$ID)
+	# expect_error(
+	# 	eval_pt(x = nogeo, layer = lc, type = 'categorical',
+	# 					direction = 'neutral'),
+	# 	'geometry column not found in x'
+	# )
+
+
 	multipoints <- st_cast(points, 'MULTIPOINT')
 
 	expect_error(
