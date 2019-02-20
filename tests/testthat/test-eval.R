@@ -2,6 +2,7 @@ context("test-eval")
 
 library(data.table)
 library(sf)
+library(raster)
 
 data(points)
 data(lc)
@@ -9,14 +10,6 @@ data(lc)
 DT <-
 	data.table(ID = points$ID,
 						 st_coordinates(points))
-
-###
-expect_error(
-	eval_pt(x = DT, layer = lc,
-					type = 'categorical', direction = 'neutral',
-					coords = c('X', 'Y')),
-)
-###
 
 test_that("eval_pt, general", {
 	expect_error(
@@ -34,14 +27,14 @@ test_that("eval_pt, general", {
 	)
 
 	expect_warning(
-		eval_pt(x = DT, layer = NULL,
+		eval_pt(x = DT, layer = lc,
 						type = NULL, direction = 'neutral',
 						coords = c('X', 'Y')),
-		'missing type and/or direction', fixed = FALSE
+		'missing type and', fixed = FALSE
 	)
 
 	expect_warning(
-		eval_pt(x = DT, layer = NULL,
+		eval_pt(x = DT, layer = lc,
 						type = 'categorical', direction = NULL,
 						coords = c('X', 'Y')),
 		'missing type and/or direction', fixed = FALSE
@@ -51,22 +44,34 @@ test_that("eval_pt, general", {
 
 test_that("eval_pt, data.table", {
 
-})
+	expect_error(
+		eval_pt(x = DT, layer = lc, type = 'categorical',
+						direction = 'neutral', coords = 'X'),
+		'length of coords column names should be 2'
+	)
 
-test_that("eval_pt, sf", {
-
-})
-
-
-test_that("eval_buffer, general", {
-
-})
-
-
-test_that("eval_buffer, data.table", {
+	expect_error(
+		eval_pt(x = DT, layer = lc, type = 'categorical',
+						direction = 'neutral', coords = c('ID', 'ID')),
+		'coords provided must be numeric'
+	)
 
 })
 
-test_that("eval_buffer, sf", {
+# test_that("eval_pt, sf", {
+#
+# })
 
-})
+
+# test_that("eval_buffer, general", {
+#
+# })
+
+
+# test_that("eval_buffer, data.table", {
+#
+# })
+
+# test_that("eval_buffer, sf", {
+#
+# })
