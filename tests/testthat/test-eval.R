@@ -1,16 +1,5 @@
 context("test-eval")
 
-library(data.table)
-library(sf)
-library(raster)
-
-data(points)
-data(lc)
-
-DT <-
-	data.table(ID = points$ID,
-						 st_coordinates(points))
-
 test_that("eval_pt, general", {
 	expect_error(
 		eval_pt(x = NULL, layer = lc,

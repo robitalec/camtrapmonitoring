@@ -1,16 +1,9 @@
 context("test-make-grid")
 
-library(sf)
-library(data.table)
-
-data(points)
-DT <- data.table(ID = points$ID, st_coordinates(points))
-
+# make expected results
 queen <- make_grid(points, case = 'queen', distance = 100)
 rook <- make_grid(points, case = 'rook', distance = 100)
 bishop <- make_grid(points, case = 'bishop', distance = 100)
-
-
 
 gridQ <- make_grid(DT, case = 'queen', distance = 100,
 									 id = 'ID', coords = c('X', 'Y'))
@@ -19,6 +12,7 @@ gridR <- make_grid(DT, case = 'rook', distance = 100,
 gridB <- make_grid(DT, case = 'bishop', distance = 100,
 									 id = 'ID', coords = c('X', 'Y'))
 
+# tests
 test_that("make_grid works", {
 	expect_error(
 		make_grid(points, case = 'potato', distance = 100),

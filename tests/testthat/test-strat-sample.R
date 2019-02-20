@@ -1,10 +1,10 @@
 context("test-strat-sample")
 
-data(densitygrid)
+# make expected results
 col <- 'density'
 pts <- strat_sample(densitygrid, 10, col = col, returnDT = TRUE)
 
-
+# tests
 test_that("basics", {
 	expect_error(strat_sample(densitygrid, 10, col = 'potato'),
 							 error = 'strata column not found in x')
@@ -13,8 +13,6 @@ test_that("basics", {
 	expect_error(strat_sample(densitygrid, 10, col = 'potato'),
 							 error = 'no strata found')
 })
-
-
 
 test_that("with data.table return", {
 	pts <- strat_sample(densitygrid, 10,
