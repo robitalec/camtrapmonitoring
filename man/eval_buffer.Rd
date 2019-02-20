@@ -4,7 +4,14 @@
 \alias{eval_buffer}
 \title{Eval layers by buffered}
 \usage{
-eval_buffer(DT, layer, buffersize, type, direction)
+eval_buffer(x, layer, buffersize, type, direction, ...)
+}
+\arguments{
+\item{x}{data.table or sf points.}
+
+\item{buffersize}{}
+
+\item{...}{}
 }
 \description{
 Eval layers by buffered

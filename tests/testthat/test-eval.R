@@ -39,9 +39,12 @@ test_that("eval_pt, data.table", {
 		'length of coords column names should be 2'
 	)
 
+
+	DT[, xchr := 'potato']
+
 	expect_error(
 		eval_pt(x = DT, layer = lc, type = 'categorical',
-						direction = 'neutral', coords = c('ID', 'ID')),
+						direction = 'neutral', coords = c('xchr', 'xchr')),
 		'coords provided must be numeric'
 	)
 

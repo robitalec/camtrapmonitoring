@@ -1,4 +1,16 @@
-#' Eval layers by point
+#' Evaluate camera trap locations by point sampling layers
+#'
+#' Using the point locations generated manually or with `wildcam` functions `strat_sample()` and `make_grid()`, sample relevant layers to understand sampling bias and assist camera trap location selection.
+#'
+#'
+#' @inheritParams make_grid
+#' @param layer
+#' @param type
+#' @param direction
+#' @param ...
+#'
+#' @rdname eval_pt-methods
+#' @aliases eval_pt
 #'
 #' @return
 #' @export
@@ -17,10 +29,8 @@ eval_pt <- function(x, layer, type = NULL, direction = NULL, ...) {
 		warning('missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.')
 	}
 
-	# if missing x and layer
 	# if type isn't one of
 	# if direction isn't one of
-	# warn if no direction or no type
 
 	nm <- deparse(substitute(layer))
 
@@ -28,6 +38,8 @@ eval_pt <- function(x, layer, type = NULL, direction = NULL, ...) {
 }
 
 #' @export
+#' @rdname eval_pt-methods
+#' @aliases eval_pt, eval_pt-data.table-method
 eval_pt.data.table <- function(x, layer, type, direction, coords) {
 	if (length(coords) != 2) {
 		stop('length of coords column names should be 2')
@@ -38,10 +50,12 @@ eval_pt.data.table <- function(x, layer, type, direction, coords) {
 	}
 
 	raster::extract(layer, x[, .SD, .SDcols = coords],
-									na.rm = FALSE)
+									na.rm = FALSE, buffer = buffersize)
 }
 
 #' @export
+#' @rdname eval_pt-methods
+#' @aliases eval_pt, eval_pt-sf-method
 eval_pt.sf <- function(x, layer, type, direction) {
 	# if x isn't right type
 
@@ -51,10 +65,37 @@ eval_pt.sf <- function(x, layer, type, direction) {
 
 #' Eval layers by buffered
 #'
+#'
+#' @inheritParams eval_pt
+#' @param buffersize
+#'
 #' @return
 #' @export
 #'
 #' @examples
-eval_buffer <- function(DT, layer, buffersize, type, direction) {
+eval_buffer <- function(x, layer, buffersize, type, direction, ...) {
 	# extract(buffer = buffersize)
+	UseMethod('eval_buffer', x)
+}
+
+
+#' @export
+eval_pt.data.table <- function(x, layer, buffersize, type, direction, coords) {
+	if (length(coords) != 2) {
+		stop('length of coords column names should be 2')
+	}
+
+	if (!all(sapply(DT[, .SD, .SDcols = coords], is.numeric))) {
+		stop('coords provided must be numeric')
+	}
+
+	raster::extract(layer, x[, .SD, .SDcols = coords],
+									na.rm = FALSE, buffer = buffersize)
+}
+
+#' @export
+eval_pt.sf <- function(x, layer, buffersize, type, direction) {
+	# if x isn't right type
+
+	raster::extract(layer, sf::st_coordinates(x))
 }
