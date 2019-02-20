@@ -16,6 +16,15 @@
 #' @export
 #'
 #' @examples
+#' # Load data
+#' data(points)
+#' data(lc)
+#'
+#' # Evaluate each point with the land cover layer
+#' #   type is categorical, and the direction is neutral
+#' points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = 'neutral')
+#'
+#' plot(points)
 eval_pt <- function(x, layer, type = NULL, direction = NULL, ...) {
 	if (is.null(x)) {
 		stop('x must be provided. either data.table or sf point object.')

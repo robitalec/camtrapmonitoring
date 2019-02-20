@@ -25,3 +25,14 @@ eval_pt(x, layer, type = NULL, direction = NULL, ...)
 \description{
 Using the point locations generated manually or with \code{wildcam} functions \code{strat_sample()} and \code{make_grid()}, sample relevant layers to understand sampling bias and assist camera trap location selection.
 }
+\examples{
+# Load data
+data(points)
+data(lc)
+
+# Evaluate each point with the land cover layer
+#   type is categorical, and the direction is neutral
+points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = 'neutral')
+
+plot(points)
+}
