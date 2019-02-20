@@ -50,9 +50,15 @@ test_that("eval_pt, data.table", {
 
 })
 
-# test_that("eval_pt, sf", {
-#
-# })
+test_that("eval_pt, sf", {
+	multipoints <- st_cast(points, 'MULTIPOINT')
+
+	expect_error(
+		eval_pt(x = multipoints, layer = lc, type = 'categorical',
+						direction = 'neutral'),
+		'class of geometry column must be sfc_POINT'
+	)
+})
 
 
 # test_that("eval_buffer, general", {

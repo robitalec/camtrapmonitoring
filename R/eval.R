@@ -59,14 +59,16 @@ eval_pt.data.table <- function(x, layer, type, direction, coords) {
 	}
 
 	raster::extract(layer, x[, .SD, .SDcols = coords],
-									na.rm = FALSE, buffer = buffersize)
+									na.rm = FALSE)
 }
 
 #' @export
 #' @rdname eval_pt-methods
 #' @aliases eval_pt, eval_pt-sf-method
 eval_pt.sf <- function(x, layer, type, direction) {
-	# if x isn't right type
+	if (!('sfc_POINT' %in% class(x$geometry))) {
+		stop('class of geometry column must be sfc_POINT')
+	}
 
 	raster::extract(layer, sf::st_coordinates(x))
 }
