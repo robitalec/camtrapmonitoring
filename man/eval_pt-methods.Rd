@@ -11,9 +11,9 @@
 \usage{
 eval_pt(x, layer, type = NULL, direction = NULL, ...)
 
-\method{eval_pt}{data.table}(x, layer, buffersize, type, direction, coords)
+\method{eval_pt}{data.table}(x, layer, type, direction, coords)
 
-\method{eval_pt}{sf}(x, layer, buffersize, type, direction)
+\method{eval_pt}{sf}(x, layer, type, direction)
 }
 \arguments{
 \item{x}{data.table or sf points.}

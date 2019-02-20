@@ -62,23 +62,30 @@ eval_pt.data.table <- function(x, layer, type, direction, coords) {
 		stop('length of coords column names should be 2')
 	}
 
-	if (!all(sapply(DT[, .SD, .SDcols = coords], is.numeric))) {
+	if (!all(vapply(DT[, .SD, .SDcols = coords], is.numeric, TRUE))) {
 		stop('coords provided must be numeric')
 	}
 
-	raster::extract(layer, x[, .SD, .SDcols = coords],
-									na.rm = FALSE)
+	set_eval_attr(raster::extract(layer, x[, .SD, .SDcols = coords],
+																na.rm = FALSE),
+								layer = nm, type = type, direction = direction)
 }
 
 #' @export
 #' @rdname eval_pt-methods
 #' @aliases eval_pt, eval_pt-sf-method
 eval_pt.sf <- function(x, layer, type, direction) {
+	if (!('geometry' %in% colnames(x))) {
+		stop('geometry column not found in x')
+	}
+
 	if (!('sfc_POINT' %in% class(x$geometry))) {
 		stop('class of geometry column must be sfc_POINT')
 	}
 
-	raster::extract(layer, sf::st_coordinates(x))
+	set_eval_attr(raster::extract(layer, sf::st_coordinates(x),
+																na.rm = FALSE),
+								layer = nm, type = type, direction = direction)
 }
 
 
@@ -86,20 +93,23 @@ eval_pt.sf <- function(x, layer, type, direction) {
 #'
 #'
 #' @inheritParams eval_pt
-#' @param buffersize
+#' @param buffersize radius
 #'
 #' @return
 #' @export
 #'
 #' @examples
 eval_buffer <- function(x, layer, buffersize, type, direction, ...) {
-	# extract(buffer = buffersize)
 	UseMethod('eval_buffer', x)
+
+
+	# use extract(buffer = , fun = 'mean' if type else null if categorical eg)
+
 }
 
 
 #' @export
-eval_pt.data.table <- function(x, layer, buffersize, type, direction, coords) {
+eval_buffer.data.table <- function(x, layer, buffersize, type, direction, coords) {
 	if (length(coords) != 2) {
 		stop('length of coords column names should be 2')
 	}
@@ -113,8 +123,19 @@ eval_pt.data.table <- function(x, layer, buffersize, type, direction, coords) {
 }
 
 #' @export
-eval_pt.sf <- function(x, layer, buffersize, type, direction) {
+eval_buffer.sf <- function(x, layer, buffersize, type, direction) {
 	# if x isn't right type
-
 	raster::extract(layer, sf::st_coordinates(x))
+}
+
+
+
+set_eval_attr <- function(x, layer, type, direction) {
+	data.table::setattr(x,
+											'wildcam',
+											list(
+												layer = layer,
+												type = type,
+												direction = direction
+											))
 }

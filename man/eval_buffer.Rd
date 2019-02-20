@@ -9,7 +9,7 @@ eval_buffer(x, layer, buffersize, type, direction, ...)
 \arguments{
 \item{x}{data.table or sf points.}
 
-\item{buffersize}{}
+\item{buffersize}{radius}
 
 \item{...}{}
 }
