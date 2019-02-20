@@ -19,7 +19,7 @@ test_that("eval_pt, general", {
 		eval_pt(x = DT, layer = lc,
 						type = NULL, direction = 'neutral',
 						coords = c('X', 'Y')),
-		'missing type and', fixed = FALSE
+		'missing type and/or direction', fixed = FALSE
 	)
 
 	expect_warning(
@@ -27,6 +27,20 @@ test_that("eval_pt, general", {
 						type = 'categorical', direction = NULL,
 						coords = c('X', 'Y')),
 		'missing type and/or direction', fixed = FALSE
+	)
+
+	expect_warning(
+		eval_pt(x = DT, layer = lc,
+						type = 'categorical', direction = 42,
+						coords = c('X', 'Y')),
+		'type and direction must be characters'
+	)
+
+	expect_warning(
+		eval_pt(x = DT, layer = lc,
+						type = 42, direction = 'positive',
+						coords = c('X', 'Y')),
+		'type and direction must be characters'
 	)
 
 })
