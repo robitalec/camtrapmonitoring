@@ -38,8 +38,9 @@ eval_pt <- function(x, layer, type = NULL, direction = NULL, ...) {
 		warning('missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.')
 	}
 
-	if (!all(vapply(c(type, direction), is.character, FALSE))) {
-		stop('type and direction must be characters')
+	checkls <- list(type, direction)
+	if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
+		stop('type and direction must be of class character')
 	}
 
 	types <- c('categorical', 'binary', 'ordinal', 'real')
