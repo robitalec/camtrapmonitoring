@@ -17,11 +17,19 @@ knitr::opts_chunk$set(
 ```
 
 
+# Workflow
+`strat_sample` and/or `make_grid` -> `eval_pt`/`eval_buffer` -> `select_ct`
+
+OR
+
+`eval_buffer` -> `select_ct` -> `make_grid` and `make_pair` 
+
+
+
 # What you'll need
 * study area polygon
 * layers of relevant variables (e.g. roads, animal density, waterways, etc.)
 * camera trap protocol (how many cameras, placement strategy)
-
 
 
 # Selecting potential camera trap locations
