@@ -5,8 +5,8 @@
 #' @param x data.table or sf points.
 #' @param case "queen", "rook" or "bishop".
 #' @param distance distance between adjacent camera traps. Don't worry about the hypotenuse.
-#' @param id id of focal point.
-#' @param coords names of coordinate columns.
+#' @param id id of focal point. Only used when x is a data.table.
+#' @param coords names of coordinate columns. Only used when x is a data.table.
 #'
 #' @return
 #'

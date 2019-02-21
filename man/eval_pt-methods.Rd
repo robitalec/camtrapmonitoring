@@ -26,7 +26,7 @@ eval_pt(x, layer, type = NULL, direction = NULL, coords = NULL)
 
 \item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
 
-\item{coords}{names of coordinate columns.}
+\item{coords}{names of coordinate columns. Only used when x is a data.table.}
 }
 \description{
 Using the point locations generated manually or with \code{wildcam} functions \code{\link[=strat_sample]{strat_sample()}} and \code{\link[=make_grid]{make_grid()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.

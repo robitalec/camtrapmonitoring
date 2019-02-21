@@ -13,9 +13,9 @@ make_grid(x, case, distance, id = NULL, coords = NULL)
 
 \item{distance}{distance between adjacent camera traps. Don't worry about the hypotenuse.}
 
-\item{id}{id of focal point.}
+\item{id}{id of focal point. Only used when x is a data.table.}
 
-\item{coords}{names of coordinate columns.}
+\item{coords}{names of coordinate columns. Only used when x is a data.table.}
 }
 \value{
 Extended data.table either nine times the length of input DT for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case. See examples.
