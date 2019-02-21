@@ -18,6 +18,6 @@ Suggests:
 Imports: 
     data.table,
     sf (>= 0.7-3),
-    units
+    units,
     raster
 Depends: R (>= 2.10)
