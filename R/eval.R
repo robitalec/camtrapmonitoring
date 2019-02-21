@@ -159,11 +159,17 @@ eval_buffer <- function(x, layer, buffersize, type, direction, ...
 		warning("buffersize is less than the layer's resolution")
 	}
 
-		# use extract(buffer = , fun = 'mean' if type else null if categorical eg)
+	if (type %in% c('binary', 'real')) {
+		bufferfun <- mean
+	} else if (type %in% c('categorical', 'ordinal')) {
+		bufferfun <- NULL
+	} else {
+		stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
+	}
+
+	# how to summarize buffers with ordinal/categorical
 
 	UseMethod('eval_buffer', x)
-
-
 }
 
 
@@ -186,8 +192,17 @@ eval_buffer.data.table <-
 		stop('coords provided must be numeric')
 	}
 
-	raster::extract(layer, x[, .SD, .SDcols = coords],
-									na.rm = FALSE, buffer = buffersize)
+		set_eval_attr(
+			raster::extract(
+				layer,
+				x[, .SD, .SDcols = coords],
+				buffer = buffersize,
+				fun = bufferfun
+			),
+			layer = nm,
+			type = type,
+			direction = direction
+		)
 }
 
 #' @export
@@ -202,8 +217,17 @@ eval_buffer.sf <- function(x, layer, buffersize, type, direction) {
 		stop('class of geometry column must be sfc_POINT')
 	}
 
-	set_eval_attr(raster::extract(layer, sf::st_coordinates(x)),
-								layer = nm, type = type, direction = direction)
+	set_eval_attr(
+		raster::extract(
+			layer,
+			sf::st_coordinates(x),
+			buffer = buffersize,
+			fun = bufferfun
+		),
+		layer = nm,
+		type = type,
+		direction = direction
+	)
 }
 
 
