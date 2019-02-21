@@ -18,12 +18,18 @@ eval_pt(x, layer, type = NULL, direction = NULL, ...)
 \arguments{
 \item{x}{data.table or sf points.}
 
+\item{layer}{raster layer.}
+
+\item{type}{one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.}
+
+\item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
+
 \item{...}{}
 
 \item{coords}{names of coordinate columns.}
 }
 \description{
-Using the point locations generated manually or with \code{wildcam} functions \code{strat_sample()} and \code{make_grid()}, sample relevant layers to understand sampling bias and assist camera trap location selection.
+Using the point locations generated manually or with \code{wildcam} functions \code{\link[=strat_sample]{strat_sample()}} and \code{\link[=make_grid]{make_grid()}}, sample raster layers to characterize and select camera trap locations and understand sampling bias
 }
 \examples{
 # Load data
@@ -35,4 +41,7 @@ data(lc)
 points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = 'neutral')
 
 plot(points)
+}
+\seealso{
+eval_buffer
 }

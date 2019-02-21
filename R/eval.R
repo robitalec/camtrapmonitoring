@@ -1,12 +1,12 @@
 #' Evaluate camera trap locations by point sampling layers
 #'
-#' Using the point locations generated manually or with `wildcam` functions `strat_sample()` and `make_grid()`, sample relevant layers to understand sampling bias and assist camera trap location selection.
+#' Using the point locations generated manually or with `wildcam` functions [strat_sample()] and [make_grid()], sample raster layers to characterize and select camera trap locations and understand sampling bias
 #'
 #'
 #' @inheritParams make_grid
-#' @param layer
-#' @param type
-#' @param direction
+#' @param layer raster layer.
+#' @param type one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.
+#' @param direction one of 'positive', 'neutral', 'negative'. See Details.
 #' @param ...
 #'
 #' @rdname eval_pt-methods
@@ -14,6 +14,8 @@
 #'
 #' @return
 #' @export
+#'
+#' @seealso eval_buffer
 #'
 #' @examples
 #' # Load data
@@ -98,17 +100,25 @@ eval_pt.sf <- function(x, layer, type, direction) {
 #' @return
 #' @export
 #'
+#' @seealso eval_buffer
+#'
+#' @rdname eval_buffer-methods
+#' @aliases eval_buffer
+#'
 #' @examples
 eval_buffer <- function(x, layer, buffersize, type, direction, ...) {
 	UseMethod('eval_buffer', x)
 
 
 	# use extract(buffer = , fun = 'mean' if type else null if categorical eg)
+	nm <- deparse(substitute(layer))
 
 }
 
 
 #' @export
+#' @aliases eval_buffer, eval_buffer-data.table-method
+#' @rdname eval_buffer-methods
 eval_buffer.data.table <- function(x, layer, buffersize, type, direction, coords) {
 	if (length(coords) != 2) {
 		stop('length of coords column names should be 2')
@@ -123,12 +133,16 @@ eval_buffer.data.table <- function(x, layer, buffersize, type, direction, coords
 }
 
 #' @export
+#' @aliases eval_buffer, eval_buffer-sf-method
+#' @rdname eval_buffer-methods
 eval_buffer.sf <- function(x, layer, buffersize, type, direction) {
 	# if x isn't right type
-	raster::extract(layer, sf::st_coordinates(x))
+	set_eval_attr(raster::extract(layer, sf::st_coordinates(x)),
+								layer = nm, type = type, direction = direction)
 }
 
 
+###
 # reused data.table::setattr wrapper
 set_eval_attr <- function(x, layer, type, direction) {
 	# buffer size?
