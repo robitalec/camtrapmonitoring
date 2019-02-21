@@ -32,7 +32,16 @@ eval_buffer(x, layer, buffersize, type, direction, ...)
 \item{coords}{names of coordinate columns.}
 }
 \description{
-Eval layers by buffered
+Type if used to define the data type of the sampled raster layer and function when a \code{buffersize} is provided:
+}
+\details{
+| type | header |
+| ------ | ------ |
+| 'categorical' | cell |
+| 'binary' | cell |
+| 'binary' | cell |
+| 'binary' | cell |
+| 'binary' | cell |
 }
 \seealso{
 eval_buffer
