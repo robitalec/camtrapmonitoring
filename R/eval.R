@@ -1,6 +1,15 @@
 #' Evaluate camera trap locations by point sampling layers
 #'
-#' Using the point locations generated manually or with `wildcam` functions [strat_sample()] and [make_grid()], sample raster layers to characterize and select camera trap locations and understand sampling bias
+#' Using the point locations generated manually or with `wildcam` functions [strat_sample()] and [make_grid()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
+#'
+#' Type is used to define the data type of the sampled raster layer:
+#'
+#' * 'categorical' - one of a limited and usually fixed number of possible values (e.g.: landcover. 1, 2, 3 indicating 'wetland', 'forest', 'agriculture').
+#' * 'binary' - also boolean. TRUE/FALSE, presence/absence. (e.g.: raster of wetlands).
+#' * 'ordinal' - ranked or ordered data. (e.g.: animal density high/medium/low).
+#' * 'real' - real number variable either interval or ratio scale. (e.g.: digital elevation model).
+#'
+#' Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by [select_ct()] for ranking and selecting camera trap locations.
 #'
 #'
 #' @inheritParams make_grid

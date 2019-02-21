@@ -29,7 +29,18 @@ eval_pt(x, layer, type = NULL, direction = NULL, ...)
 \item{coords}{names of coordinate columns.}
 }
 \description{
-Using the point locations generated manually or with \code{wildcam} functions \code{\link[=strat_sample]{strat_sample()}} and \code{\link[=make_grid]{make_grid()}}, sample raster layers to characterize and select camera trap locations and understand sampling bias
+Using the point locations generated manually or with \code{wildcam} functions \code{\link[=strat_sample]{strat_sample()}} and \code{\link[=make_grid]{make_grid()}}, sample raster layers to characterize and select camera trap locations and understand sampling bias.
+}
+\details{
+Type is used to define the data type of the sampled raster layer:
+\itemize{
+\item 'categorical' - one of a limited and usually fixed number of possible values (e.g.: landcover. 1, 2, 3 indicating 'wetland', 'forest', 'agriculture').
+\item 'binary' - also boolean. TRUE/FALSE, presence/absence. (e.g.: raster of wetlands).
+\item 'ordinal' - ranked or ordered data. (e.g.: animal density high/medium/low).
+\item 'real' - real number variable either interval or ratio scale. (e.g.: digital elevation model).
+}
+
+Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by \code{\link[=select_ct]{select_ct()}}
 }
 \examples{
 # Load data
