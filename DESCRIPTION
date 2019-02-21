@@ -1,6 +1,6 @@
 Package: wildcam
 Title: What the Package Does (One Line, Title Case)
-Version: 0.3.0.9000
+Version: 0.4.0.9000
 Authors@R: 
     person(given = "Alec L.",
            family = "Robitaille",
@@ -19,4 +19,5 @@ Imports:
     data.table,
     sf (>= 0.7-3),
     units
+    raster
 Depends: R (>= 2.10)

@@ -1,9 +1,5 @@
 context('test-dist-to')
 
-data(water)
-data(points)
-data(densitygrid)
-
 result <- dist_to(points, water)
 inverse <- dist_to(water, points)
 inside <- dist_to(points, densitygrid)
