@@ -9,11 +9,13 @@
 \alias{eval_pt-sf-method}
 \title{Evaluate camera trap locations by point sampling layers}
 \usage{
-eval_pt(x, layer, type = NULL, direction = NULL, ...)
+eval_pt(x, layer, type = NULL, direction = NULL, coords = NULL)
 
-\method{eval_pt}{data.table}(x, layer, type, direction, coords)
+\method{eval_pt}{data.table}(x, layer, type = NULL, direction = NULL,
+  coords = NULL)
 
-\method{eval_pt}{sf}(x, layer, type, direction)
+\method{eval_pt}{sf}(x, layer, type = NULL, direction = NULL,
+  coords = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}
@@ -24,12 +26,10 @@ eval_pt(x, layer, type = NULL, direction = NULL, ...)
 
 \item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
 
-\item{...}{}
-
 \item{coords}{names of coordinate columns.}
 }
 \description{
-Using the point locations generated manually or with \code{wildcam} functions \code{\link[=strat_sample]{strat_sample()}} and \code{\link[=make_grid]{make_grid()}}, sample raster layers to characterize and select camera trap locations and understand sampling bias.
+Using the point locations generated manually or with \code{wildcam} functions \code{\link[=strat_sample]{strat_sample()}} and \code{\link[=make_grid]{make_grid()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 }
 \details{
 Type is used to define the data type of the sampled raster layer:
@@ -40,7 +40,7 @@ Type is used to define the data type of the sampled raster layer:
 \item 'real' - real number variable either interval or ratio scale. (e.g.: digital elevation model).
 }
 
-Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by \code{\link[=select_ct]{select_ct()}}
+Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by \code{\link[=select_ct]{select_ct()}} for ranking and selecting camera trap locations.
 }
 \examples{
 # Load data
@@ -51,7 +51,7 @@ data(lc)
 #   type is categorical, and the direction is neutral
 points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = 'neutral')
 
-plot(points)
+plot(points["lc"])
 }
 \seealso{
 eval_buffer

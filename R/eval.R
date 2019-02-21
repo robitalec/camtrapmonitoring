@@ -16,7 +16,6 @@
 #' @param layer raster layer.
 #' @param type one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.
 #' @param direction one of 'positive', 'neutral', 'negative'. See Details.
-#' @param ...
 #'
 #' @rdname eval_pt-methods
 #' @aliases eval_pt
@@ -36,8 +35,13 @@
 #' points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = 'neutral')
 #'
 #' plot(points["lc"])
-eval_pt <- function(x, layer, type = NULL, direction = NULL, ...) {
-	if (is.null(x)) {
+eval_pt <-
+	function(x,
+					 layer,
+					 type = NULL,
+					 direction = NULL,
+					 coords = NULL) {
+		if (is.null(x)) {
 		stop('x must be provided. either data.table or sf point object.')
 	}
 
@@ -68,8 +72,13 @@ eval_pt <- function(x, layer, type = NULL, direction = NULL, ...) {
 #' @export
 #' @rdname eval_pt-methods
 #' @aliases eval_pt, eval_pt-data.table-method
-eval_pt.data.table <- function(x, layer, type, direction, coords) {
-	if (length(coords) != 2) {
+eval_pt.data.table <-
+	function(x,
+					 layer,
+					 type = NULL,
+					 direction = NULL,
+					 coords = NULL) {
+		if (length(coords) != 2) {
 		stop('length of coords column names should be 2')
 	}
 
@@ -85,8 +94,13 @@ eval_pt.data.table <- function(x, layer, type, direction, coords) {
 #' @export
 #' @rdname eval_pt-methods
 #' @aliases eval_pt, eval_pt-sf-method
-eval_pt.sf <- function(x, layer, type, direction) {
-	if (!('geometry' %in% colnames(x))) {
+eval_pt.sf <-
+	function(x,
+					 layer,
+					 type = NULL,
+					 direction = NULL,
+					 coords = NULL) {
+		if (!('geometry' %in% colnames(x))) {
 		stop('geometry column not found in x')
 	}
 
@@ -135,8 +149,15 @@ eval_pt.sf <- function(x, layer, type, direction) {
 #' points$wetland <- eval_buffer(x = points, layer = wetland, buffersize = 150, type = 'binary', direction = 'positive')
 #'
 #' plot(points["wetland"])
-eval_buffer <- function(x, layer, buffersize, type, direction, ...
-) {
+eval_buffer <-
+	function(x,
+					 layer,
+					 buffersize,
+					 type,
+					 direction,
+					 coords = NULL
+
+	) {
 	if (is.null(x)) {
 		stop('x must be provided. either data.table or sf point object.')
 	}
@@ -159,12 +180,16 @@ eval_buffer <- function(x, layer, buffersize, type, direction, ...
 		warning("buffersize is less than the layer's resolution")
 	}
 
-	if (type %in% c('binary', 'real')) {
-		bufferfun <- mean
-	} else if (type %in% c('categorical', 'ordinal')) {
-		bufferfun <- NULL
+	if (!is.null(type)) {
+		if (type %in% c('binary', 'real')) {
+			bufferfun <- mean
+		} else if (type %in% c('categorical', 'ordinal')) {
+			bufferfun <- NULL
+		} else {
+			stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
+		}
 	} else {
-		stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
+		bufferfun <- NULL
 	}
 
 	# how to summarize buffers with ordinal/categorical
@@ -182,7 +207,7 @@ eval_buffer.data.table <-
 					 buffersize,
 					 type,
 					 direction,
-					 coords
+					 coords = NULL
 	) {
 	if (length(coords) != 2) {
 		stop('length of coords column names should be 2')
@@ -208,8 +233,14 @@ eval_buffer.data.table <-
 #' @export
 #' @aliases eval_buffer, eval_buffer-sf-method
 #' @rdname eval_buffer-methods
-eval_buffer.sf <- function(x, layer, buffersize, type, direction) {
-	if (!('geometry' %in% colnames(x))) {
+eval_buffer.sf <-
+	function(x,
+					 layer,
+					 buffersize,
+					 type,
+					 direction,
+					 coords = NULL) {
+		if (!('geometry' %in% colnames(x))) {
 		stop('geometry column not found in x')
 	}
 
