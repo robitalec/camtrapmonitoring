@@ -59,3 +59,30 @@ plot(rook)
 bishop <- make_grid(pts, case = 'bishop', distance = 100)
 plot(bishop)
 ```
+
+## Evaluate points
+```{r}
+# Load data
+data(points)
+data(lc)
+#'
+# Evaluate each point with the land cover layer
+#   type is categorical, and the direction is neutral
+points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = 'neutral')
+#'
+plot(points["lc"])
+```
+
+
+## Evaluate buffers
+```{r}
+# Load data
+data(wetland)
+
+# Evaluate each point with the wetland layer
+points$wetland <- eval_buffer(x = points, layer = wetland, buffersize = 150, type = 'binary', direction = 'positive')
+
+plot(points["wetland"])
+```
+
+
