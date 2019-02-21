@@ -64,7 +64,7 @@ make_grid <- function(x, case, distance, ...) {
 #' @import data.table
 make_grid.data.table <- function(x, case, distance, id, coords) {
 	# NSE
-	focal <- camX <- camY <- NULL;
+	focal <- camX <- camY <- NULL
 
 	if (is.null(id) | is.null(coords)) {
 		stop('id and coords must be provided with x is a data.table')
