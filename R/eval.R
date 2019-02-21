@@ -35,7 +35,7 @@
 #' #   type is categorical, and the direction is neutral
 #' points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = 'neutral')
 #'
-#' plot(points)
+#' plot(points["lc"])
 eval_pt <- function(x, layer, type = NULL, direction = NULL, ...) {
 	if (is.null(x)) {
 		stop('x must be provided. either data.table or sf point object.')
@@ -129,13 +129,12 @@ eval_pt.sf <- function(x, layer, type, direction) {
 #' @examples
 #' # Load data
 #' data(points)
-#' data(lc)
+#' data(wetland)
 #'
-#' # Evaluate each point with the land cover layer
-#' #   type is categorical, and the direction is neutral
-#' points$lc <- eval_buffer(x = points, layer = lc, type = 'categorical', direction = 'neutral')
+#' # Evaluate each point with the wetland layer
+#' points$wetland <- eval_buffer(x = points, layer = wetland, buffersize = 150, type = 'binary', direction = 'positive')
 #'
-#' plot(points)
+#' plot(points["wetland"])
 eval_buffer <- function(x, layer, buffersize, type, direction, ...
 ) {
 	if (is.null(x)) {
