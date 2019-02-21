@@ -35,7 +35,12 @@
 #' library(data.table)
 #' DT <- data.table(ID = points$ID, st_coordinates(points))
 #' grid <- make_grid(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
-make_grid <- function(x, case, distance, ...) {
+make_grid <- function(x,
+											case,
+											distance,
+											id = NULL,
+											coords = NULL
+) {
 	if (case == 'queen') {
 		move <- data.table::CJ(c(0,-distance, distance),
 													 c(0,-distance, distance))
@@ -62,35 +67,51 @@ make_grid <- function(x, case, distance, ...) {
 
 #' @export
 #' @import data.table
-make_grid.data.table <- function(x, case, distance, id, coords) {
-	# NSE
-	focal <- camX <- camY <- NULL
+make_grid.data.table <-
+	function(x,
+					 case,
+					 distance,
+					 id = NULL,
+					 coords = NULL
+	) {
+		# NSE
+		focal <- camX <- camY <- NULL;
 
-	if (is.null(id) | is.null(coords)) {
-		stop('id and coords must be provided with x is a data.table')
+		if (is.null(id) | is.null(coords)) {
+			stop('id and coords must be provided with x is a data.table')
+		}
+
+		if (!(id %in% colnames(x))) {
+			stop('id provided not found in colnames(x)')
+		}
+
+		if (!(all(coords %in% colnames(x)))) {
+			stop('coords provided not found in colnames(x)')
+		}
+
+		out <- x[rep(1:.N, times = nrow(move))]
+		out[, c('X', 'Y') := .SD + move,
+				.SDcols = coords, by = id]
+
+		out[1:nrow(x), focal := TRUE]
+		out[is.na(focal), focal := FALSE][]
+
+		return(out)
 	}
-
-	if (!(id %in% colnames(x))) {
-		stop('id provided not found in colnames(x)')
-	}
-
-	if (!(all(coords %in% colnames(x)))) {
-		stop('coords provided not found in colnames(x)')
-	}
-
-	out <- x[rep(1:.N, times = nrow(move))]
-	out[, c('X', 'Y') := .SD + move,
-		 .SDcols = coords, by = id]
-
-	out[1:nrow(x), focal := TRUE]
-	out[is.na(focal), focal := FALSE][]
-
-	return(out)
-}
 
 
 #' @export
-make_grid.sf <- function(x, case, distance) {
+make_grid.sf <- function(x,
+												 case,
+												 distance,
+												 id = NULL,
+												 coords = NULL
+) {
+
+	if (!('geometry' %in% colnames(x))) {
+		stop('geometry column not found in x')
+	}
+
 	if (!('sfc_POINT' %in% class(x$geometry))) {
 		stop('class of geometry column must be sfc_POINT')
 	}

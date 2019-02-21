@@ -4,7 +4,7 @@
 \alias{make_grid}
 \title{Make camera trap grids}
 \usage{
-make_grid(x, case, distance, ...)
+make_grid(x, case, distance, id = NULL, coords = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}
