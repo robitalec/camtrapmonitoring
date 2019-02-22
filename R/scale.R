@@ -27,5 +27,11 @@ scale_roi <- function(layer, roi) {
 		stop('layer must be provided and expected type is raster.')
 	}
 
-	raster::scale(raster::crop(layer, roi))
+	if (missing(roi)) {
+		stop('roi must be provided.')
+	}
+
+	return(
+		raster::scale(raster::crop(layer, roi))
+	)
 }
