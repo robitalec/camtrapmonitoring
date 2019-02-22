@@ -130,7 +130,7 @@ make_grid.sf <- function(x,
 	out <- sf::st_as_sf(
 		data.frame(r[, colnames(r)[!(grepl('geometry', colnames(r),
 																			 fixed = TRUE))]],
-							 st_coordinates(r) +
+							 sf::st_coordinates(r) +
 							 	as.matrix(move[rep(1:.N, times = nrow(x))])),
 		coords = c('X', 'Y')
 	)
