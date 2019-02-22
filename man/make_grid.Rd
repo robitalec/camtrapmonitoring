@@ -4,28 +4,44 @@
 \alias{make_grid}
 \title{Make camera trap grids}
 \usage{
-make_grid(x, case, distance, id, coords)
+make_grid(x, case, distance, id = NULL, coords = NULL)
 }
 \arguments{
+\item{x}{data.table or sf points.}
+
 \item{case}{"queen", "rook" or "bishop".}
 
-\item{distance}{distance in x and y between cameras. don't worry about the hypotenuse.}
+\item{distance}{distance between adjacent camera traps. Don't worry about the hypotenuse.}
 
-\item{id}{id of focal point.}
+\item{id}{id of focal point. Only used when x is a data.table.}
 
-\item{coords}{names of coordinate columns.}
-
-\item{DT}{data.table or sf points.}
+\item{coords}{names of coordinate columns. Only used when x is a data.table.}
 }
 \value{
-Extended data.table either nine times the length of input DT for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case.
+Extended data.table either nine times the length of input DT for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case. See examples.
 
-The logical 'focal' column indicates which point is the focal.
+The logical 'focal' column indicates which point is the focal or center camera trap.
 }
 \description{
-Set up grids around focal points. For example, sample points in your study area and establish a grid of camera traps around each.
+Set up grids around focal points. For example, sample points in your study area and use \code{make_grid} to establish a grid of camera traps around each.
 }
 \examples{
-grid <- make_grid(DT, id = 'point', case = 'queen', distance = 250, coords = c('X', 'Y'))
-# plot 3 types
+# Point data (sf object)
+library(sf)
+data(points)
+plot(points)
+
+queen <- make_grid(points, case = 'queen', distance = 100)
+plot(queen)
+
+rook <- make_grid(points, case = 'rook', distance = 100)
+plot(rook)
+
+bishop <- make_grid(points, case = 'bishop', distance = 100)
+plot(bishop)
+
+# Or a data.table
+library(data.table)
+DT <- data.table(ID = points$ID, st_coordinates(points))
+grid <- make_grid(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
 }
