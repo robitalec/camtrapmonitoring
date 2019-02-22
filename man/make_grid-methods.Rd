@@ -2,9 +2,16 @@
 % Please edit documentation in R/make_grid.R
 \name{make_grid}
 \alias{make_grid}
+\alias{make_grid.data.table}
+\alias{make_grid.sf}
 \title{Make camera trap grids}
 \usage{
 make_grid(x, case, distance, id = NULL, coords = NULL)
+
+\method{make_grid}{data.table}(x, case, distance, id = NULL,
+  coords = NULL)
+
+\method{make_grid}{sf}(x, case, distance, id = NULL, coords = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}

@@ -16,6 +16,9 @@
 #'
 #' @export
 #'
+#' @aliases make_grid
+#' @rdname make_grid-methods
+#'
 #' @examples
 #' # Point data (sf object)
 #' library(sf)
@@ -67,6 +70,8 @@ make_grid <- function(x,
 
 #' @export
 #' @import data.table
+#' @aliases make_grid
+#' @rdname make_grid-methods
 make_grid.data.table <-
 	function(x,
 					 case,
@@ -103,6 +108,8 @@ make_grid.data.table <-
 
 
 #' @export
+#' @aliases make_grid
+#' @rdname make_grid-methods
 make_grid.sf <- function(x,
 												 case,
 												 distance,

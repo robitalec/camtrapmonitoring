@@ -4,7 +4,7 @@
 \alias{strat_sample}
 \title{Stratified polygon sampling}
 \usage{
-strat_sample(x, n, col, returnDT = TRUE)
+strat_sample(x, n, col, returnDT = FALSE)
 }
 \arguments{
 \item{x}{polygon object of class \code{sf}}
