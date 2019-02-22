@@ -7,8 +7,28 @@
 scale_roi(layer, roi)
 }
 \arguments{
-\item{roi}{}
+\item{layer}{raster layer.}
+
+\item{roi}{any object which can be passed to extent including \code{sf}, \code{Spatial}, \code{Raster} objects and 2x2 matrices.}
+}
+\value{
+\code{Raster} layer, cropped to extent of provided 'roi', and center scaled.
 }
 \description{
-Scale in region of interest
+Scale a layer in a region of interest to optionally compare locations with \code{\link[=eval_pt]{eval_pt()}} and \code{\link[=eval_buffer]{eval_buffer()}}, and select locations with \code{\link[=select_ct]{select_ct()}} based off of relative values instead of absolute values.
+}
+\examples{
+# Load data
+data(densitygrid)
+data(dem)
+
+# Scale elevation layer in extent of density grid
+demScaled <- scale_roi(layer = dem, roi = densitygrid)
+
+# Plot
+plot(dem)
+plot(demScaled)
+}
+\seealso{
+\code{\link[raster:scale]{raster::scale()}}
 }
