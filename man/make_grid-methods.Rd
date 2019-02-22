@@ -6,7 +6,7 @@
 \alias{make_grid.sf}
 \title{Make camera trap grids}
 \usage{
-make_grid(x, case, distance, id = NULL, coords = NULL)
+make_grid(x, n, case, distance, id = NULL, coords = NULL)
 
 \method{make_grid}{data.table}(x, case, distance, id = NULL,
   coords = NULL)
@@ -14,15 +14,17 @@ make_grid(x, case, distance, id = NULL, coords = NULL)
 \method{make_grid}{sf}(x, case, distance, id = NULL, coords = NULL)
 }
 \arguments{
-\item{x}{data.table or sf points.}
+\item{x}{data.table or sf; points.}
 
-\item{case}{"queen", "rook" or "bishop".}
+\item{n}{number of points around each focal point. \code{n} overrides the \code{case} argument, do not provide both. See details.}
+
+\item{case}{"queen", "rook" or "bishop". Ignored if \code{n} is provided.}
 
 \item{distance}{distance between adjacent camera traps. Don't worry about the hypotenuse.}
 
-\item{id}{id of focal point. Only used when x is a data.table.}
+\item{id}{column in \code{x} indicating id of focal point. Only used when x is a \code{data.table}.}
 
-\item{coords}{names of coordinate columns. Only used when x is a data.table.}
+\item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}.}
 }
 \value{
 Extended data.table either nine times the length of input DT for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case. See examples.

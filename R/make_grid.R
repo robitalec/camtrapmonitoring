@@ -3,10 +3,12 @@
 #' Set up grids around focal points. For example, sample points in your study area and use `make_grid` to establish a grid of camera traps around each.
 #'
 #' @param x data.table or sf points.
-#' @param case "queen", "rook" or "bishop".
+#' @param n number of points around each focal point. `n` overrides the `case` argument, do not provide both. See details.
+#' @param case "queen", "rook" or "bishop". Ignored if `n` is provided.
 #' @param distance distance between adjacent camera traps. Don't worry about the hypotenuse.
-#' @param id id of focal point. Only used when x is a data.table.
-#' @param coords names of coordinate columns. Only used when x is a data.table.
+#' @param id column in `x` indicating id of focal point. Only used when x is a `data.table`.
+#' @param coords columns in `x` indicating names of coordinate columns of focal point. Only used when x is a `data.table`.
+
 #'
 #' @return
 #'
