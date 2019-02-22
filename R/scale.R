@@ -17,7 +17,11 @@
 #' data(dem)
 #'
 #' # Scale elevation layer in extent of density grid
-#' scale_roi(layer = dem, roi = densitygrid)
+#' demScaled <- scale_roi(layer = dem, roi = densitygrid)
+#'
+#' # Plot
+#' plot(dem)
+#' plot(demScaled)
 scale_roi <- function(layer, roi) {
 	if (missing(layer) | !("RasterLayer" %in% class(layer))) {
 		stop('layer must be provided and expected type is raster.')

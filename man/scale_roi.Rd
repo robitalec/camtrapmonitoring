@@ -23,7 +23,11 @@ data(densitygrid)
 data(dem)
 
 # Scale elevation layer in extent of density grid
-scale_roi(layer = dem, roi = densitygrid)
+demScaled <- scale_roi(layer = dem, roi = densitygrid)
+
+# Plot
+plot(dem)
+plot(demScaled)
 }
 \seealso{
 \code{\link[raster:scale]{raster::scale()}}
