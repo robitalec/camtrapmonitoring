@@ -4,7 +4,7 @@
 \alias{scale_roi}
 \title{Scale in region of interest}
 \usage{
-scale_roi(layer, roi)
+scale_roi(layer = NULL, roi = NULL)
 }
 \arguments{
 \item{layer}{raster layer.}

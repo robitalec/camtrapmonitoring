@@ -22,14 +22,16 @@
 #' # Plot
 #' plot(dem)
 #' plot(demScaled)
-scale_roi <- function(layer, roi) {
-	if (missing(layer) | !("RasterLayer" %in% class(layer))) {
+scale_roi <- function(layer = NULL, roi = NULL) {
+	if (is.null(layer) | !("RasterLayer" %in% class(layer))) {
 		stop('layer must be provided and expected type is raster.')
 	}
 
-	if (missing(roi)) {
+	if (is.null(roi)) {
 		stop('roi must be provided.')
 	}
+
+	# add check for compatible with extent
 
 	return(
 		raster::scale(raster::crop(layer, roi))
