@@ -2,13 +2,22 @@
 #'
 #' Scale a layer in a region of interest to optionally compare locations with [eval_pt()] and [eval_buffer()], and select locations with [select_ct()] based off of relative values instead of absolute values.
 #'
-#' @param layer
-#' @param roi sf
+#' @inheritParams eval_pt
+#' @param roi any object which can be passed to extent including `sf`, `Spatial`, `Raster` objects and 2x2 matrices.
 #'
-#' @return
+#' @return `Raster` layer, cropped to extent of provided 'roi', and center scaled.
+#'
+#' @seealso [raster::scale()]
+#'
 #' @export
 #'
 #' @examples
+#' # Load data
+#' data(densitygrid)
+#' data(dem)
+#'
+#' # Scale elevation layer in extent of density grid
+#' scale_roi(layer = dem, roi = densitygrid)
 scale_roi <- function(layer, roi) {
 	raster::scale(raster::crop(layer, roi))
 }
