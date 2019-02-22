@@ -19,5 +19,9 @@
 #' # Scale elevation layer in extent of density grid
 #' scale_roi(layer = dem, roi = densitygrid)
 scale_roi <- function(layer, roi) {
+	if (missing(layer) | !("RasterLayer" %in% class(layer))) {
+		stop('layer must be provided and expected type is raster.')
+	}
+
 	raster::scale(raster::crop(layer, roi))
 }
