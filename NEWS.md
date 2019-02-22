@@ -1,3 +1,8 @@
+# wildcam 0.5.0.9000 (2019-02-21)
+
+* Add `scale_roi` for rescaling rasters in a region of interest  [!5](https://gitlab.com/robit.a/wildcam/merge_requests/5).
+* Add "dem" example data.
+
 # wildcam 0.4.0.9000 (2019-02-21)
 
 * Add `eval_pt` and `eval_buffer` for evaluating and characterizing camera trap locations [!4](https://gitlab.com/robit.a/wildcam/merge_requests/4).
