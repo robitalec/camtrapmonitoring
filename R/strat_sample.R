@@ -6,6 +6,7 @@
 #'
 #' @param x polygon object of class `sf`
 #' @param n number of random points
+#' @param type of sampling. either 'random' or 'regular'.
 #' @param col column in x indicating strata
 #' @param returnDT return a `data.table` (TRUE) or `sf` (FALSE) object
 #'
@@ -21,9 +22,13 @@
 #'
 #' plot(densitygrid, reset = FALSE)
 #' plot(pts$geometry, add = TRUE)
-strat_sample <- function(x, n, col, returnDT = FALSE) {
+strat_sample <- function(x, n, type, col, returnDT = FALSE) {
 	if (!(col %in% colnames(x))) {
 		stop('strata column not found in x')
+	}
+
+	if (missing(type) | !(type %in% c('regular', 'random'))) {
+		stop('type must be provided. either "regular" or "random"')
 	}
 
 	lvls <- unique(x[[col]])
@@ -34,7 +39,7 @@ strat_sample <- function(x, n, col, returnDT = FALSE) {
 
 	DT <- lapply(lvls, function(l) {
 		s <- sf::st_sf(
-			geometry = sf::st_sample(x[x[[col]] == l, ], n, type = 'random',
+			geometry = sf::st_sample(x[x[[col]] == l, ], n, type = type,
 															 exact = TRUE))
 		s[[col]] <- l
 		return(s)
