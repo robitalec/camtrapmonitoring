@@ -146,7 +146,7 @@ eval_pt.sf <-
 #' data(wetland)
 #'
 #' # Evaluate each point with the wetland layer
-#' points$wetland <- eval_buffer(x = points, layer = wetland, buffersize = 150, type = 'binary', direction = 'positive')
+#' points$wetland <- eval_buffer(points, wetland, buffersize = 150, type = 'binary', direction = 'positive')
 #'
 #' plot(points["wetland"])
 eval_buffer <-
@@ -155,9 +155,7 @@ eval_buffer <-
 					 buffersize,
 					 type,
 					 direction,
-					 coords = NULL
-
-	) {
+					 coords = NULL) {
 	if (is.null(x)) {
 		stop('x must be provided. either data.table or sf point object.')
 	}
@@ -207,8 +205,7 @@ eval_buffer.data.table <-
 					 buffersize,
 					 type,
 					 direction,
-					 coords = NULL
-	) {
+					 coords = NULL) {
 	if (length(coords) != 2) {
 		stop('length of coords column names should be 2')
 	}
@@ -240,7 +237,7 @@ eval_buffer.sf <-
 					 type,
 					 direction,
 					 coords = NULL) {
-		if (!('geometry' %in% colnames(x))) {
+	if (!('geometry' %in% colnames(x))) {
 		stop('geometry column not found in x')
 	}
 

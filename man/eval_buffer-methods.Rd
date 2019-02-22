@@ -52,7 +52,7 @@ data(points)
 data(wetland)
 
 # Evaluate each point with the wetland layer
-points$wetland <- eval_buffer(x = points, layer = wetland, buffersize = 150, type = 'binary', direction = 'positive')
+points$wetland <- eval_buffer(points, wetland, buffersize = 150, type = 'binary', direction = 'positive')
 
 plot(points["wetland"])
 }
