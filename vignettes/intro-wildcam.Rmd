@@ -17,6 +17,10 @@ knitr::opts_chunk$set(
 ```
 
 
+ggplot2 figs with geom_sf
+
+
+
 # Workflow
 `strat_sample` and/or `make_grid` -> `eval_pt`/`eval_buffer` -> `select_ct`
 

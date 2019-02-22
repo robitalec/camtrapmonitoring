@@ -16,7 +16,8 @@ Roxygen: list(markdown = TRUE)
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggplot2
 VignetteBuilder: knitr
 Imports: 
     data.table,
