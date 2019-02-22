@@ -21,7 +21,7 @@
 #'
 #' plot(densitygrid, reset = FALSE)
 #' plot(pts$geometry, add = TRUE)
-strat_sample <- function(x, n, col, returnDT = TRUE) {
+strat_sample <- function(x, n, col, returnDT = FALSE) {
 	if (!(col %in% colnames(x))) {
 		stop('strata column not found in x')
 	}
