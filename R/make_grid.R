@@ -39,6 +39,7 @@
 #' DT <- data.table(ID = points$ID, st_coordinates(points))
 #' grid <- make_grid(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
 make_grid <- function(x,
+											n,
 											case,
 											distance,
 											id = NULL,
