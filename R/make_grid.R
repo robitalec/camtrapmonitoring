@@ -39,8 +39,8 @@ make_grid <- function(x,
 											case,
 											distance,
 											id = NULL,
-											coords = NULL
-) {
+											coords = NULL) {
+
 	if (case == 'queen') {
 		move <- data.table::CJ(c(0,-distance, distance),
 													 c(0,-distance, distance))
@@ -90,8 +90,10 @@ make_grid.data.table <-
 		}
 
 		out <- x[rep(1:.N, times = nrow(move))]
-		out[, c('X', 'Y') := .SD + move,
-				.SDcols = coords, by = id]
+		set(out, j = coords[[1]],
+				value = out[[coords[[1]]]] + as.double(move$V1))
+		set(out, j = coords[[2]],
+				value = out[[coords[[2]]]] + as.double(move$V2))
 
 		out[1:nrow(x), focal := TRUE]
 		out[is.na(focal), focal := FALSE][]
