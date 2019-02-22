@@ -2,20 +2,25 @@ context("test-strat-sample")
 
 # make expected results
 col <- 'density'
-pts <- strat_sample(densitygrid, 10, col = col, returnDT = TRUE)
+pts <- strat_sample(densitygrid, 10, type = 'random',
+										col = col, returnDT = TRUE)
 
 # tests
 test_that("basics", {
-	expect_error(strat_sample(densitygrid, 10, col = 'potato'),
+	expect_error(strat_sample(densitygrid, 10, type = 'random', col = 'potato'),
 							 error = 'strata column not found in x')
 
 	densitygrid$potato <- NA
-	expect_error(strat_sample(densitygrid, 10, col = 'potato'),
+	expect_error(strat_sample(densitygrid, 10, type = 'random', col = 'potato'),
 							 error = 'no strata found')
+
+	expect_error(strat_sample(densitygrid, 10, col = col),
+							 error = 'type must be provided. either "regular" or "random"')
+
 })
 
 test_that("with data.table return", {
-	pts <- strat_sample(densitygrid, 10,
+	pts <- strat_sample(densitygrid, 10, type = 'random',
 											col = col, returnDT = TRUE)
 
 	expect_equivalent(unique(pts[[col]]),
@@ -27,7 +32,7 @@ test_that("with data.table return", {
 })
 
 test_that("with sf return", {
-	pts <- strat_sample(densitygrid, 10,
+	pts <- strat_sample(densitygrid, 10, type = 'random',
 											col = col, returnDT = FALSE)
 
 	expect_equivalent(unique(pts[[col]]),
@@ -40,7 +45,7 @@ test_that("with sf return", {
 test_that("type of col is well handled", {
 	# factor
 	densitygrid$tryfactor <- as.factor(densitygrid$density)
-	pts <- strat_sample(densitygrid, 10,
+	pts <- strat_sample(densitygrid, 10, type = 'random',
 											col = 'tryfactor', returnDT = FALSE)
 
 	expect_equivalent(unique(pts[['tryfactor']]),
@@ -48,7 +53,7 @@ test_that("type of col is well handled", {
 
 	# numeric
 	densitygrid$trynum <- sample(1:3, size = 4, replace = TRUE)
-	pts <- strat_sample(densitygrid, 10,
+	pts <- strat_sample(densitygrid, 10, type = 'random',
 											col = 'trynum', returnDT = FALSE)
 
 	expect_equivalent(unique(pts[['trynum']]),
@@ -56,7 +61,7 @@ test_that("type of col is well handled", {
 
 	# boolean
 	densitygrid$trybool <- sample(c(TRUE, FALSE), size = 4, replace = TRUE)
-	pts <- strat_sample(densitygrid, 10,
+	pts <- strat_sample(densitygrid, 10, type = 'random',
 											col = 'trybool', returnDT = FALSE)
 
 	expect_equivalent(unique(pts[['trybool']]),
