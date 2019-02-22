@@ -3,10 +3,7 @@
 \name{eval_pt}
 \alias{eval_pt}
 \alias{eval_pt.data.table}
-\alias{eval_pt,}
-\alias{eval_pt-data.table-method}
 \alias{eval_pt.sf}
-\alias{eval_pt-sf-method}
 \title{Evaluate camera trap locations by point sampling layers}
 \usage{
 eval_pt(x, layer, type = NULL, direction = NULL, coords = NULL)

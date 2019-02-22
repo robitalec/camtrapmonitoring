@@ -71,7 +71,7 @@ eval_pt <-
 
 #' @export
 #' @rdname eval_pt-methods
-#' @aliases eval_pt, eval_pt-data.table-method
+#' @aliases eval_pt
 eval_pt.data.table <-
 	function(x,
 					 layer,
@@ -93,7 +93,7 @@ eval_pt.data.table <-
 
 #' @export
 #' @rdname eval_pt-methods
-#' @aliases eval_pt, eval_pt-sf-method
+#' @aliases eval_pt
 eval_pt.sf <-
 	function(x,
 					 layer,
@@ -197,7 +197,7 @@ eval_buffer <-
 
 
 #' @export
-#' @aliases eval_buffer, eval_buffer-data.table-method
+#' @aliases eval_buffer
 #' @rdname eval_buffer-methods
 eval_buffer.data.table <-
 	function(x,
@@ -228,7 +228,7 @@ eval_buffer.data.table <-
 }
 
 #' @export
-#' @aliases eval_buffer, eval_buffer-sf-method
+#' @aliases eval_buffer
 #' @rdname eval_buffer-methods
 eval_buffer.sf <-
 	function(x,

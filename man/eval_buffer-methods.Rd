@@ -3,10 +3,7 @@
 \name{eval_buffer}
 \alias{eval_buffer}
 \alias{eval_buffer.data.table}
-\alias{eval_buffer,}
-\alias{eval_buffer-data.table-method}
 \alias{eval_buffer.sf}
-\alias{eval_buffer-sf-method}
 \title{Eval layers by buffered}
 \usage{
 eval_buffer(x, layer, buffersize, type, direction, coords = NULL)
