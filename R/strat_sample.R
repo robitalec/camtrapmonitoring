@@ -1,8 +1,8 @@
 #' Stratified polygon sampling
 #'
-#' For each mutually exclusive strata, sample random points.
+#' Sample points in each region defined by unique values in col in x.
 #'
-#' Polygons cannot be assigned to multiple strata. Strata are defined by values in 'col'. Optionally return a `data.table` if 'returnDT' is TRUE or an `sf` object if FALSE.
+#' Random or regular sampling. Polygons cannot be assigned to multiple values. Optionally return a `data.table` if 'returnDT' is TRUE or an `sf` object if FALSE.
 #'
 #' @param x polygon object of class `sf`
 #' @param n number of random points
@@ -14,11 +14,19 @@
 #' @export
 #'
 #' @examples
-#' # Example polygons with density levels 1, 2 and 3.
+#' # Example polygons with density levels 1, 2 and 3
 #' data(densitygrid)
 #'
-#' # Randomly sample 5 points for each set of polygons in each strata.
-#' pts <- strat_sample(x = densitygrid, n = 5, col = 'density', returnDT = FALSE)
+#' # Randomly sample 5 points for each set of polygons in each strata
+#' pts <- strat_sample(x = densitygrid, n = 5, type = 'random',
+#' col = 'density', returnDT = FALSE)
+#'
+#' plot(densitygrid, reset = FALSE)
+#' plot(pts$geometry, add = TRUE)
+#'
+#' # Sample 5 regular points for each set of polygons in each strata
+#' pts <- strat_sample(x = densitygrid, n = 20, type = 'regular',
+#' col = 'density', returnDT = FALSE)
 #'
 #' plot(densitygrid, reset = FALSE)
 #' plot(pts$geometry, add = TRUE)
@@ -28,7 +36,7 @@ strat_sample <- function(x, n, type, col, returnDT = FALSE) {
 	}
 
 	if (missing(type) | !(type %in% c('regular', 'random'))) {
-		stop('type must be provided. either "regular" or "random"')
+		stop('type must be provided. either "regular" or "random".')
 	}
 
 	lvls <- unique(x[[col]])
