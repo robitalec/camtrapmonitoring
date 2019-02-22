@@ -1,3 +1,8 @@
+# wildcam 0.5.1.9000 (2019-02-22)
+
+* Add 'type' argument to `strat_sample` for regular and random sampling. [!6](https://gitlab.com/robit.a/wildcam/merge_requests/6).
+
+
 # wildcam 0.5.0.9000 (2019-02-21)
 
 * Add `scale_roi` for rescaling rasters in a region of interest  [!5](https://gitlab.com/robit.a/wildcam/merge_requests/5).
