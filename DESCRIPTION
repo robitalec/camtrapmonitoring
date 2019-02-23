@@ -1,6 +1,6 @@
 Package: wildcam
 Title: What the Package Does (One Line, Title Case)
-Version: 0.5.1.9000
+Version: 0.5.2.9000
 Authors@R: 
     person(given = "Alec L.",
            family = "Robitaille",
