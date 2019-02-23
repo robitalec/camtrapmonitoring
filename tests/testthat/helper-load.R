@@ -1,6 +1,6 @@
-library(data.table)
 library(sf)
 library(raster)
+library(data.table)
 
 data(points)
 data(lc)
