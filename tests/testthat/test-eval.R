@@ -73,10 +73,10 @@ test_that("eval_pt, sf", {
 	# )
 
 
-	multipoints <- st_cast(points, 'MULTIPOINT')
+	lines <- st_cast(points, 'LINESTRING')
 
 	expect_error(
-		eval_pt(x = multipoints, layer = lc, type = 'categorical',
+		eval_pt(x = lines, layer = lc, type = 'categorical',
 						direction = 'neutral'),
 		'class of geometry column must be sfc_POINT'
 	)

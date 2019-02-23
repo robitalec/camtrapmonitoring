@@ -3,10 +3,12 @@
 #' Set up grids around focal points. For example, sample points in your study area and use `make_grid` to establish a grid of camera traps around each.
 #'
 #' @param x data.table or sf points.
-#' @param case "queen", "rook" or "bishop".
+#' @param n number of points around each focal point. `n` overrides the `case` argument, do not provide both. See details.
+#' @param case "queen", "rook" or "bishop". Ignored if `n` is provided.
 #' @param distance distance between adjacent camera traps. Don't worry about the hypotenuse.
-#' @param id id of focal point. Only used when x is a data.table.
-#' @param coords names of coordinate columns. Only used when x is a data.table.
+#' @param id column in `x` indicating id of focal point. Only used when x is a `data.table`.
+#' @param coords columns in `x` indicating names of coordinate columns of focal point. Only used when x is a `data.table`.
+
 #'
 #' @return
 #'
@@ -25,6 +27,7 @@
 #' data(points)
 #' plot(points)
 #'
+#' ## Make grid with case
 #' queen <- make_grid(points, case = 'queen', distance = 100)
 #' plot(queen)
 #'
@@ -34,32 +37,47 @@
 #' bishop <- make_grid(points, case = 'bishop', distance = 100)
 #' plot(bishop)
 #'
-#' # Or a data.table
+#' ## Make grid with n
+#' grid <- make_grid(points, n = 25, distance = 100)
+#' plot(grid)
+#'
+#' # data.table input
 #' library(data.table)
 #' DT <- data.table(ID = points$ID, st_coordinates(points))
 #' grid <- make_grid(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
 make_grid <- function(x,
+											n,
 											case,
 											distance,
 											id = NULL,
 											coords = NULL) {
 
-	if (case == 'queen') {
+	if ((missing(n) & missing(case)) |
+			!missing(n) & !missing(case)) {
+		stop('provide one of n and case and not both.')
+	}
+
+	if (missing(case)) {
+		tms <- floor(n / 8)
+		s <- seq(1, tms) * distance
+		move <- data.table::CJ(c(0,-s, s), c(0,-s, s))
+		move <- move[order(abs(V1) + abs(V2))][1:n]
+	} else if (case == 'queen') {
 		move <- data.table::CJ(c(0,-distance, distance),
 													 c(0,-distance, distance))
-	} else if (case == 'rook') {
+		move <- move[order(abs(V1), abs(V2))]
+	} else if (case == 'bishop') {
 		move <- rbind(list(0, 0),
 									data.table::CJ(c(-distance, distance),
 																 c(-distance, distance)))
-	} else if (case == 'bishop') {
+	} else if (case == 'rook') {
 		move <- rbind(list(0, 0),
 									data.table::data.table(c(0, distance, 0,-distance),
 																				 c(distance, 0,-distance, 0)))
 	} else {
-		stop('must provide case one of "queen", "rook" or "bishop"')
+		stop('case provided must be one of "queen", "rook" or "bishop"')
 	}
 
-	move <- move[order(abs(V1), abs(V2))]
 
 	if (distance < 0 | !is.numeric(distance)) {
 		stop('distance must be a numeric, greater than 0')
@@ -74,6 +92,7 @@ make_grid <- function(x,
 #' @rdname make_grid-methods
 make_grid.data.table <-
 	function(x,
+					 n,
 					 case,
 					 distance,
 					 id = NULL,
@@ -111,6 +130,7 @@ make_grid.data.table <-
 #' @aliases make_grid
 #' @rdname make_grid-methods
 make_grid.sf <- function(x,
+												 n,
 												 case,
 												 distance,
 												 id = NULL,
@@ -121,7 +141,7 @@ make_grid.sf <- function(x,
 		stop('geometry column not found in x')
 	}
 
-	if (!('sfc_POINT' %in% class(x$geometry))) {
+	if (!inherits(x[['geometry']], 'sfc_POINT')) {
 		stop('class of geometry column must be sfc_POINT')
 	}
 
