@@ -39,6 +39,27 @@ test_that("make_grid works", {
 		'provide one of n and case and not both.'
 	)
 
+	expect_equal(
+		nrow(make_grid(points, n = 100, distance = 100)),
+		nrow(points) * 100
+	)
+
+	expect_equal(
+		nrow(make_grid(points, case = 'queen', distance = 100)),
+		nrow(points) * 9
+	)
+
+	expect_equal(
+		nrow(make_grid(points, case = 'rook', distance = 100)),
+		nrow(points) * 5
+	)
+
+	expect_equal(
+		nrow(make_grid(points, case = 'bishop', distance = 100)),
+		nrow(points) * 5
+	)
+
+
 })
 
 
