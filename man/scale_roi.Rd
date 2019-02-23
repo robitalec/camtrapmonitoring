@@ -18,6 +18,9 @@ scale_roi(layer = NULL, roi = NULL)
 Scale a layer in a region of interest to optionally compare locations with \code{\link[=eval_pt]{eval_pt()}} and \code{\link[=eval_buffer]{eval_buffer()}}, and select locations with \code{\link[=select_ct]{select_ct()}} based off of relative values instead of absolute values.
 }
 \examples{
+# Load packages
+library(raster)
+
 # Load data
 data(densitygrid)
 data(dem)

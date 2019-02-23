@@ -12,6 +12,9 @@
 #' @export
 #'
 #' @examples
+#' # Load packages
+#' library(raster)
+#'
 #' # Load data
 #' data(densitygrid)
 #' data(dem)
