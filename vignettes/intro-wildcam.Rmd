@@ -64,6 +64,17 @@ bishop <- make_grid(pts, case = 'bishop', distance = 100)
 plot(bishop)
 ```
 
+or n
+
+```{r}
+grid <- make_grid(pts, n = 100, distance = 500)
+plot(grid)
+
+```
+
+
+
+
 ## Evaluate points
 ```{r}
 # Load data
