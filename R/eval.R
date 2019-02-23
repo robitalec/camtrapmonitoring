@@ -211,7 +211,7 @@ eval_buffer.data.table <-
 		stop('length of coords column names should be 2')
 	}
 
-	if (!all(vapply(DT[, .SD, .SDcols = coords], is.numeric, TRUE))) {
+	if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
 		stop('coords provided must be numeric')
 	}
 
