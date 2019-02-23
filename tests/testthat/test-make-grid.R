@@ -16,7 +16,7 @@ gridB <- make_grid(DT, case = 'bishop', distance = 100,
 test_that("make_grid works", {
 	expect_error(
 		make_grid(points, case = 'potato', distance = 100),
-		'must provide case one of "queen", "rook" or "bishop"'
+		'case provided must be one of "queen", "rook" or "bishop"'
 	)
 
 	expect_error(
@@ -27,6 +27,16 @@ test_that("make_grid works", {
 	expect_error(
 		make_grid(1, case = 'queen', distance = 100),
 		'no applicable method for ', fixed = FALSE
+	)
+
+	expect_error(
+		make_grid(points, n = 100, case = 'queen'),
+		'provide one of n and case and not both.'
+	)
+
+	expect_error(
+		make_grid(points),
+		'provide one of n and case and not both.'
 	)
 
 })
@@ -91,7 +101,7 @@ test_that("... for sf input", {
 	multipoints <- st_cast(points, 'MULTIPOINT')
 
 	expect_error(
-		make_grid(multipoints, 'queen', 100),
+		make_grid(multipoints, case = 'queen', distance = 100),
 		'class of geometry column must be sfc_POINT'
 	)
 
@@ -107,3 +117,7 @@ test_that("... for sf input", {
 		nrow(bishop), nrow(DT) * 5
 	)
 })
+
+
+
+# right focals

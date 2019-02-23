@@ -87,6 +87,7 @@ make_grid <- function(x,
 #' @rdname make_grid-methods
 make_grid.data.table <-
 	function(x,
+					 n,
 					 case,
 					 distance,
 					 id = NULL,
@@ -124,6 +125,7 @@ make_grid.data.table <-
 #' @aliases make_grid
 #' @rdname make_grid-methods
 make_grid.sf <- function(x,
+												 n,
 												 case,
 												 distance,
 												 id = NULL,

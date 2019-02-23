@@ -8,13 +8,13 @@
 \usage{
 make_grid(x, n, case, distance, id = NULL, coords = NULL)
 
-\method{make_grid}{data.table}(x, case, distance, id = NULL,
+\method{make_grid}{data.table}(x, n, case, distance, id = NULL,
   coords = NULL)
 
-\method{make_grid}{sf}(x, case, distance, id = NULL, coords = NULL)
+\method{make_grid}{sf}(x, n, case, distance, id = NULL, coords = NULL)
 }
 \arguments{
-\item{x}{data.table or sf; points.}
+\item{x}{data.table or sf points.}
 
 \item{n}{number of points around each focal point. \code{n} overrides the \code{case} argument, do not provide both. See details.}
 
