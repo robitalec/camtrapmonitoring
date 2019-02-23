@@ -1,3 +1,8 @@
+# wildcam 0.5.2.9000 (2019-02-22)
+
+* Add 'n' argument to `make_grid` to specify a grid size *instead of* 'case' [!8](https://gitlab.com/robit.a/wildcam/merge_requests/8).
+
+
 # wildcam 0.5.1.9000 (2019-02-22)
 
 * Add 'type' argument to `strat_sample` for regular and random sampling. [!6](https://gitlab.com/robit.a/wildcam/merge_requests/6).
