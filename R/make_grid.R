@@ -27,6 +27,7 @@
 #' data(points)
 #' plot(points)
 #'
+#' ## Make grid with case
 #' queen <- make_grid(points, case = 'queen', distance = 100)
 #' plot(queen)
 #'
@@ -36,7 +37,11 @@
 #' bishop <- make_grid(points, case = 'bishop', distance = 100)
 #' plot(bishop)
 #'
-#' # Or a data.table
+#' ## Make grid with n
+#' grid <- make_grid(points, n = 25, distance = 100)
+#' plot(grid)
+#'
+#' # data.table input
 #' library(data.table)
 #' DT <- data.table(ID = points$ID, st_coordinates(points))
 #' grid <- make_grid(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
