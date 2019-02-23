@@ -124,7 +124,7 @@ make_grid.sf <- function(x,
 		stop('geometry column not found in x')
 	}
 
-	if (!('sfc_POINT' %in% class(x$geometry))) {
+	if (!inherits(x[['geometry']], 'sfc_POINT')) {
 		stop('class of geometry column must be sfc_POINT')
 	}
 
