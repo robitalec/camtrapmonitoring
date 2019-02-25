@@ -32,6 +32,6 @@ coverage_job:
   only:
     - master
   script:
-  	- r -e 'install.packages("covr")'
+    - r -e 'install.packages("covr")'
     - r -e 'devtools::install()'
     - r -e 'covr::codecov(type = c("tests", "examples"), quiet = FALSE, token = "65f93176-08d1-48a8-8be4-828e79525722")'
