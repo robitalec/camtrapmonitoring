@@ -1,15 +1,19 @@
 #' Select camera trap locations
 #'
-#' ...
+#' Select camera trap locations by subsetting (`sub`) and ranking (`rank`) locations in each group (`by`).
+#'
+#' `n` is the number of locations to select. When groups are defined with `by`, the number of locations will be selected for each group.
 #'
 #' `sub` is a named list used to subset the input `x`. It should follow the form `list(colname = value)`or `list(colname = c(values, values))`.
 #'
+#' `by` is a character vector of column names in `x` to group camera trap locations and rank. This should match (at least) the column provided to `strat_sample`, if it was used to generate potential locations.
 #'
-#' @param x
-#' @param n
-#' @param rank
+#'
+#' @inheritParams make_grid
+#' @param n number of locations to select. if `by` is provided, `select_ct` will select `n` for each group defined in `by`.
+#' @param rank character vector of column name(s) in `x` to rank rows.
 #' @param sub a named list with the form `list(colname = value)`. See Details.
-#' @param by
+#' @param by character vector of column name(s) in `x` to form groups. if `by` is provided, ranking and subsetting will occur within in each group.
 #'
 #' @return
 #' @export

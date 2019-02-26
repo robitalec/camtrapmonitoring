@@ -4,16 +4,26 @@
 \alias{select_ct}
 \title{Select camera trap locations}
 \usage{
-select_ct(x, n, rank, sub, by)
+select_ct(x, n, rank, sub, by = NULL)
 }
 \arguments{
+\item{x}{data.table or sf points.}
+
+\item{n}{number of locations to select. if \code{by} is provided, \code{select_ct} will select \code{n} for each group defined in \code{by}.}
+
+\item{rank}{character vector of column name(s) in \code{x} to rank rows.}
+
 \item{sub}{a named list with the form \code{list(colname = value)}. See Details.}
 
-\item{by}{}
+\item{by}{character vector of column name(s) in \code{x} to form groups. if \code{by} is provided, ranking and subsetting will occur within in each group.}
 }
 \description{
-...
+Select camera trap locations by subsetting (\code{sub}) and ranking (\code{rank}) locations in each group (\code{by}).
 }
 \details{
+\code{n} is the number of locations to select. When groups are defined with \code{by}, the number of locations will be selected for each group.
+
 \code{sub} is a named list used to subset the input \code{x}. It should follow the form \code{list(colname = value)}or \code{list(colname = c(values, values))}.
+
+\code{by} is a character vector of column names in \code{x} to group camera trap locations and rank. This should match (at least) the column provided to \code{strat_sample}, if it was used to generate potential locations.
 }
