@@ -4,7 +4,7 @@
 \alias{select_ct}
 \title{Select camera trap locations}
 \usage{
-select_ct(x, n, rank, sub, by = NULL)
+select_ct(x, n, rank = NULL, sub = NULL, by = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}

@@ -85,6 +85,10 @@ sfsel <- select_ct(
 
 # tests
 test_that("select_works, general", {
+	expect_error(select_ct(NULL, 10),
+		'x is required. either a data.table or sf object.')
+
+	expect_error(select_ct(pts, NULL), 'n is required.')
 
 	expect_warning(
 		select_ct(

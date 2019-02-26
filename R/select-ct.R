@@ -23,9 +23,18 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 	# NAs detected, removing
 	# na.omit
 
+	if (missing(x)) {
+		stop('x is required. either a data.table or sf object.')
+	}
+
+	if (missing(n)) {
+		stop('n is required.')
+	}
+
 	if (is.null(rank) & is.null(sub) & is.null(by)) {
 		warning('rank, sub and by are all NULL... selecting n rows  arbitrarily')
 	}
+
 
 
 	directions <- vapply(rank, function(col) parse_directions(x, col), 1L)
