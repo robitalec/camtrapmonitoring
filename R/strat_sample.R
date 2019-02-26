@@ -45,6 +45,7 @@ strat_sample <- function(x, n, type, col, returnDT = FALSE) {
 		stop('no strata found')
 	}
 
+
 	DT <- lapply(lvls, function(l) {
 		s <- sf::st_sf(
 			geometry = sf::st_sample(x[x[[col]] == l, ], n, type = type,
@@ -54,7 +55,10 @@ strat_sample <- function(x, n, type, col, returnDT = FALSE) {
 	})
 
 	if (returnDT) {
-		out <- data.table::rbindlist(DT)
+		out <-
+			data.table::rbindlist(DT)[,
+			c('X', 'Y') := data.table::as.data.table(sf::st_coordinates(geometry))]
+		data.table::set(out, j = 'geometry', value = NULL)
 		data.table::set(out, j = 'ID', value = 1:nrow(out))
 		return(out)
 	} else {
