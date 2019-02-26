@@ -31,6 +31,10 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 		stop('n is required.')
 	}
 
+	if (!is.numeric(n) | n < 1) {
+		stop('n must be a positive numeric.')
+	}
+
 	if (is.null(rank) & is.null(sub) & is.null(by)) {
 		warning('rank, sub and by are all NULL... selecting n rows  arbitrarily')
 	}

@@ -85,10 +85,18 @@ sfsel <- select_ct(
 
 # tests
 test_that("select_works, general", {
-	expect_error(select_ct(NULL, 10),
+	expect_error(select_ct(),
 		'x is required. either a data.table or sf object.')
 
-	expect_error(select_ct(pts, NULL), 'n is required.')
+	expect_error(select_ct(pts),
+							 'n is required.')
+
+	expect_error(select_ct(pts, -1),
+							 'n must be a positive numeric.')
+
+	expect_error(select_ct(pts, 'potato'),
+							 'n must be a positive numeric.')
+
 
 	expect_warning(
 		select_ct(
