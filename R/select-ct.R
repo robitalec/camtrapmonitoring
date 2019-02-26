@@ -16,20 +16,20 @@ select_ct <- function(x, n, rank, sub, by) {
 	# by is a vector of column names
 
 
-
 	# NAs detected, removing
 	# na.omit
 
 
 
-	vapply(rank, parse_attr_dir, 1L)
+	dirs <- vapply(rank, function(col) parse_attr_dir(x, col), 1L)
 
-	#
-	# setorder(
-	# 	x[sub, on = names(sub)],
-	# 	rank,
-	#
-	# )
+
+	### x[sub][order(rank)][, .SD[1:n], by] ###
+	setorderv(
+		x[sub, on = names(sub)],
+		cols = names(dirs),
+		order = dirs
+	)[]
 	# [order(rank)]#[, .SD[1:n], by]
 }
 
@@ -37,11 +37,11 @@ select_ct <- function(x, n, rank, sub, by) {
 
 parse_attr_dir <- function(x, col) {
 	d <- attr(x[[col]], 'wildcam')[['direction']]
-	if (d == '1') {
+	if (d == 'positive') {
 		1L
 	} else if (d == 'negative') {
 		-1L
 	} else if (d == 'neutral') {
-		stop('cannot rank with a neutral direction')
+		stop('cannot rank columns with a neutral direction')
 	}
 }
