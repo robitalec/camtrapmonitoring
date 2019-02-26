@@ -23,10 +23,6 @@ select_ct <- function(x, n, rank, sub, by = NULL) {
 	# NAs detected, removing
 	# na.omit
 
-	# should sub do 'lc > 202'?
-
-	# should rank do: camera grid -> summary stat?
-
 	directions <- vapply(rank, function(col) parse_directions(x, col), 1L)
 
 
@@ -39,15 +35,12 @@ select_ct <- function(x, n, rank, sub, by = NULL) {
 		stop('x must be either a data.table or an sf object')
 	}
 
-	nby <- x[, .GRP, by = by][, .N]
-
-
 	sel <- function(x) {
 		data.table::setorderv(
 			x[sub, on = names(sub)],
 			cols = c(by, names(directions)),
 			order = c(rep(1, length(by)), directions)
-		)[, .SD[1:n / nby], by]
+		)[, .SD[seq(1, n)], by]
 	}
 
 	if (t == 'dt') {
