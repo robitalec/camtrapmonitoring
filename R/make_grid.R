@@ -7,7 +7,7 @@
 #' @param case "queen", "rook" or "bishop". Ignored if `n` is provided.
 #' @param distance distance between adjacent camera traps. Don't worry about the hypotenuse.
 #' @param id column in `x` indicating id of focal point. Only used when x is a `data.table`.
-#' @param coords columns in `x` indicating names of coordinate columns of focal point. Only used when x is a `data.table`.
+#' @param coords columns in `x` indicating names of coordinate columns of focal point. Only used when x is a `data.table`. Expects length = 2 e.g.: c('X', 'Y').
 
 #'
 #' @return

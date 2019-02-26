@@ -25,7 +25,7 @@ eval_buffer(x, layer, buffersize, type, direction, coords = NULL)
 
 \item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
 
-\item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}.}
+\item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}. Expects length = 2 e.g.: c('X', 'Y').}
 }
 \description{
 Using the buffered points locations generated manually or with \code{wildcam} functions \code{\link[=strat_sample]{strat_sample()}} and \code{\link[=make_grid]{make_grid()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
