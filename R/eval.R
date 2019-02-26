@@ -79,17 +79,21 @@ eval_pt.data.table <-
 					 direction = NULL,
 					 coords = NULL) {
 		if (length(coords) != 2) {
-		stop('length of coords column names should be 2')
-	}
+			stop('length of coords column names should be 2')
+		}
 
-	if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
-		stop('coords provided must be numeric')
-	}
+		if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
+			stop('coords provided must be numeric')
+		}
 
-	set_eval_attr(raster::extract(layer, x[, .SD, .SDcols = coords],
-																na.rm = FALSE),
-								layer = nm, type = type, direction = direction)
-}
+		set_eval_attr(
+			raster::extract(layer, x[, .SD, .SDcols = coords],
+											na.rm = FALSE),
+			layer = nm,
+			type = type,
+			direction = direction
+		)
+	}
 
 #' @export
 #' @rdname eval_pt-methods
@@ -101,17 +105,21 @@ eval_pt.sf <-
 					 direction = NULL,
 					 coords = NULL) {
 		if (!('geometry' %in% colnames(x))) {
-		stop('geometry column not found in x')
-	}
+			stop('geometry column not found in x')
+		}
 
-	if (!('sfc_POINT' %in% class(x$geometry))) {
-		stop('class of geometry column must be sfc_POINT')
-	}
+		if (!inherits(x$geometry, 'sfc_POINT')) {
+			stop('class of geometry column must be sfc_POINT')
+		}
 
-	set_eval_attr(raster::extract(layer, sf::st_coordinates(x),
-																na.rm = FALSE),
-								layer = nm, type = type, direction = direction)
-}
+		set_eval_attr(
+			raster::extract(layer, sf::st_coordinates(x),
+											na.rm = FALSE),
+			layer = nm,
+			type = type,
+			direction = direction
+		)
+	}
 
 
 #' Eval layers by buffered
