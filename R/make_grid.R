@@ -98,9 +98,6 @@ make_grid.data.table <-
 					 id = NULL,
 					 coords = NULL
 	) {
-		# NSE
-		focal <- camX <- camY <- NULL;
-
 		if (is.null(id) | is.null(coords)) {
 			stop('id and coords must be provided with x is a data.table')
 		}

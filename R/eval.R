@@ -41,7 +41,7 @@ eval_pt <-
 					 type = NULL,
 					 direction = NULL,
 					 coords = NULL) {
-		if (is.null(x)) {
+	if (is.null(x)) {
 		stop('x must be provided. either data.table or sf point object.')
 	}
 
