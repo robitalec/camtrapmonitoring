@@ -27,3 +27,29 @@ Select camera trap locations by subsetting (\code{sub}) and ranking (\code{rank}
 
 \code{by} is a character vector of column names in \code{x} to group camera trap locations and rank. This should match (at least) the column provided to \code{strat_sample}, if it was used to generate potential locations.
 }
+\examples{
+# Packages
+library(data.table)
+
+# Data
+data(densitygrid)
+data(lc)
+data(dem)
+data(wetland)
+
+# Stratified random sampling
+pts <- strat_sample(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
+
+# Evaluate layers
+pts[, lc := eval_pt(.SD, lc, type = 'categorical', direction = 'neutral', coords = c('X', 'Y'))]
+
+pts[, dem := eval_buffer(.SD, dem, buffersize = 100, type = 'real', direction = 'positive', coords = c('X', 'Y'))]
+
+pts[, wetland := eval_buffer(.SD, wetland, 100, 'binary', 'negative', coords = c('X', 'Y'))]
+
+# Select n locations
+n <- 1
+
+sel <- select_ct(pts, n, rank = c('wetland'), sub = list(lc = 212), by = 'density')
+
+}
