@@ -21,21 +21,20 @@ select_ct <- function(x, n, rank, sub, by) {
 
 
 
-	dirs <- vapply(rank, function(col) parse_attr_dir(x, col), 1L)
+	directions <- vapply(rank, function(col) parse_directions(x, col), 1L)
 
 
 	### x[sub][order(rank)][, .SD[1:n], by] ###
-	setorderv(
+	data.table::setorderv(
 		x[sub, on = names(sub)],
-		cols = names(dirs),
-		order = dirs
-	)[]
-	# [order(rank)]#[, .SD[1:n], by]
+		cols = c(by, names(directions)),
+		order = c(rep(1, length(by)), directions)
+	)[, .SD[1:n], by]
 }
 
 
 
-parse_attr_dir <- function(x, col) {
+parse_directions <- function(x, col) {
 	d <- attr(x[[col]], 'wildcam')[['direction']]
 	if (d == 'positive') {
 		1L
