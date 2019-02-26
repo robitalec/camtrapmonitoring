@@ -1,6 +1,6 @@
 context("test-select-ct")
 
-# prep
+# prep data.table
 pts <-
 	strat_sample(
 		densitygrid,
@@ -43,6 +43,44 @@ sel <- select_ct(
 	by = 'density'
 )
 
+# prep sf
+sfpt <-
+	strat_sample(
+		densitygrid,
+		n = 5,
+		type = 'random',
+		col = 'density')
+
+sfpt$lc <- eval_pt(
+	sfpt,
+	lc,
+	type = 'categorical',
+	direction = 'neutral'
+)
+sfpt$dem <- eval_buffer(
+	sfpt,
+	dem,
+	buffersize = 100,
+	type = 'real',
+	direction = 'positive'
+)
+sfpt$wetland <- eval_buffer(
+	sfpt,
+	wetland,
+	100,
+	'binary',
+	'negative'
+)
+
+n <- 1
+
+sfsel <- select_ct(
+	pts,
+	n,
+	rank = c('wetland'),
+	sub = list(lc = 212),
+	by = 'density'
+)
 
 
 # tests
@@ -58,5 +96,7 @@ test_that("select_works, data.table", {
 })
 
 test_that("select_works, sf", {
+	expect_true(inherits(sfsel, 'sf'))
 
+	expect_true(nrow(sfsel) <= (n * length(unique(pts$density))))
 })
