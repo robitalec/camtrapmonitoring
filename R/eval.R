@@ -78,8 +78,8 @@ eval_pt.data.table <-
 					 type = NULL,
 					 direction = NULL,
 					 coords = NULL) {
-		if (length(coords) != 2) {
-			stop('length of coords column names should be 2')
+		if (is.null(coords) | length(coords) != 2) {
+			stop('coords of length 2 must be provided if x is a data.table')
 		}
 
 		if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
@@ -215,8 +215,8 @@ eval_buffer.data.table <-
 					 type,
 					 direction,
 					 coords = NULL) {
-	if (length(coords) != 2) {
-		stop('length of coords column names should be 2')
+	if (is.null(coords) | length(coords) != 2) {
+		stop('coords of length 2 must be provided if x is a data.table')
 	}
 
 	if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {

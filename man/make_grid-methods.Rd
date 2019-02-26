@@ -24,7 +24,7 @@ make_grid(x, n, case, distance, id = NULL, coords = NULL)
 
 \item{id}{column in \code{x} indicating id of focal point. Only used when x is a \code{data.table}.}
 
-\item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}.}
+\item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}. Expects length = 2 e.g.: c('X', 'Y').}
 }
 \value{
 Extended data.table either nine times the length of input DT for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case. See examples.

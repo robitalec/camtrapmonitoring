@@ -111,7 +111,7 @@ test_that("eval_buffer, data.table", {
 		eval_buffer(x = DT, layer = lc, buffersize = 50,
 								type = 'categorical', direction = 'neutral',
 								coords = 'X'),
-		'length of coords column names should be 2'
+		'coords of length 2 must be provided if x is a data.table'
 	)
 
 
