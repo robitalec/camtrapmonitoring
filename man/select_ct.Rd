@@ -7,8 +7,13 @@
 select_ct(x, n, rank, sub, by)
 }
 \arguments{
+\item{sub}{a named list with the form \code{list(colname = value)}. See Details.}
+
 \item{by}{}
 }
 \description{
-Select camera trap locations
+...
+}
+\details{
+\code{sub} is a named list used to subset the input \code{x}. It should follow the form \code{list(colname = value)}or \code{list(colname = c(values, values))}.
 }

@@ -1,9 +1,14 @@
 #' Select camera trap locations
 #'
+#' ...
+#'
+#' `sub` is a named list used to subset the input `x`. It should follow the form `list(colname = value)`or `list(colname = c(values, values))`.
+#'
+#'
 #' @param x
 #' @param n
 #' @param rank
-#' @param sub
+#' @param sub a named list with the form `list(colname = value)`. See Details.
 #' @param by
 #'
 #' @return
