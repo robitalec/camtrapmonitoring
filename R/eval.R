@@ -45,7 +45,7 @@ eval_pt <-
 		stop('x must be provided. either data.table or sf point object.')
 	}
 
-	if (is.null(layer) | !("RasterLayer" %in% class(layer))) {
+	if (is.null(layer) | !inherits(layer, 'Raster')) {
 		stop('layer must be provided. expected type is raster.')
 	}
 
@@ -161,7 +161,7 @@ eval_buffer <-
 		stop('x must be provided. either data.table or sf point object.')
 	}
 
-	if (is.null(layer) | !("RasterLayer" %in% class(layer))) {
+	if (is.null(layer) | !inherits(layer, 'Raster')) {
 		stop('layer must be provided. expected type is raster.')
 	}
 
@@ -242,7 +242,7 @@ eval_buffer.sf <-
 		stop('geometry column not found in x')
 	}
 
-	if (!('sfc_POINT' %in% class(x$geometry))) {
+	if (!inherits(x$geometry, 'sfc_POINT')) {
 		stop('class of geometry column must be sfc_POINT')
 	}
 

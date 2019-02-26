@@ -26,7 +26,7 @@
 #' plot(dem)
 #' plot(demScaled)
 scale_roi <- function(layer = NULL, roi = NULL) {
-	if (is.null(layer) | !("RasterLayer" %in% class(layer))) {
+	if (is.null(layer) | !inherits(layer, 'Raster')) {
 		stop('layer must be provided and expected type is raster.')
 	}
 
