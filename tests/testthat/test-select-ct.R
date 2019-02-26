@@ -75,7 +75,7 @@ sfpt$wetland <- eval_buffer(
 n <- 1
 
 sfsel <- select_ct(
-	pts,
+	sfpt,
 	n,
 	rank = c('wetland'),
 	sub = list(lc = 212),
