@@ -45,7 +45,7 @@ eval_pt <-
 		stop('x must be provided. either data.table or sf point object.')
 	}
 
-	if (is.null(layer) | !("RasterLayer" %in% class(layer))) {
+	if (is.null(layer) | !inherits(layer, 'Raster')) {
 		stop('layer must be provided. expected type is raster.')
 	}
 
@@ -105,17 +105,21 @@ eval_pt.sf <-
 					 direction = NULL,
 					 coords = NULL) {
 		if (!('geometry' %in% colnames(x))) {
-		stop('geometry column not found in x')
-	}
+			stop('geometry column not found in x')
+		}
 
-	if (!('sfc_POINT' %in% class(x$geometry))) {
-		stop('class of geometry column must be sfc_POINT')
-	}
+		if (!inherits(x$geometry, 'sfc_POINT')) {
+			stop('class of geometry column must be sfc_POINT')
+		}
 
-	set_eval_attr(raster::extract(layer, sf::st_coordinates(x),
-																na.rm = FALSE),
-								layer = nm, type = type, direction = direction)
-}
+		set_eval_attr(
+			raster::extract(layer, sf::st_coordinates(x),
+											na.rm = FALSE),
+			layer = nm,
+			type = type,
+			direction = direction
+		)
+	}
 
 
 #' Eval layers by buffered
@@ -165,7 +169,7 @@ eval_buffer <-
 		stop('x must be provided. either data.table or sf point object.')
 	}
 
-	if (is.null(layer) | !("RasterLayer" %in% class(layer))) {
+	if (is.null(layer) | !inherits(layer, 'Raster')) {
 		stop('layer must be provided. expected type is raster.')
 	}
 
@@ -246,7 +250,7 @@ eval_buffer.sf <-
 		stop('geometry column not found in x')
 	}
 
-	if (!('sfc_POINT' %in% class(x$geometry))) {
+	if (!inherits(x$geometry, 'sfc_POINT')) {
 		stop('class of geometry column must be sfc_POINT')
 	}
 
