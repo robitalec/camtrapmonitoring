@@ -86,6 +86,15 @@ sfsel <- select_ct(
 # tests
 test_that("select_works, general", {
 
+	expect_warning(
+		select_ct(
+			sfpt,
+			n,
+			rank = NULL,
+			sub = NULL,
+			by = NULL
+		),
+		'rank, sub and by are all NULL... selecting n rows  arbitrarily')
 })
 
 
