@@ -41,11 +41,19 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 	}
 
 	sel <- function(x) {
-		data.table::setorderv(
-			x[sub, on = names(sub)],
-			cols = c(by, names(directions)),
-			order = c(rep(1, length(by)), directions)
-		)[, .SD[seq(1, n)], by]
+		if (is.null(sub)) {
+			data.table::setorderv(
+				x,
+				cols = c(by, names(directions)),
+				order = c(rep(1, length(by)), directions)
+			)[, .SD[seq(1, n)], by]
+		} else {
+			data.table::setorderv(
+				x[sub, on = names(sub)],
+				cols = c(by, names(directions)),
+				order = c(rep(1, length(by)), directions)
+			)[, .SD[seq(1, n)], by]
+		}
 	}
 
 	if (t == 'dt') {
