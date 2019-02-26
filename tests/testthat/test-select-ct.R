@@ -95,6 +95,15 @@ test_that("select_works, general", {
 			by = NULL
 		),
 		'rank, sub and by are all NULL... selecting n rows  arbitrarily')
+
+	expect_error(
+		select_ct(
+			sfpt,
+			n,
+			rank = c('lc')
+		),
+		'cannot rank columns with a neutral direction'
+	)
 })
 
 
