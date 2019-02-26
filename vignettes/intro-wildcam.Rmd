@@ -42,10 +42,10 @@ OR
 ```{r}
 # Example polygons with density levels 1, 2 and 3.
 data(densitygrid)
-#'
+
 # Randomly sample 5 points for each set of polygons in each strata.
 pts <- strat_sample(x = densitygrid, n = 5, col = 'density', returnDT = FALSE)
-#'
+
 plot(densitygrid, reset = FALSE)
 plot(pts$geometry, add = TRUE)
 
@@ -80,11 +80,11 @@ plot(grid)
 # Load data
 data(points)
 data(lc)
-#'
+
 # Evaluate each point with the land cover layer
 #   type is categorical, and the direction is neutral
 points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = 'neutral')
-#'
+
 plot(points["lc"])
 ```
 
@@ -101,3 +101,30 @@ plot(points["wetland"])
 ```
 
 
+# Select
+```{r}
+# Packages
+library(data.table)
+
+# Data
+data(densitygrid)
+data(lc)
+data(dem)
+data(wetland)
+
+# Stratified random sampling
+pts <- strat_sample(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
+
+# Evaluate layers
+pts[, lc := eval_pt(.SD, lc, type = 'categorical', direction = 'neutral', coords = c('X', 'Y'))]
+
+pts[, dem := eval_buffer(.SD, dem, 100, type = 'real', direction = 'positive', coords = c('X', 'Y'))]
+
+pts[, wetland := eval_buffer(.SD, wetland, 100, 'binary', 'negative', coords = c('X', 'Y'))]
+
+# Select n locations
+n <- 1
+
+sel <- select_ct(pts, n, rank = c('wetland'), sub = list(lc = 212), by = 'density')
+
+```
