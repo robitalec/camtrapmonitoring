@@ -4,10 +4,10 @@
 \alias{select_ct}
 \title{Select camera trap locations}
 \usage{
-select_ct(DT, n, useattr, paired)
+select_ct(x, n, rank, sub, by)
 }
 \arguments{
-\item{useattr}{}
+\item{by}{}
 }
 \description{
 Select camera trap locations
