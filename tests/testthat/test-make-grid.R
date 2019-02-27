@@ -69,7 +69,13 @@ test_that("... for data.table input", {
 	)
 
 	expect_true(
-		'focal' %in% colnames(gridQ)
+		'camID' %in% colnames(gridQ)
+	)
+	expect_true(
+		'camID' %in% colnames(gridR)
+	)
+	expect_true(
+		'camID' %in% colnames(gridB)
 	)
 
 	expect_error(
@@ -118,6 +124,16 @@ test_that("... for sf input", {
 	# 	make_grid(nogeo, 'queen', 100),
 	# 	'geometry column not found in x'
 	# )
+
+	expect_true(
+		'camID' %in% colnames(queen)
+	)
+	expect_true(
+		'camID' %in% colnames(rook)
+	)
+	expect_true(
+		'camID' %in% colnames(bishop)
+	)
 
 	multipoints <- st_cast(points, 'MULTIPOINT')
 
