@@ -110,7 +110,7 @@ make_grid.data.table <-
 			stop('coords provided not found in colnames(x)')
 		}
 
-		out <- x[rep(1:.N, times = nrow(move))]
+		out <- x[rep(1:.N, each = nrow(move))]
 		set(out, j = coords[[1]],
 				value = out[[coords[[1]]]] + as.double(move$V1))
 		set(out, j = coords[[2]],
