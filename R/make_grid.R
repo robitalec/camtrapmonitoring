@@ -98,6 +98,9 @@ make_grid.data.table <-
 					 id = NULL,
 					 coords = NULL
 	) {
+		# NSE
+		camID <- NULL
+
 		if (is.null(id) | is.null(coords)) {
 			stop('id and coords must be provided with x is a data.table')
 		}
@@ -115,10 +118,7 @@ make_grid.data.table <-
 				value = out[[coords[[1]]]] + as.double(move$V1))
 		set(out, j = coords[[2]],
 				value = out[[coords[[2]]]] + as.double(move$V2))
-
-		out[1:nrow(x), focal := TRUE]
-		out[is.na(focal), focal := FALSE][]
-
+		out[, camID := .I]
 		return(out)
 	}
 
