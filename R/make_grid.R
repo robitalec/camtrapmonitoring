@@ -98,6 +98,9 @@ make_grid.data.table <-
 					 id = NULL,
 					 coords = NULL
 	) {
+		# NSE
+		camID <- NULL
+
 		if (is.null(id) | is.null(coords)) {
 			stop('id and coords must be provided with x is a data.table')
 		}
@@ -110,15 +113,12 @@ make_grid.data.table <-
 			stop('coords provided not found in colnames(x)')
 		}
 
-		out <- x[rep(1:.N, times = nrow(move))]
+		out <- x[rep(1:.N, each = nrow(move))]
 		set(out, j = coords[[1]],
 				value = out[[coords[[1]]]] + as.double(move$V1))
 		set(out, j = coords[[2]],
 				value = out[[coords[[2]]]] + as.double(move$V2))
-
-		out[1:nrow(x), focal := TRUE]
-		out[is.na(focal), focal := FALSE][]
-
+		out[, camID := .I]
 		return(out)
 	}
 
@@ -151,6 +151,8 @@ make_grid.sf <- function(x,
 							 	as.matrix(move[rep(1:.N, times = nrow(x))])),
 		coords = c('X', 'Y')
 	)
+
+	out$camID <- seq.int(1, nrow(x))
 
 	if (is.null(sf::st_crs(x))) {
 		return(out)
