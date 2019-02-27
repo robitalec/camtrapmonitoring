@@ -1,3 +1,7 @@
+# wildcam 0.6.1.9000 (2019-02-27)
+* return 'camID' with `make_grid` [!10](https://gitlab.com/robit.a/wildcam/merge_requests/10)
+
+
 # wildcam 0.6.0.9000 (2019-02-26)
 * Add `select_ct` for selecting camera trap locations from 'x' [!9](https://gitlab.com/robit.a/wildcam/merge_requests/9).
 
