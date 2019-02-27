@@ -152,6 +152,8 @@ make_grid.sf <- function(x,
 		coords = c('X', 'Y')
 	)
 
+	out$camID <- seq.int(1, nrow(x))
+
 	if (is.null(sf::st_crs(x))) {
 		return(out)
 	} else {
