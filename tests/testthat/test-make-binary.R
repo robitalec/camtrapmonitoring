@@ -6,7 +6,7 @@ test_that("make_binary works", {
 
 	expect_true(inherits(lc212, 'Raster'))
 
-	expect_true(unique(lc212) <= 2)
+	expect_true(length(raster::unique(lc212)) <= 2)
 
 	expect_equal(crs(lc), crs(lc212))
 
