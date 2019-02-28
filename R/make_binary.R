@@ -26,7 +26,12 @@ make_binary <- function(layer, value) {
 	}
 
 	if (!inherits(value, 'numeric')) {
-		stop('value must be a numeric')
+		stop('value must be a numeric.')
 	}
-	is.na(raster::mask(layer, layer, maskvalue = value))
+
+	if (length(value) != 1) {
+		stop('value must be of length one.')
+	}
+
+	return(is.na(raster::mask(layer, layer, maskvalue = value)))
 }
