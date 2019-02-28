@@ -12,4 +12,20 @@ test_that("make_binary works", {
 
 	expect_equal(res(lc), res(lc212))
 
+
+	expect_error(make_binary(),
+							 'layer must be provided.')
+
+	expect_error(make_binary(lc),
+							 'value must be provided.')
+
+	expect_error(make_binary('potato', 212),
+							 'layer must be a raster.')
+
+	expect_error(make_binary(lc, 'potato'),
+							 'value must be a numeric.')
+
+	expect_error(make_binary(lc, c(212, 212)),
+							 'value must be of length one.')
+
 })
