@@ -4,12 +4,14 @@
 \alias{strat_sample}
 \title{Stratified polygon sampling}
 \usage{
-strat_sample(x, n, col, returnDT = TRUE)
+strat_sample(x, n, type, col, returnDT = FALSE)
 }
 \arguments{
 \item{x}{polygon object of class \code{sf}}
 
 \item{n}{number of random points}
+
+\item{type}{of sampling. either 'random' or 'regular'.}
 
 \item{col}{column in x indicating strata}
 
@@ -19,17 +21,25 @@ strat_sample(x, n, col, returnDT = TRUE)
 Either a \code{sf} object or a \code{data.table} with a \code{sfc} (simple feature column).
 }
 \description{
-For each mutually exclusive strata, sample random points.
+Sample points in each region defined by unique values in col in x.
 }
 \details{
-Polygons cannot be assigned to multiple strata. Strata are defined by values in 'col'. Optionally return a \code{data.table} if 'returnDT' is TRUE or an \code{sf} object if FALSE.
+Random or regular sampling. Polygons cannot be assigned to multiple values. Optionally return a \code{data.table} if 'returnDT' is TRUE or an \code{sf} object if FALSE.
 }
 \examples{
-# Example polygons with density levels 1, 2 and 3.
+# Example polygons with density levels 1, 2 and 3
 data(densitygrid)
 
-# Randomly sample 5 points for each set of polygons in each strata.
-pts <- strat_sample(x = densitygrid, n = 5, col = 'density', returnDT = FALSE)
+# Randomly sample 5 points for each set of polygons in each strata
+pts <- strat_sample(x = densitygrid, n = 5, type = 'random',
+col = 'density', returnDT = FALSE)
+
+plot(densitygrid, reset = FALSE)
+plot(pts$geometry, add = TRUE)
+
+# Sample 5 regular points for each set of polygons in each strata
+pts <- strat_sample(x = densitygrid, n = 20, type = 'regular',
+col = 'density', returnDT = FALSE)
 
 plot(densitygrid, reset = FALSE)
 plot(pts$geometry, add = TRUE)

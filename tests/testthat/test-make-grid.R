@@ -16,7 +16,7 @@ gridB <- make_grid(DT, case = 'bishop', distance = 100,
 test_that("make_grid works", {
 	expect_error(
 		make_grid(points, case = 'potato', distance = 100),
-		'must provide case one of "queen", "rook" or "bishop"'
+		'case provided must be one of "queen", "rook" or "bishop"'
 	)
 
 	expect_error(
@@ -29,6 +29,37 @@ test_that("make_grid works", {
 		'no applicable method for ', fixed = FALSE
 	)
 
+	expect_error(
+		make_grid(points, n = 100, case = 'queen'),
+		'provide one of n and case and not both.'
+	)
+
+	expect_error(
+		make_grid(points),
+		'provide one of n and case and not both.'
+	)
+
+	expect_equal(
+		nrow(make_grid(points, n = 100, distance = 100)),
+		nrow(points) * 100
+	)
+
+	expect_equal(
+		nrow(make_grid(points, case = 'queen', distance = 100)),
+		nrow(points) * 9
+	)
+
+	expect_equal(
+		nrow(make_grid(points, case = 'rook', distance = 100)),
+		nrow(points) * 5
+	)
+
+	expect_equal(
+		nrow(make_grid(points, case = 'bishop', distance = 100)),
+		nrow(points) * 5
+	)
+
+
 })
 
 
@@ -38,7 +69,13 @@ test_that("... for data.table input", {
 	)
 
 	expect_true(
-		'focal' %in% colnames(gridQ)
+		'camID' %in% colnames(gridQ)
+	)
+	expect_true(
+		'camID' %in% colnames(gridR)
+	)
+	expect_true(
+		'camID' %in% colnames(gridB)
 	)
 
 	expect_error(
@@ -88,10 +125,20 @@ test_that("... for sf input", {
 	# 	'geometry column not found in x'
 	# )
 
+	expect_true(
+		'camID' %in% colnames(queen)
+	)
+	expect_true(
+		'camID' %in% colnames(rook)
+	)
+	expect_true(
+		'camID' %in% colnames(bishop)
+	)
+
 	multipoints <- st_cast(points, 'MULTIPOINT')
 
 	expect_error(
-		make_grid(multipoints, 'queen', 100),
+		make_grid(multipoints, case = 'queen', distance = 100),
 		'class of geometry column must be sfc_POINT'
 	)
 
@@ -107,3 +154,7 @@ test_that("... for sf input", {
 		nrow(bishop), nrow(DT) * 5
 	)
 })
+
+
+
+# right focals

@@ -3,10 +3,12 @@
 #' Set up grids around focal points. For example, sample points in your study area and use `make_grid` to establish a grid of camera traps around each.
 #'
 #' @param x data.table or sf points.
-#' @param case "queen", "rook" or "bishop".
+#' @param n number of points around each focal point. `n` overrides the `case` argument, do not provide both. See details.
+#' @param case "queen", "rook" or "bishop". Ignored if `n` is provided.
 #' @param distance distance between adjacent camera traps. Don't worry about the hypotenuse.
-#' @param id id of focal point.
-#' @param coords names of coordinate columns.
+#' @param id column in `x` indicating id of focal point. Only used when x is a `data.table`.
+#' @param coords columns in `x` indicating names of coordinate columns of focal point. Only used when x is a `data.table`. Expects length = 2 e.g.: c('X', 'Y').
+
 #'
 #' @return
 #'
@@ -16,12 +18,16 @@
 #'
 #' @export
 #'
+#' @aliases make_grid
+#' @rdname make_grid-methods
+#'
 #' @examples
 #' # Point data (sf object)
 #' library(sf)
 #' data(points)
 #' plot(points)
 #'
+#' ## Make grid with case
 #' queen <- make_grid(points, case = 'queen', distance = 100)
 #' plot(queen)
 #'
@@ -31,27 +37,47 @@
 #' bishop <- make_grid(points, case = 'bishop', distance = 100)
 #' plot(bishop)
 #'
-#' # Or a data.table
+#' ## Make grid with n
+#' grid <- make_grid(points, n = 25, distance = 100)
+#' plot(grid)
+#'
+#' # data.table input
 #' library(data.table)
 #' DT <- data.table(ID = points$ID, st_coordinates(points))
 #' grid <- make_grid(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
-make_grid <- function(x, case, distance, ...) {
-	if (case == 'queen') {
+make_grid <- function(x,
+											n,
+											case,
+											distance,
+											id = NULL,
+											coords = NULL) {
+
+	if ((missing(n) & missing(case)) |
+			!missing(n) & !missing(case)) {
+		stop('provide one of n and case and not both.')
+	}
+
+	if (missing(case)) {
+		tms <- floor(n / 8)
+		s <- seq(1, tms) * distance
+		move <- data.table::CJ(c(0,-s, s), c(0,-s, s))
+		move <- move[order(abs(V1) + abs(V2))][1:n]
+	} else if (case == 'queen') {
 		move <- data.table::CJ(c(0,-distance, distance),
 													 c(0,-distance, distance))
-	} else if (case == 'rook') {
+		move <- move[order(abs(V1), abs(V2))]
+	} else if (case == 'bishop') {
 		move <- rbind(list(0, 0),
 									data.table::CJ(c(-distance, distance),
 																 c(-distance, distance)))
-	} else if (case == 'bishop') {
+	} else if (case == 'rook') {
 		move <- rbind(list(0, 0),
 									data.table::data.table(c(0, distance, 0,-distance),
 																				 c(distance, 0,-distance, 0)))
 	} else {
-		stop('must provide case one of "queen", "rook" or "bishop"')
+		stop('case provided must be one of "queen", "rook" or "bishop"')
 	}
 
-	move <- move[order(abs(V1), abs(V2))]
 
 	if (distance < 0 | !is.numeric(distance)) {
 		stop('distance must be a numeric, greater than 0')
@@ -62,41 +88,57 @@ make_grid <- function(x, case, distance, ...) {
 
 #' @export
 #' @import data.table
-make_grid.data.table <- function(x, case, distance, id, coords) {
-	# NSE
-	focal <- camX <- camY <- NULL;
+#' @aliases make_grid
+#' @rdname make_grid-methods
+make_grid.data.table <-
+	function(x,
+					 n,
+					 case,
+					 distance,
+					 id = NULL,
+					 coords = NULL
+	) {
+		# NSE
+		camID <- NULL
 
-	if (is.null(id) | is.null(coords)) {
-		stop('id and coords must be provided with x is a data.table')
+		if (is.null(id) | is.null(coords)) {
+			stop('id and coords must be provided with x is a data.table')
+		}
+
+		if (!(id %in% colnames(x))) {
+			stop('id provided not found in colnames(x)')
+		}
+
+		if (!(all(coords %in% colnames(x)))) {
+			stop('coords provided not found in colnames(x)')
+		}
+
+		out <- x[rep(1:.N, each = nrow(move))]
+		set(out, j = coords[[1]],
+				value = out[[coords[[1]]]] + as.double(move$V1))
+		set(out, j = coords[[2]],
+				value = out[[coords[[2]]]] + as.double(move$V2))
+		out[, camID := .I]
+		return(out)
 	}
-
-	if (!(id %in% colnames(x))) {
-		stop('id provided not found in colnames(x)')
-	}
-
-	if (!(all(coords %in% colnames(x)))) {
-		stop('coords provided not found in colnames(x)')
-	}
-
-	out <- x[rep(1:.N, times = nrow(move))]
-	out[, c('X', 'Y') := .SD + move,
-		 .SDcols = coords, by = id]
-
-	out[1:nrow(x), focal := TRUE]
-	out[is.na(focal), focal := FALSE][]
-
-	return(out)
-}
 
 
 #' @export
-make_grid.sf <- function(x, case, distance) {
+#' @aliases make_grid
+#' @rdname make_grid-methods
+make_grid.sf <- function(x,
+												 n,
+												 case,
+												 distance,
+												 id = NULL,
+												 coords = NULL
+) {
 
 	if (!('geometry' %in% colnames(x))) {
 		stop('geometry column not found in x')
 	}
 
-	if (!('sfc_POINT' %in% class(x$geometry))) {
+	if (!inherits(x[['geometry']], 'sfc_POINT')) {
 		stop('class of geometry column must be sfc_POINT')
 	}
 
@@ -105,10 +147,12 @@ make_grid.sf <- function(x, case, distance) {
 	out <- sf::st_as_sf(
 		data.frame(r[, colnames(r)[!(grepl('geometry', colnames(r),
 																			 fixed = TRUE))]],
-							 st_coordinates(r) +
+							 sf::st_coordinates(r) +
 							 	as.matrix(move[rep(1:.N, times = nrow(x))])),
 		coords = c('X', 'Y')
 	)
+
+	out$camID <- seq.int(1, nrow(x))
 
 	if (is.null(sf::st_crs(x))) {
 		return(out)

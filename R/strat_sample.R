@@ -1,11 +1,12 @@
 #' Stratified polygon sampling
 #'
-#' For each mutually exclusive strata, sample random points.
+#' Sample points in each region defined by unique values in col in x.
 #'
-#' Polygons cannot be assigned to multiple strata. Strata are defined by values in 'col'. Optionally return a `data.table` if 'returnDT' is TRUE or an `sf` object if FALSE.
+#' Random or regular sampling. Polygons cannot be assigned to multiple values. Optionally return a `data.table` if 'returnDT' is TRUE or an `sf` object if FALSE.
 #'
 #' @param x polygon object of class `sf`
 #' @param n number of random points
+#' @param type of sampling. either 'random' or 'regular'.
 #' @param col column in x indicating strata
 #' @param returnDT return a `data.table` (TRUE) or `sf` (FALSE) object
 #'
@@ -13,17 +14,29 @@
 #' @export
 #'
 #' @examples
-#' # Example polygons with density levels 1, 2 and 3.
+#' # Example polygons with density levels 1, 2 and 3
 #' data(densitygrid)
 #'
-#' # Randomly sample 5 points for each set of polygons in each strata.
-#' pts <- strat_sample(x = densitygrid, n = 5, col = 'density', returnDT = FALSE)
+#' # Randomly sample 5 points for each set of polygons in each strata
+#' pts <- strat_sample(x = densitygrid, n = 5, type = 'random',
+#' col = 'density', returnDT = FALSE)
 #'
 #' plot(densitygrid, reset = FALSE)
 #' plot(pts$geometry, add = TRUE)
-strat_sample <- function(x, n, col, returnDT = TRUE) {
+#'
+#' # Sample 5 regular points for each set of polygons in each strata
+#' pts <- strat_sample(x = densitygrid, n = 20, type = 'regular',
+#' col = 'density', returnDT = FALSE)
+#'
+#' plot(densitygrid, reset = FALSE)
+#' plot(pts$geometry, add = TRUE)
+strat_sample <- function(x, n, type, col, returnDT = FALSE) {
 	if (!(col %in% colnames(x))) {
 		stop('strata column not found in x')
+	}
+
+	if (missing(type) | !(type %in% c('regular', 'random'))) {
+		stop('type must be provided. either "regular" or "random".')
 	}
 
 	lvls <- unique(x[[col]])
@@ -32,15 +45,20 @@ strat_sample <- function(x, n, col, returnDT = TRUE) {
 		stop('no strata found')
 	}
 
+
 	DT <- lapply(lvls, function(l) {
 		s <- sf::st_sf(
-			geometry = sf::st_sample(x[x[[col]] == l, ], n, type = 'random'))
+			geometry = sf::st_sample(x[x[[col]] == l, ], n, type = type,
+															 exact = TRUE))
 		s[[col]] <- l
 		return(s)
 	})
 
 	if (returnDT) {
-		out <- data.table::rbindlist(DT)
+		out <-
+			data.table::rbindlist(DT)[,
+			c('X', 'Y') := data.table::as.data.table(sf::st_coordinates(geometry))]
+		data.table::set(out, j = 'geometry', value = NULL)
 		data.table::set(out, j = 'ID', value = 1:nrow(out))
 		return(out)
 	} else {

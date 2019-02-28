@@ -1,13 +1,16 @@
 Package: wildcam
-Title: What the Package Does (One Line, Title Case)
-Version: 0.3.0.9000
+Title: Select and Evaluate Camera Trap Locations
+Version: 0.6.1.9000
 Authors@R: 
     person(given = "Alec L.",
            family = "Robitaille",
            role = c("aut", "cre"),
            email = "robit.alec@gmail.com",
            comment = c(ORCID = "0000-0002-4706-1762"))
-Description: What the package does (one paragraph).
+Description: Selects and evaluates potential camera trap locations. 
+		Potential locations are evaluated using relevant spatial layers
+		producing a dataset of selected locations with covariates that
+		can be used to quantify sampling bias. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -17,7 +20,7 @@ Suggests:
     testthat
 Imports: 
     data.table,
-    sf,
+    sf (>= 0.7-3),
     units,
     raster
 Depends: R (>= 2.10)
