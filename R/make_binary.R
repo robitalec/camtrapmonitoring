@@ -2,12 +2,14 @@
 #'
 #' Make a binary raster from input 'layer'.
 #'
-#' @param layer
-#' @param value
+#' Find all pixels matching the 'value' provided and return binary raster.
+#'
+#' @inheritParams eval_pt
+#' @param value numeric value in 'layer'. expected length is 1.
 #'
 #' @return
 #'
-#' A binary raster layer with two values:
+#' A binary raster layer with two values: `TRUE` if pixel matches 'value' provided and `FALSE` if pixel does not match 'value' provided.
 #'
 #' @export
 #'
