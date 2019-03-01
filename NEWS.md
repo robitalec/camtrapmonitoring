@@ -1,6 +1,8 @@
+# wildcam 0.6.5.9000 (2019-03-01)
+* return focal identifier with `make_grid`. 
+
 # wildcam 0.6.4.9000 (2019-03-01)
 * fix 'camID' returned by sf method incorrectly. 
-
 
 # wildcam 0.6.3.9000 (2019-03-01)
 * fix lack of error when attributes are null [#20](https://gitlab.com/robit.a/wildcam/issues/20).
