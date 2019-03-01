@@ -65,7 +65,7 @@ test_that("make_grid works", {
 
 test_that("... for data.table input", {
 	expect_equal(
-		ncol(DT) + 1, ncol(gridQ)
+		ncol(DT) + 2, ncol(gridQ)
 	)
 
 	expect_true(
@@ -76,6 +76,16 @@ test_that("... for data.table input", {
 	)
 	expect_true(
 		'camID' %in% colnames(gridB)
+	)
+
+	expect_true(
+		'focal' %in% colnames(gridQ)
+	)
+	expect_true(
+		'focal' %in% colnames(gridR)
+	)
+	expect_true(
+		'focal' %in% colnames(gridB)
 	)
 
 	expect_error(
@@ -148,6 +158,17 @@ test_that("... for sf input", {
 	expect_true(
 		'camID' %in% colnames(bishop)
 	)
+
+	expect_true(
+		'focal' %in% colnames(queen)
+	)
+	expect_true(
+		'focal' %in% colnames(rook)
+	)
+	expect_true(
+		'focal' %in% colnames(bishop)
+	)
+
 
 	multipoints <- st_cast(points, 'MULTIPOINT')
 
