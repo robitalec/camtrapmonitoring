@@ -40,5 +40,8 @@ make_binary <- function(layer, value) {
 		stop('value must be of length one.')
 	}
 
-	return(is.na(raster::mask(layer, layer, maskvalue = value)))
+	return(raster::mask(is.na(
+		raster::mask(layer, layer, maskvalue = value)
+	), layer))
+
 }
