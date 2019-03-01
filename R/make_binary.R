@@ -14,6 +14,11 @@
 #' @export
 #'
 #' @examples
+#' data(lc)
+#'
+#' bin <- make_binary(lc, 212)
+#'
+#' image(bin)
 make_binary <- function(layer, value) {
 	if (missing(layer)) {
 		stop('layer must be provided.')

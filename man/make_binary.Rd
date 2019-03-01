@@ -7,11 +7,23 @@
 make_binary(layer, value)
 }
 \arguments{
-\item{value}{}
+\item{layer}{raster layer.}
+
+\item{value}{numeric value in 'layer'. expected length is 1.}
 }
 \value{
-A binary raster layer with two values:
+A binary raster layer with two values: \code{TRUE} if pixel matches 'value' provided and \code{FALSE} if pixel does not match 'value' provided.
 }
 \description{
 Make a binary raster from input 'layer'.
+}
+\details{
+Find all pixels matching the 'value' provided and return binary raster.
+}
+\examples{
+data(lc)
+
+bin <- make_binary(lc, 212)
+
+image(bin)
 }
