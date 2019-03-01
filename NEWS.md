@@ -1,5 +1,9 @@
+# wildcam 0.6.2.9000 (2019-03-01)
+* Fix bug in `make_binary`, losing original mask [#18](https://gitlab.com/robit.a/wildcam/issues/18). 
+
+
 # wildcam 0.6.1.9000 (2019-02-27)
-* return 'camID' with `make_grid` [!10](https://gitlab.com/robit.a/wildcam/merge_requests/10)
+* Return 'camID' with `make_grid` [!10](https://gitlab.com/robit.a/wildcam/merge_requests/10)
 
 
 # wildcam 0.6.0.9000 (2019-02-26)
