@@ -103,6 +103,7 @@ test_that("... for data.table input", {
 		'coords provided not found in colnames', fixed = FALSE
 	)
 
+	# Output rows match expected length
 	expect_equal(
 		nrow(gridQ), nrow(DT) * 9
 	)
@@ -113,6 +114,19 @@ test_that("... for data.table input", {
 
 	expect_equal(
 		nrow(gridB), nrow(DT) * 5
+	)
+
+	# camID match output length
+	expect_equal(
+		max(gridQ$camID), nrow(DT) * 9
+	)
+
+	expect_equal(
+		max(gridR$camID), nrow(DT) * 5
+	)
+
+	expect_equal(
+		max(gridB$camID), nrow(DT) * 5
 	)
 
 })
@@ -143,15 +157,28 @@ test_that("... for sf input", {
 	)
 
 	expect_equal(
-		nrow(queen), nrow(DT) * 9
+		nrow(queen), nrow(points) * 9
 	)
 
 	expect_equal(
-		nrow(rook), nrow(DT) * 5
+		nrow(rook), nrow(points) * 5
 	)
 
 	expect_equal(
-		nrow(bishop), nrow(DT) * 5
+		nrow(bishop), nrow(points) * 5
+	)
+
+	# camID match output length
+	expect_equal(
+		max(queen$camID), nrow(points) * 9
+	)
+
+	expect_equal(
+		max(rook$camID), nrow(points) * 5
+	)
+
+	expect_equal(
+		max(bishop$camID), nrow(points) * 5
 	)
 })
 
