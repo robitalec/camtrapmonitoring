@@ -1,8 +1,12 @@
+# wildcam 0.6.4.9000 (2019-03-01)
+* fix 'camID' returned by sf method incorrectly. 
+
+
 # wildcam 0.6.3.9000 (2019-03-01)
-* fix lack of error when attributes are null [#20](https://gitlab.com/robit.a/wildcam/issues/20)
+* fix lack of error when attributes are null [#20](https://gitlab.com/robit.a/wildcam/issues/20).
 
 # wildcam 0.6.1.9000 (2019-02-27)
-* return 'camID' with `make_grid` [!10](https://gitlab.com/robit.a/wildcam/merge_requests/10)
+* return 'camID' with `make_grid` [!10](https://gitlab.com/robit.a/wildcam/merge_requests/10).
 
 
 # wildcam 0.6.0.9000 (2019-02-26)
