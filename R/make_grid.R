@@ -31,6 +31,9 @@
 #' queen <- make_grid(points, case = 'queen', distance = 100)
 #' plot(queen)
 #'
+#' # Focal individuals
+#' plot(queen['focal'])
+#'
 #' rook <- make_grid(points, case = 'rook', distance = 100)
 #' plot(rook)
 #'
@@ -119,6 +122,9 @@ make_grid.data.table <-
 		set(out, j = coords[[2]],
 				value = out[[coords[[2]]]] + as.double(move$V2))
 		out[, camID := .I]
+
+		focals <- out[, .(camID = min(camID)), id]
+		out[, focal := ifelse(camID %in% focals$camID, TRUE, FALSE)]
 		return(out)
 	}
 
@@ -153,6 +159,9 @@ make_grid.sf <- function(x,
 	)
 
 	out$camID <- seq.int(1, nrow(out))
+
+	focals <- by(out, out$ID, function(x) min(x$camID))
+	out$focal <- ifelse(out$camID %in% focals, TRUE, FALSE)
 
 	if (is.null(sf::st_crs(x))) {
 		return(out)

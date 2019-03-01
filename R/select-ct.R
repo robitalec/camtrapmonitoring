@@ -63,10 +63,7 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 		warning('rank, sub and by are all NULL... selecting n rows  arbitrarily')
 	}
 
-
-
 	directions <- vapply(rank, function(col) parse_directions(x, col), 1L)
-
 
 	if (inherits(x, 'sf')) {
 		t <- 'sf'

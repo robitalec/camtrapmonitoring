@@ -44,6 +44,9 @@ plot(points)
 queen <- make_grid(points, case = 'queen', distance = 100)
 plot(queen)
 
+# Focal individuals
+plot(queen['focal'])
+
 rook <- make_grid(points, case = 'rook', distance = 100)
 plot(rook)
 
