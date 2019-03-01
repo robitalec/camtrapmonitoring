@@ -104,7 +104,10 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 
 parse_directions <- function(x, col) {
 	d <- attr(x[[col]], 'wildcam')[['direction']]
-	if (d == 'positive') {
+
+	if (is.null(d)) {
+		stop('columns in rank do not have direction attribute, did you use eval_*?')
+	} else if (d == 'positive') {
 		1L
 	} else if (d == 'negative') {
 		-1L
