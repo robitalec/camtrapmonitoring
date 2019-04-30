@@ -38,42 +38,53 @@ eval_pt <-
 					 type = NULL,
 					 direction = NULL,
 					 coords = NULL) {
-	if (is.null(x)) {
-		stop('x must be provided. either data.table or sf point object.')
+		if (is.null(x)) {
+			stop('x must be provided. either data.table or sf point object.')
+		}
+
+		if (is.null(layer) | !inherits(layer, 'Raster')) {
+			stop('layer must be provided. expected type is raster.')
+		}
+
+		if (is.null(type) | is.null(direction)) {
+			warning(
+				'missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.'
+			)
+		}
+
+		checkls <- list(type, direction)
+		if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
+			stop('type and direction must be of class character')
+		}
+
+		types <- c('categorical', 'binary', 'ordinal', 'real')
+		directions <- c('positive', 'neutral', 'negative')
+
+		if (!(type %in% types)) {
+			stop('type must be one of ', paste(types, collapse = ', '))
+		}
+
+		if (!(direction %in% directions)) {
+			stop('direction must be one of ', paste(direction, collapse = ', '))
+		}
+
+		eval_pt_(x, layer, type, direction, coords)
 	}
-
-	if (is.null(layer) | !inherits(layer, 'Raster')) {
-		stop('layer must be provided. expected type is raster.')
-	}
-
-	if (is.null(type) | is.null(direction)) {
-		warning('missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.')
-	}
-
-	checkls <- list(type, direction)
-	if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
-		stop('type and direction must be of class character')
-	}
-
-	types <- c('categorical', 'binary', 'ordinal', 'real')
-	directions <- c('positive', 'neutral', 'negative')
-
-	if (!(type %in% types)) {
-		stop('type must be one of ', paste(types, collapse = ', '))
-	}
-
-	if (!(direction %in% directions)) {
-		stop('direction must be one of ', paste(direction, collapse = ', '))
-	}
-
-	nm <- deparse(substitute(layer))
-
-	UseMethod('eval_pt', x)
-}
 
 #' @export
 #' @describeIn eval_pt
-eval_pt.data.table <-
+eval_pt_ <- 	function(x,
+											layer,
+											type = NULL,
+											direction = NULL,
+											coords = NULL) {
+	UseMethod('eval_pt_')
+}
+
+
+#' @export
+#' @describeIn eval_pt
+eval_pt_.data.table <-
 	function(x,
 					 layer,
 					 type = NULL,
@@ -90,7 +101,7 @@ eval_pt.data.table <-
 		set_eval_attr(
 			raster::extract(layer, x[, .SD, .SDcols = coords],
 											na.rm = FALSE),
-			layer = nm,
+			layer = deparse(substitute(layer)),
 			type = type,
 			direction = direction
 		)
@@ -98,7 +109,7 @@ eval_pt.data.table <-
 
 #' @export
 #' @describeIn eval_pt
-eval_pt.sf <-
+eval_pt_.sf <-
 	function(x,
 					 layer,
 					 type = NULL,
@@ -115,7 +126,7 @@ eval_pt.sf <-
 		set_eval_attr(
 			raster::extract(layer, sf::st_coordinates(x),
 											na.rm = FALSE),
-			layer = nm,
+			layer = deparse(substitute(layer)),
 			type = type,
 			direction = direction
 		)
