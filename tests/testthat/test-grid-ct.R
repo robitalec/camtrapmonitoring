@@ -1,4 +1,4 @@
-context("test-make-grid")
+context("test-grid-ct")
 
 # make expected results
 queen <- grid_ct(points, case = 'queen', distance = 100)
