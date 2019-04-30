@@ -2,16 +2,9 @@
 % Please edit documentation in R/grid_ct.R
 \name{grid_ct}
 \alias{grid_ct}
-\alias{grid_ct.data.table}
-\alias{grid_ct.sf}
 \title{Make camera trap grids}
 \usage{
 grid_ct(x, n, case, distance, id = NULL, coords = NULL)
-
-\method{grid_ct}{data.table}(x, n, case, distance, id = NULL,
-  coords = NULL)
-
-\method{grid_ct}{sf}(x, n, case, distance, id = NULL, coords = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}

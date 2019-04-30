@@ -8,7 +8,7 @@
 #' @param distance distance between adjacent camera traps. Don't worry about the hypotenuse.
 #' @param id column in `x` indicating id of focal point. Only used when x is a `data.table`.
 #' @param coords columns in `x` indicating names of coordinate columns of focal point. Only used when x is a `data.table`. Expects length = 2 e.g.: c('X', 'Y').
-
+#'
 #'
 #' @return
 #'
@@ -17,9 +17,6 @@
 #' The logical 'focal' column indicates which point is the focal or center camera trap.
 #'
 #' @export
-#'
-#' @aliases grid_ct
-#' @rdname grid_ct-methods
 #'
 #' @examples
 #' # Point data (sf object)
@@ -91,8 +88,7 @@ grid_ct <- function(x,
 
 #' @export
 #' @import data.table
-#' @aliases grid_ct
-#' @rdname grid_ct-methods
+#' @describeIn grid_ct
 grid_ct.data.table <-
 	function(x,
 					 n,
@@ -130,8 +126,7 @@ grid_ct.data.table <-
 
 
 #' @export
-#' @aliases grid_ct
-#' @rdname grid_ct-methods
+#' @describeIn grid_ct
 grid_ct.sf <- function(x,
 												 n,
 												 case,
