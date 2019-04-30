@@ -4,7 +4,7 @@
 \alias{eval_buffer}
 \alias{eval_buffer.data.table}
 \alias{eval_buffer.sf}
-\title{Eval layers by buffered}
+\title{Evaluate camera trap locations by buffered sampling of layers}
 \usage{
 eval_buffer(x, layer, buffersize, type, direction, coords = NULL)
 
