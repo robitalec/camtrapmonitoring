@@ -17,9 +17,6 @@
 #' @param type one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.
 #' @param direction one of 'positive', 'neutral', 'negative'. See Details.
 #'
-#' @rdname eval_pt-methods
-#' @aliases eval_pt
-#'
 #' @return
 #' @export
 #'
@@ -70,8 +67,7 @@ eval_pt <-
 }
 
 #' @export
-#' @rdname eval_pt-methods
-#' @aliases eval_pt
+#' @describeIn eval_pt
 eval_pt.data.table <-
 	function(x,
 					 layer,
@@ -96,8 +92,7 @@ eval_pt.data.table <-
 	}
 
 #' @export
-#' @rdname eval_pt-methods
-#' @aliases eval_pt
+#' @describeIn eval_pt
 eval_pt.sf <-
 	function(x,
 					 layer,
@@ -143,10 +138,7 @@ eval_pt.sf <-
 #' @return
 #' @export
 #'
-#' @seealso eval_buffer
-#'
-#' @rdname eval_buffer-methods
-#' @aliases eval_buffer
+#' @seealso eval_pt
 #'
 #' @examples
 #' # Load data
@@ -206,8 +198,7 @@ eval_buffer <-
 
 
 #' @export
-#' @aliases eval_buffer
-#' @rdname eval_buffer-methods
+#' @describeIn eval_buffer
 eval_buffer.data.table <-
 	function(x,
 					 layer,
@@ -237,8 +228,7 @@ eval_buffer.data.table <-
 }
 
 #' @export
-#' @aliases eval_buffer
-#' @rdname eval_buffer-methods
+#' @describeIn eval_buffer
 eval_buffer.sf <-
 	function(x,
 					 layer,
