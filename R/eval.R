@@ -58,8 +58,13 @@ eval_pt <-
 	types <- c('categorical', 'binary', 'ordinal', 'real')
 	directions <- c('positive', 'neutral', 'negative')
 
-	# if type isn't one of
-	# if direction isn't one of
+	if (!(type %in% types)) {
+		stop('type must be one of ', paste(types, collapse = ', '))
+	}
+
+	if (!(direction %in% directions)) {
+		stop('direction must be one of ', paste(direction, collapse = ', '))
+	}
 
 	nm <- deparse(substitute(layer))
 
