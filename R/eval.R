@@ -20,7 +20,7 @@
 #' @return
 #' @export
 #'
-#' @seealso eval_buffer
+#' @family eval
 #'
 #' @examples
 #' # Load data
@@ -154,7 +154,7 @@ eval_pt_.sf <-
 #' @return
 #' @export
 #'
-#' @seealso eval_pt
+#' @family eval
 #'
 #' @examples
 #' # Load data
@@ -189,6 +189,7 @@ eval_buffer <-
 	if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
 		stop('type and direction must be of class character')
 	}
+
 	nm <- deparse(substitute(layer))
 
 	if (any(buffersize < raster::res(layer))) {

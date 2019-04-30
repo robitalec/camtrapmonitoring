@@ -47,5 +47,6 @@ points$wetland <- eval_buffer(points, wetland, buffersize = 150,
 plot(points["wetland"])
 }
 \seealso{
-eval_pt
+Other eval: \code{\link{eval_pt}}
 }
+\concept{eval}
