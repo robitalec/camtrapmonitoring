@@ -1,6 +1,6 @@
 #' Make camera trap grids
 #'
-#' Set up grids around focal points. For example, sample points in your study area and use `make_grid` to establish a grid of camera traps around each.
+#' Set up grids around focal points. For example, sample points in your study area and use `grid_ct` to establish a grid of camera traps around each.
 #'
 #' @param x data.table or sf points.
 #' @param n number of points around each focal point. `n` overrides the `case` argument, do not provide both. See details.
@@ -18,8 +18,8 @@
 #'
 #' @export
 #'
-#' @aliases make_grid
-#' @rdname make_grid-methods
+#' @aliases grid_ct
+#' @rdname grid_ct-methods
 #'
 #' @examples
 #' # Point data (sf object)
@@ -28,27 +28,27 @@
 #' plot(points)
 #'
 #' ## Make grid with case
-#' queen <- make_grid(points, case = 'queen', distance = 100)
+#' queen <- grid_ct(points, case = 'queen', distance = 100)
 #' plot(queen)
 #'
 #' # Focal individuals
 #' plot(queen['focal'])
 #'
-#' rook <- make_grid(points, case = 'rook', distance = 100)
+#' rook <- grid_ct(points, case = 'rook', distance = 100)
 #' plot(rook)
 #'
-#' bishop <- make_grid(points, case = 'bishop', distance = 100)
+#' bishop <- grid_ct(points, case = 'bishop', distance = 100)
 #' plot(bishop)
 #'
 #' ## Make grid with n
-#' grid <- make_grid(points, n = 25, distance = 100)
+#' grid <- grid_ct(points, n = 25, distance = 100)
 #' plot(grid)
 #'
 #' # data.table input
 #' library(data.table)
 #' DT <- data.table(ID = points$ID, st_coordinates(points))
-#' grid <- make_grid(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
-make_grid <- function(x,
+#' grid <- grid_ct(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
+grid_ct <- function(x,
 											n,
 											case,
 											distance,
@@ -86,14 +86,14 @@ make_grid <- function(x,
 		stop('distance must be a numeric, greater than 0')
 	}
 
-	UseMethod('make_grid', x)
+	UseMethod('grid_ct', x)
 }
 
 #' @export
 #' @import data.table
-#' @aliases make_grid
-#' @rdname make_grid-methods
-make_grid.data.table <-
+#' @aliases grid_ct
+#' @rdname grid_ct-methods
+grid_ct.data.table <-
 	function(x,
 					 n,
 					 case,
@@ -130,9 +130,9 @@ make_grid.data.table <-
 
 
 #' @export
-#' @aliases make_grid
-#' @rdname make_grid-methods
-make_grid.sf <- function(x,
+#' @aliases grid_ct
+#' @rdname grid_ct-methods
+grid_ct.sf <- function(x,
 												 n,
 												 case,
 												 distance,

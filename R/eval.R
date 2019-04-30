@@ -1,6 +1,6 @@
 #' Evaluate camera trap locations by point sampling layers
 #'
-#' Using the point locations generated manually or with `wildcam` functions [strat_sample()] and [make_grid()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
+#' Using the point locations generated manually or with `wildcam` functions [strat_sample()] and [grid_ct()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 #'
 #' Type is used to define the data type of the sampled raster layer:
 #'
@@ -12,7 +12,7 @@
 #' Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by [select_ct()] for ranking and selecting camera trap locations.
 #'
 #'
-#' @inheritParams make_grid
+#' @inheritParams grid_ct
 #' @param layer raster layer.
 #' @param type one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.
 #' @param direction one of 'positive', 'neutral', 'negative'. See Details.
@@ -124,7 +124,7 @@ eval_pt.sf <-
 
 #' Eval layers by buffered
 #'
-#' Using the buffered points locations generated manually or with `wildcam` functions [strat_sample()] and [make_grid()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
+#' Using the buffered points locations generated manually or with `wildcam` functions [strat_sample()] and [grid_ct()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 #'
 #' Type is used to define the data type of the sampled raster layer:
 #'
