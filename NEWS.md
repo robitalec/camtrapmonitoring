@@ -1,3 +1,7 @@
+# wildcam 0.6.6.9000 (2019-05-29)
+* rename `make_grid` to `grid_ct` [!14](https://gitlab.com/robit.a/wildcam/merge_requests/14)
+
+
 # wildcam 0.6.5.9000 (2019-03-01)
 * return focal identifier with `make_grid`. 
 
