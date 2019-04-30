@@ -1,61 +1,61 @@
-context("test-make-grid")
+context("test-grid-ct")
 
 # make expected results
-queen <- make_grid(points, case = 'queen', distance = 100)
-rook <- make_grid(points, case = 'rook', distance = 100)
-bishop <- make_grid(points, case = 'bishop', distance = 100)
+queen <- grid_ct(points, case = 'queen', distance = 100)
+rook <- grid_ct(points, case = 'rook', distance = 100)
+bishop <- grid_ct(points, case = 'bishop', distance = 100)
 
-gridQ <- make_grid(DT, case = 'queen', distance = 100,
+gridQ <- grid_ct(DT, case = 'queen', distance = 100,
 									 id = 'ID', coords = c('X', 'Y'))
-gridR <- make_grid(DT, case = 'rook', distance = 100,
+gridR <- grid_ct(DT, case = 'rook', distance = 100,
 									 id = 'ID', coords = c('X', 'Y'))
-gridB <- make_grid(DT, case = 'bishop', distance = 100,
+gridB <- grid_ct(DT, case = 'bishop', distance = 100,
 									 id = 'ID', coords = c('X', 'Y'))
 
 # tests
-test_that("make_grid works", {
+test_that("grid_ct works", {
 	expect_error(
-		make_grid(points, case = 'potato', distance = 100),
+		grid_ct(points, case = 'potato', distance = 100),
 		'case provided must be one of "queen", "rook" or "bishop"'
 	)
 
 	expect_error(
-		make_grid(points, case = 'queen', distance = -100),
+		grid_ct(points, case = 'queen', distance = -100),
 		'distance must be a numeric, greater than 0'
 	)
 
 	expect_error(
-		make_grid(1, case = 'queen', distance = 100),
+		grid_ct(1, case = 'queen', distance = 100),
 		'no applicable method for ', fixed = FALSE
 	)
 
 	expect_error(
-		make_grid(points, n = 100, case = 'queen'),
+		grid_ct(points, n = 100, case = 'queen'),
 		'provide one of n and case and not both.'
 	)
 
 	expect_error(
-		make_grid(points),
+		grid_ct(points),
 		'provide one of n and case and not both.'
 	)
 
 	expect_equal(
-		nrow(make_grid(points, n = 100, distance = 100)),
+		nrow(grid_ct(points, n = 100, distance = 100)),
 		nrow(points) * 100
 	)
 
 	expect_equal(
-		nrow(make_grid(points, case = 'queen', distance = 100)),
+		nrow(grid_ct(points, case = 'queen', distance = 100)),
 		nrow(points) * 9
 	)
 
 	expect_equal(
-		nrow(make_grid(points, case = 'rook', distance = 100)),
+		nrow(grid_ct(points, case = 'rook', distance = 100)),
 		nrow(points) * 5
 	)
 
 	expect_equal(
-		nrow(make_grid(points, case = 'bishop', distance = 100)),
+		nrow(grid_ct(points, case = 'bishop', distance = 100)),
 		nrow(points) * 5
 	)
 
@@ -89,26 +89,26 @@ test_that("... for data.table input", {
 	)
 
 	expect_error(
-		make_grid(DT, case = 'queen', distance = 100, id = 'ID',
+		grid_ct(DT, case = 'queen', distance = 100, id = 'ID',
 							coords = NULL),
 		'id and coords must be provided with x is a data.table'
 	)
 
 	expect_error(
-		make_grid(DT, case = 'queen', distance = 100, id = NULL,
+		grid_ct(DT, case = 'queen', distance = 100, id = NULL,
 							coords = c('X', 'Y')),
 		'id and coords must be provided with x is a data.table'
 	)
 
 	expect_error(
-		make_grid(DT, case = 'queen', distance = 100, id = 'potato',
+		grid_ct(DT, case = 'queen', distance = 100, id = 'potato',
 							coords = c('X', 'Y')),
 		'id provided not found in colnames', fixed = FALSE
 	)
 
 
 	expect_error(
-		make_grid(DT, case = 'queen', distance = 100, id = 'ID',
+		grid_ct(DT, case = 'queen', distance = 100, id = 'ID',
 							coords = c('potatoX', 'Y')),
 		'coords provided not found in colnames', fixed = FALSE
 	)
@@ -145,7 +145,7 @@ test_that("... for data.table input", {
 test_that("... for sf input", {
 	# nogeo <- data.frame(points$ID)
 	# expect_error(
-	# 	make_grid(nogeo, 'queen', 100),
+	# 	grid_ct(nogeo, 'queen', 100),
 	# 	'geometry column not found in x'
 	# )
 
@@ -173,7 +173,7 @@ test_that("... for sf input", {
 	multipoints <- st_cast(points, 'MULTIPOINT')
 
 	expect_error(
-		make_grid(multipoints, case = 'queen', distance = 100),
+		grid_ct(multipoints, case = 'queen', distance = 100),
 		'class of geometry column must be sfc_POINT'
 	)
 

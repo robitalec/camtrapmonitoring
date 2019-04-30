@@ -9,7 +9,7 @@
 #' `by` is a character vector of column names in `x` to group camera trap locations and rank. This should match (at least) the column provided to `strat_sample`, if it was used to generate potential locations.
 #'
 #'
-#' @inheritParams make_grid
+#' @inheritParams grid_ct
 #' @param n number of locations to select. if `by` is provided, `select_ct` will select `n` for each group defined in `by`.
 #' @param rank character vector of column name(s) in `x` to rank rows.
 #' @param sub a named list with the form `list(colname = value)`. See Details.
