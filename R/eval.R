@@ -283,8 +283,8 @@ eval_buffer.sf <-
 #' data(water)
 #' data(points)
 #'
-#' dist_to(points, water)
-dist_to <- function(x, y) {
+#' eval_dist(points, water)
+eval_dist <- function(x, y) {
 	if (is.null(x) | is.null(y)) {
 		stop('please provide both x and y')
 	}
