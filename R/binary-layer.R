@@ -1,22 +1,25 @@
-#' Binary rasters
+#' Binary layer
 #'
-#' Make a binary raster from input 'layer'.
+#' Make a binary raster layer from input 'layer'.
 #'
-#' Find all pixels matching the 'value' provided and return binary raster.
+#' Find all pixels matching the 'value' provided given the 'fun' and return a binary raster.
 #'
 #' @inheritParams eval_pt
-#' @param value numeric value in 'layer'. expected length is 1.
+#' @param value numeric value in 'layer'. see Details.
+#' @param fun character indicating which function to use to compare layer to value. One of 'equal', 'gt', 'gte', 'lt', 'lte' or 'in'.
 #'
 #' @return
-#'
 #' A binary raster layer with two values: `TRUE` if pixel matches 'value' provided and `FALSE` if pixel does not match 'value' provided.
+#'
+#' 'value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte', 'lt', 'lte'.
+#' 'value' may be greater than length 1 if 'fun' is: 'in'.
 #'
 #' @export
 #'
 #' @examples
 #' data(lc)
 #'
-#' bin <- binary_layer(lc, 212)
+#' bin <- binary_layer(lc, 212, fun = 'equals')
 #'
 #' image(bin)
 binary_layer <- function(layer, value, fun) {
