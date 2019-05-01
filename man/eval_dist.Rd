@@ -4,12 +4,17 @@
 \alias{eval_dist}
 \title{Evaluate distance-to}
 \usage{
-eval_dist(x, layer, coords = NULL, crs = NULL)
+eval_dist(x, layer, type = NULL, direction = NULL, coords = NULL,
+  crs = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}
 
 \item{layer}{object of class sfg, sfc or sf.}
+
+\item{type}{one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.}
+
+\item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
 
 \item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}. Expects length = 2 e.g.: c('X', 'Y').}
 }

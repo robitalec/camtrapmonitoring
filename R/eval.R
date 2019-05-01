@@ -366,10 +366,19 @@ eval_buffer_.sf <-
 #' alloc.col(DT)
 #'
 #' DT[, distWater := eval_dist(.SD, water, coords = c('X', 'Y', crs = sf::st_crs(water)))]
-eval_dist <- function(x, layer, coords = NULL, crs = NULL) {
+eval_dist <- function(x, layer, type = NULL, direction = NULL, coords = NULL, crs = NULL) {
 	if (is.null(x) | is.null(layer)) {
 		stop('please provide both x and layer')
 	}
+
+	if (is.null(type) | is.null(direction)) {
+		warning(
+			'missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.'
+		)
+	}
+
+	check_type(type)
+	check_direction(direction)
 
 	# TODO: check types of x and layer
 	eval_dist_(x = x, layer = layer, coords = coords, crs = crs)
