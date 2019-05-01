@@ -342,50 +342,81 @@ eval_buffer_.sf <-
 #' alloc.col(DT)
 #'
 #' DT[, distWater := eval_dist(.SD, water, coords = c('X', 'Y', crs = sf::st_crs(water)))]
-eval_dist <- function(x, layer, type = NULL, direction = NULL, coords = NULL, crs = NULL) {
-	if (is.null(x) | is.null(layer)) {
-		stop('please provide both x and layer')
-	}
+eval_dist <-
+	function(x,
+					 layer,
+					 type = NULL,
+					 direction = NULL,
+					 coords = NULL,
+					 crs = NULL) {
+		if (is.null(x) | is.null(layer)) {
+			stop('please provide both x and layer')
+		}
 
-	if (is.null(type) | is.null(direction)) {
-		warning(
-			'missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.'
-		)
-	}
+		if (is.null(type) | is.null(direction)) {
+			warning(
+				'missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.'
+			)
+		}
 
 	check_type(type)
 	check_direction(direction)
 
-	# TODO: check types of x and layer
-	eval_dist_(x = x, layer = layer, coords = coords, crs = crs)
+		# TODO: check types of x and layer
+		eval_dist_(
+			x = x,
+			layer = layer,
+			type = type,
+			direction = direction,
+			coords = coords,
+			crs = crs
+		)
 }
 
 #' @export
 #' @describeIn eval_dist
-eval_dist_ <- function(x, layer, coords = NULL, crs = NULL) {
-	UseMethod('eval_dist_', x)
-}
-
-#' @export
-#' @describeIn eval_dist
-eval_dist_.sf <- function(x, layer, coords = NULL, crs = NULL) {
-	if (!(is.null(coords))) {
-		warning('coords ignored since x is an sf object')
+eval_dist_ <-
+	function(x,
+					 layer,
+					 type = NULL,
+					 direction = NULL,
+					 coords = NULL,
+					 crs = NULL) {
+		UseMethod('eval_dist_', x)
 	}
 
+#' @export
+#' @describeIn eval_dist
+eval_dist_.sf <-
+	function(x,
+					 layer,
+					 type = NULL,
+					 direction = NULL,
+					 coords = NULL,
+					 crs = NULL) {
+		if (!(is.null(coords))) {
+			warning('coords ignored since x is an sf object')
+		}
 
-	sf::st_distance(x, layer[sf::st_nearest_feature(x, layer), ],
-									by_element = TRUE)
-}
+		set_eval_attr(
+			sf::st_distance(x, layer[sf::st_nearest_feature(x, layer),],
+											by_element = TRUE),
+			layer = deparse(substitute(layer)),
+			type = type,
+			direction = direction
+		)
+
+	}
 
 #' @export
 #' @describeIn eval_dist
 eval_dist_.data.table <-
 	function(x,
 					 layer,
+					 type = NULL,
+					 direction = NULL,
 					 coords = NULL,
 					 crs = NULL) {
-
 		if (is.null(coords)) {
 			warning('coords must be provided if x is a data.table')
 		}
@@ -395,11 +426,17 @@ eval_dist_.data.table <-
 		}
 
 
-		sf <- sf::st_as_sf(x, coords = coords, crs = crs)
-		sf::st_distance(xsf,
-										layer[sf::st_nearest_feature(xsf, layer), ],
-										by_element = TRUE)
-}
+		xsf <- sf::st_as_sf(x, coords = coords, crs = crs)
+
+		set_eval_attr(
+			sf::st_distance(xsf,
+											layer[sf::st_nearest_feature(xsf, layer), ],
+											by_element = TRUE),
+			layer = deparse(substitute(layer)),
+			type = type,
+			direction = direction
+		)[]
+	}
 
 
 
