@@ -145,9 +145,9 @@ test_that("eval_buffer, sf", {
 
 
 ## eval_dist
-result <- eval_dist(points, water, type = '')
-inverse <- eval_dist(water, points)
-inside <- eval_dist(points, densitygrid)
+result <- eval_dist(points, water, direction = 'positive')
+inverse <- eval_dist(water, points, direction = 'positive')
+inside <- eval_dist(points, densitygrid, direction = 'positive')
 
 
 test_that('eval_dist returns expected', {
@@ -161,11 +161,11 @@ test_that('eval_dist returns expected', {
 
 
 test_that('eval_dist works from point to polygon', {
-	expect_silent(eval_dist(water, points))
+	expect_silent(eval_dist(water, points, direction = 'positive'))
 })
 
 test_that('eval_dist works from polygon to point', {
-	expect_silent(eval_dist(points, water))
+	expect_silent(eval_dist(points, water, direction = 'positive'))
 
 })
 
