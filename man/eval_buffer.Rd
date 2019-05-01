@@ -20,7 +20,7 @@ eval_buffer(x, layer, buffersize, type, direction, coords = NULL)
 \item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}. Expects length = 2 e.g.: c('X', 'Y').}
 }
 \description{
-Using the buffered points locations generated manually or with \code{wildcam} functions \code{\link[=strat_sample]{strat_sample()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
+Using the buffered points locations generated manually or with \code{wildcam} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 }
 \details{
 Type is used to define the data type of the sampled raster layer:
