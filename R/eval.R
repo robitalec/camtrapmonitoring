@@ -190,12 +190,24 @@ eval_buffer <-
 		stop('type and direction must be of class character')
 	}
 
+	types <- c('categorical', 'binary', 'ordinal', 'real')
+	directions <- c('positive', 'neutral', 'negative')
+
+	if (!is.null(type)) {
+		if (!(type %in% types)) {
+			stop('type must be one of ', paste(types, collapse = ', '))
+		}
+	}
+
+	if (!is.null(direction)) {
+		if (!(direction %in% directions)) {
+			stop('direction must be one of ', paste(direction, collapse = ', '))
+		}
+	}
+
 	if (any(buffersize < raster::res(layer))) {
 		warning("buffersize is less than the layer's resolution")
 	}
-
-	if (type == '')
-
 
 	eval_buffer_(x, layer,  buffersize, type, direction, coords = NULL)
 }
