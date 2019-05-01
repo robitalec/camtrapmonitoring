@@ -1,13 +1,11 @@
-* rename `make_binary` to `binary_layer` [#22](https://gitlab.com/robit.a/wildcam/issues/22).
+# wildcam 0.8.0.9000 (2019-06-01) 
 
-
-# wildcam 0.7.2.9000 (2019-05-30) 
+* added function `binary_layer` for making binary raster layers with equi and non-equi functions (e.g. =, >, <=, %in%) [!11](https://gitlab.com/robit.a/wildcam/merge_requests/11).
 
 * rename `scale_roi` to `scale_layer` [#22](https://gitlab.com/robit.a/wildcam/issues/22). 
 
-# wildcam 0.7.1.9000 (2019-05-30) 
-
 * rename `strat_sample` to `sample_ct` [#21](https://gitlab.com/robit.a/wildcam/issues/21) and [!17](https://gitlab.com/robit.a/wildcam/merge_requests/17). 
+
 
 # wildcam 0.7.0.9000 (2019-05-30) 
 
