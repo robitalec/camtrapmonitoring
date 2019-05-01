@@ -39,7 +39,7 @@ Type is used to define the data type of the sampled raster layer:
 \item 'real' - real number variable either interval or ratio scale. (e.g.: digital elevation model).
 }
 
-The function used to summarize the buffer regions around each point in \code{x} depends on the data \code{type} defined. 'categorical' data should likely be transformed into individual binary layers with \code{\link[=make_binary]{make_binary()}} so \code{mean} can be used to determine proportions in a buffer region.
+The function used to summarize the buffer regions around each point in \code{x} depends on the data \code{type} defined. 'categorical' data should likely be transformed into individual binary layers with \code{\link[=binary_layer]{binary_layer()}} so \code{mean} can be used to determine proportions in a buffer region.
 
 Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by \code{\link[=select_ct]{select_ct()}} for ranking and selecting camera trap locations.
 }
