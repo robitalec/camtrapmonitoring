@@ -4,27 +4,42 @@
 \alias{eval_dist}
 \title{Evaluate distance-to}
 \usage{
-eval_dist(x, y)
+eval_dist(x, layer, direction = NULL, coords = NULL, crs = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}
 
-\item{y}{object of class sfg, sfc or sf.}
+\item{layer}{object of class sfg, sfc or sf.}
+
+\item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
+
+\item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}. Expects length = 2 e.g.: c('X', 'Y').}
 }
 \value{
-Vector of distances between x and the nearest feature in y.
+Vector of distances between x and the nearest feature in layer.
+
+Note attributes are returned like by \code{eval_pt} and \code{eval_buffer}. The \code{type} attribute for distance to a feature (layer) is "real" and the \code{direction} is left for the user to provide.
 }
 \description{
-Evaluates locations in x by measuring the distance to the nearest feature in y.
+Evaluates locations in x by measuring the distance to the nearest feature in layer.
 }
 \details{
-To avoid the large overhead of creating distance to rasters for small/medium number of sample points, this vector-based distance to determines the nearest feature (y) to each x then calculates the distance between each pair.
+To avoid the large overhead of creating distance to rasters for small/medium number of sample points, this vector-based distance to determines the nearest feature (layer) to each x then calculates the distance between each pair.
 }
 \examples{
+# sf objects
 data(water)
 data(points)
 
-eval_dist(points, water)
+points$distWater <- eval_dist(points, water)
+
+# data.table objects
+library(data.table)
+
+data(DT)
+alloc.col(DT)
+
+DT[, distWater := eval_dist(.SD, water, coords = c('X', 'Y', crs = sf::st_crs(water)))]
 }
 \seealso{
 Other eval: \code{\link{eval_buffer}},

@@ -57,20 +57,8 @@ eval_pt <-
 			stop('type and direction must be of class character')
 		}
 
-		types <- c('categorical', 'binary', 'ordinal', 'real')
-		directions <- c('positive', 'neutral', 'negative')
-
-		if (!is.null(type)) {
-			if (!(type %in% types)) {
-				stop('type must be one of ', paste(types, collapse = ', '))
-			}
-		}
-
-		if (!is.null(direction)) {
-			if (!(direction %in% directions)) {
-				stop('direction must be one of ', paste(direction, collapse = ', '))
-			}
-		}
+		check_type(type)
+		check_direction(direction)
 
 		eval_pt_(x, layer, type, direction, coords)
 	}
@@ -94,21 +82,7 @@ eval_pt_.data.table <-
 					 type = NULL,
 					 direction = NULL,
 					 coords = NULL) {
-		if (is.null(coords)) {
-			stop('coords must be provided if x is a data.table')
-		}
-
-		if (length(coords) != 2) {
-			stop('coords must be a character vector of length 2')
-		}
-
-		if (any(!(coords %in% colnames(x)))) {
-			stop('geometry column not found in x')
-		}
-
-		if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
-			stop('coords provided must be numeric')
-		}
+		check_coords(x, coords)
 
 		set_eval_attr(
 			raster::extract(layer, x[, .SD, .SDcols = coords],
@@ -116,8 +90,8 @@ eval_pt_.data.table <-
 			layer = deparse(substitute(layer)),
 			type = type,
 			direction = direction
-		)
-	}
+		)[]
+}
 
 #' @export
 #' @describeIn eval_pt
@@ -202,24 +176,14 @@ eval_buffer <-
 		stop('type and direction must be of class character')
 	}
 
-	types <- c('categorical', 'binary', 'ordinal', 'real')
-	directions <- c('positive', 'neutral', 'negative')
-
-	if (!is.null(type)) {
-		if (!(type %in% types)) {
-			stop('type must be one of ', paste(types, collapse = ', '))
-		}
-	}
-
-	if (!is.null(direction)) {
-		if (!(direction %in% directions)) {
-			stop('direction must be one of ', paste(direction, collapse = ', '))
-		}
-	}
+	check_type(type)
+	check_direction(direction)
 
 	if (any(buffersize < raster::res(layer))) {
 		warning("buffersize is less than the layer's resolution")
 	}
+
+	# TODO: add crs = crs(layer)
 
 	eval_buffer_(x, layer, buffersize, type, direction, coords)
 }
@@ -246,21 +210,8 @@ eval_buffer_.data.table <-
 					 type,
 					 direction,
 					 coords = NULL) {
-		if (is.null(coords)) {
-			stop('coords must be provided if x is a data.table')
-		}
 
-		if (length(coords) != 2) {
-			stop('coords must be a character vector of length 2')
-		}
-
-		if (any(!(coords %in% colnames(x)))) {
-			stop('geometry column not found in x')
-		}
-
-		if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
-			stop('coords provided must be numeric')
-		}
+		check_coords(x, coords)
 
 		if (!is.null(type)) {
 			if (type %in% c('binary', 'real')) {
@@ -284,7 +235,7 @@ eval_buffer_.data.table <-
 			layer = deparse(substitute(layer)),
 			type = type,
 			direction = direction
-		)
+		)[]
 	}
 
 #' @export
@@ -338,53 +289,122 @@ eval_buffer_.sf <-
 
 #' Evaluate distance-to
 #'
-#' Evaluates locations in x by measuring the distance to the nearest feature in y.
+#' Evaluates locations in x by measuring the distance to the nearest feature in layer.
 #'
-#' To avoid the large overhead of creating distance to rasters for small/medium number of sample points, this vector-based distance to determines the nearest feature (y) to each x then calculates the distance between each pair.
+#' To avoid the large overhead of creating distance to rasters for small/medium number of sample points, this vector-based distance to determines the nearest feature (layer) to each x then calculates the distance between each pair.
 #'
 #' @inheritParams eval_pt
-#' @param y object of class sfg, sfc or sf.
+#' @param layer object of class sfg, sfc or sf.
 #'
-#' @return Vector of distances between x and the nearest feature in y.
+#' @return Vector of distances between x and the nearest feature in layer.
+#'
+#' Note attributes are returned like by `eval_pt` and `eval_buffer`. The `type` attribute for distance to a feature (layer) is "real" and the `direction` is left for the user to provide.
 #'
 #' @family eval
 #' @export
 #'
 #' @examples
+#' # sf objects
 #' data(water)
 #' data(points)
 #'
-#' eval_dist(points, water)
-eval_dist <- function(x, y) {
-	if (is.null(x) | is.null(y)) {
-		stop('please provide both x and y')
+#' points$distWater <- eval_dist(points, water)
+#'
+#' # data.table objects
+#' library(data.table)
+#'
+#' data(DT)
+#' alloc.col(DT)
+#'
+#' DT[, distWater := eval_dist(.SD, water, coords = c('X', 'Y', crs = sf::st_crs(water)))]
+eval_dist <-
+	function(x,
+					 layer,
+					 direction = NULL,
+					 coords = NULL,
+					 crs = NULL) {
+		if (is.null(x) | is.null(layer)) {
+			stop('please provide both x and layer')
+		}
+
+		if (is.null(direction)) {
+			warning(
+				'missing direction. it is recommended to provide these for subsequent selection of camera trap locations.'
+			)
+		}
+
+	check_direction(direction)
+
+		# TODO: check types of x and layer
+		eval_dist_(
+			x = x,
+			layer = layer,
+			direction = direction,
+			coords = coords,
+			crs = crs
+		)
+}
+
+#' @export
+#' @describeIn eval_dist
+eval_dist_ <-
+	function(x,
+					 layer,
+					 direction = NULL,
+					 coords = NULL,
+					 crs = NULL) {
+		UseMethod('eval_dist_', x)
 	}
 
-	# check types of x and y
+#' @export
+#' @describeIn eval_dist
+eval_dist_.sf <-
+	function(x,
+					 layer,
+					 direction = NULL,
+					 coords = NULL,
+					 crs = NULL) {
+		if (!(is.null(coords))) {
+			warning('coords ignored since x is an sf object')
+		}
 
-	sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
-									by_element = TRUE)
-}
+		set_eval_attr(
+			sf::st_distance(x, layer[sf::st_nearest_feature(x, layer),],
+											by_element = TRUE),
+			layer = deparse(substitute(layer)),
+			type = 'real',
+			direction = direction
+		)[]
+
+	}
 
 #' @export
 #' @describeIn eval_dist
-eval_dist_ <- function(x, y) {
-	UseMethod('eval_dist_')
-}
+eval_dist_.data.table <-
+	function(x,
+					 layer,
+					 direction = NULL,
+					 coords = NULL,
+					 crs = NULL) {
 
-#' @export
-#' @describeIn eval_dist
-eval_dist_.sf <- function(x, y) {
-	# sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
-	# 								by_element = TRUE)
-}
+		check_coords(x, coords)
 
-#' @export
-#' @describeIn eval_dist
-eval_dist_.data.table <- function(x, y) {
-	# sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
-	# 								by_element = TRUE)
-}
+
+		if (is.null(crs)) {
+			warning('crs must be provided if x is a data.table')
+		}
+
+		xsf <- sf::st_as_sf(x, coords = coords, crs = crs)
+
+		set_eval_attr(
+			sf::st_distance(xsf,
+											layer[sf::st_nearest_feature(xsf, layer), ],
+											by_element = TRUE),
+			layer = deparse(substitute(layer)),
+			type = 'real',
+			direction = direction
+		)[]
+	}
 
 
 
@@ -402,4 +422,44 @@ set_eval_attr <- function(x, layer, type, direction) {
 												type = type,
 												direction = direction
 											))
+}
+
+
+
+###
+check_type <- function(type) {
+	types <- c('categorical', 'binary', 'ordinal', 'real')
+	if (!is.null(type)) {
+		if (!(type %in% types)) {
+			stop('type must be one of ', paste(types, collapse = ', '))
+		}
+	}
+}
+
+check_direction <- function(direction) {
+	directions <- c('positive', 'neutral', 'negative')
+	if (!is.null(direction)) {
+		if (!(direction %in% directions)) {
+			stop('direction must be one of ', paste(direction, collapse = ', '))
+		}
+	}
+}
+
+
+check_coords <- function(x, coords) {
+	if (is.null(coords)) {
+		stop('coords must be provided if x is a data.table')
+	}
+
+	if (length(coords) != 2) {
+		stop('coords must be a character vector of length 2')
+	}
+
+	if (any(!(coords %in% colnames(x)))) {
+		stop('coords columns not found in x')
+	}
+
+	if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
+		stop('coords provided must be numeric')
+	}
 }
