@@ -98,7 +98,7 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 }
 
 
-
+###
 parse_directions <- function(x, col) {
 	d <- attr(x[[col]], 'wildcam')[['direction']]
 

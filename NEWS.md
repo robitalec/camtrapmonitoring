@@ -1,3 +1,6 @@
+# wildcam 0.7.1.9000 (2019-05-30)
+* rename `strat_sample` to `sample_ct` [#21](https://gitlab.com/robit.a/wildcam/issues/21) and [!17](https://gitlab.com/robit.a/wildcam/merge_requests/17). 
+
 # wildcam 0.7.0.9000 (2019-05-30)
 * rename `dist_to` to `eval_dist` and add attributes like other `eval_*` [#19](https://gitlab.com/robit.a/wildcam/issues/19) and [!12](https://gitlab.com/robit.a/wildcam/merge_requests/12). 
 
