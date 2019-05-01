@@ -1,8 +1,10 @@
-#' Stratified polygon sampling
+#' Stratified camera trap sampling
 #'
-#' Sample points in each region defined by unique values in col in x.
+#' Sample potential camera trap locations in each region defined by unique values in col in x.
 #'
 #' Random or regular sampling. Polygons cannot be assigned to multiple values. Optionally return a `data.table` if 'returnDT' is TRUE or an `sf` object if FALSE.
+#'
+#' If you'd like to sample a polygon, but not stratified by any `col`, simply use \link[sf]{st_sample}.
 #'
 #' @param x polygon object of class `sf`
 #' @param n number of random points
@@ -18,19 +20,19 @@
 #' data(densitygrid)
 #'
 #' # Randomly sample 5 points for each set of polygons in each strata
-#' pts <- strat_sample(x = densitygrid, n = 5, type = 'random',
+#' pts <- sample_ct(x = densitygrid, n = 5, type = 'random',
 #' col = 'density', returnDT = FALSE)
 #'
 #' plot(densitygrid, reset = FALSE)
 #' plot(pts$geometry, add = TRUE)
 #'
 #' # Sample 5 regular points for each set of polygons in each strata
-#' pts <- strat_sample(x = densitygrid, n = 20, type = 'regular',
+#' pts <- sample_ct(x = densitygrid, n = 20, type = 'regular',
 #' col = 'density', returnDT = FALSE)
 #'
 #' plot(densitygrid, reset = FALSE)
 #' plot(pts$geometry, add = TRUE)
-strat_sample <- function(x, n, type, col, returnDT = FALSE) {
+sample_ct <- function(x, n, type, col, returnDT = FALSE) {
 	if (!(col %in% colnames(x))) {
 		stop('strata column not found in x')
 	}
