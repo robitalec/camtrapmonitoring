@@ -82,21 +82,7 @@ eval_pt_.data.table <-
 					 type = NULL,
 					 direction = NULL,
 					 coords = NULL) {
-		if (is.null(coords)) {
-			stop('coords must be provided if x is a data.table')
-		}
-
-		if (length(coords) != 2) {
-			stop('coords must be a character vector of length 2')
-		}
-
-		if (any(!(coords %in% colnames(x)))) {
-			stop('geometry column not found in x')
-		}
-
-		if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
-			stop('coords provided must be numeric')
-		}
+		check_coords(x, coords)
 
 		set_eval_attr(
 			raster::extract(layer, x[, .SD, .SDcols = coords],
@@ -105,7 +91,7 @@ eval_pt_.data.table <-
 			type = type,
 			direction = direction
 		)[]
-	}
+}
 
 #' @export
 #' @describeIn eval_pt
@@ -224,21 +210,8 @@ eval_buffer_.data.table <-
 					 type,
 					 direction,
 					 coords = NULL) {
-		if (is.null(coords)) {
-			stop('coords must be provided if x is a data.table')
-		}
 
-		if (length(coords) != 2) {
-			stop('coords must be a character vector of length 2')
-		}
-
-		if (any(!(coords %in% colnames(x)))) {
-			stop('geometry column not found in x')
-		}
-
-		if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
-			stop('coords provided must be numeric')
-		}
+		check_coords(x, coords)
 
 		if (!is.null(type)) {
 			if (type %in% c('binary', 'real')) {
@@ -404,7 +377,7 @@ eval_dist_.sf <-
 			layer = deparse(substitute(layer)),
 			type = type,
 			direction = direction
-		)
+		)[]
 
 	}
 
@@ -417,14 +390,13 @@ eval_dist_.data.table <-
 					 direction = NULL,
 					 coords = NULL,
 					 crs = NULL) {
-		if (is.null(coords)) {
-			warning('coords must be provided if x is a data.table')
-		}
+
+		check_coords(x, coords)
+
 
 		if (is.null(crs)) {
 			warning('crs must be provided if x is a data.table')
 		}
-
 
 		xsf <- sf::st_as_sf(x, coords = coords, crs = crs)
 
@@ -474,5 +446,24 @@ check_direction <- function(direction) {
 		if (!(direction %in% directions)) {
 			stop('direction must be one of ', paste(direction, collapse = ', '))
 		}
+	}
+}
+
+
+check_coords <- function(x, coords) {
+	if (is.null(coords)) {
+		stop('coords must be provided if x is a data.table')
+	}
+
+	if (length(coords) != 2) {
+		stop('coords must be a character vector of length 2')
+	}
+
+	if (any(!(coords %in% colnames(x)))) {
+		stop('coords columns not found in x')
+	}
+
+	if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
+		stop('coords provided must be numeric')
 	}
 }
