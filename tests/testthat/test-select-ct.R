@@ -2,7 +2,7 @@ context("test-select-ct")
 
 # prep data.table
 pts <-
-	strat_sample(
+	sample_ct(
 		densitygrid,
 		n = 5,
 		type = 'random',
@@ -45,7 +45,7 @@ sel <- select_ct(
 
 # prep sf
 sfpt <-
-	strat_sample(
+	sample_ct(
 		densitygrid,
 		n = 5,
 		type = 'random',
