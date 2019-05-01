@@ -190,89 +190,115 @@ eval_buffer <-
 		stop('type and direction must be of class character')
 	}
 
-	nm <- deparse(substitute(layer))
-
 	if (any(buffersize < raster::res(layer))) {
 		warning("buffersize is less than the layer's resolution")
 	}
 
-	if (!is.null(type)) {
-		if (type %in% c('binary', 'real')) {
-			bufferfun <- mean
-		} else if (type %in% c('categorical', 'ordinal')) {
-			bufferfun <- NULL
-		} else {
-			stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
-		}
-	} else {
-		bufferfun <- NULL
-	}
+	if (type == '')
 
-	# how to summarize buffers with ordinal/categorical
 
-	UseMethod('eval_buffer', x)
+	eval_buffer_(x, layer,  buffersize, type, direction, coords = NULL)
 }
+
+#' @export
+#' @describeIn eval_buffer
+eval_buffer_ <- function(x,
+												 layer,
+												 buffersize,
+												 type,
+												 direction,
+												 coords = NULL) {
+	UseMethod('eval_buffer_')
+}
+
 
 
 #' @export
 #' @describeIn eval_buffer
-eval_buffer.data.table <-
+eval_buffer_.data.table <-
 	function(x,
 					 layer,
 					 buffersize,
 					 type,
 					 direction,
 					 coords = NULL) {
-	if (is.null(coords) | length(coords) != 2) {
-		stop('coords of length 2 must be provided if x is a data.table')
+		if (is.null(coords) | length(coords) != 2) {
+			stop('coords of length 2 must be provided if x is a data.table')
+		}
+
+		if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
+			stop('coords provided must be numeric')
+		}
+
+		if (!is.null(type)) {
+			if (type %in% c('binary', 'real')) {
+				bufferfun <- mean
+			} else if (type %in% c('categorical', 'ordinal')) {
+				bufferfun <- NULL
+				warning('type provided is either categorical or ordinal, cannot summarize in buffer, returning frequency table')
+			} else {
+				stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
+			}
+		}
+		# how to summarize buffers with ordinal/categorical
+
+		set_eval_attr(
+			raster::extract(layer,
+											x[, .SD, .SDcols = coords],
+											buffer = buffersize,
+											fun = bufferfun),
+			layer = deparse(substitute(layer)),
+			type = type,
+			direction = direction
+		)
 	}
 
-	if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
-		stop('coords provided must be numeric')
-	}
+#' @export
+#' @describeIn eval_buffer
+eval_buffer_.sf <-
+	function(x,
+					 layer,
+					 buffersize,
+					 type,
+					 direction,
+					 coords = NULL) {
+		if (!('geometry' %in% colnames(x))) {
+			stop('geometry column not found in x')
+		}
+
+		if (!inherits(x$geometry, 'sfc_POINT')) {
+			stop('class of geometry column must be sfc_POINT')
+		}
+
+		if (!is.null(coords)) {
+			warning('coords provided are ignored because x is an sf object')
+		}
+
+		if (!is.null(type)) {
+			if (type %in% c('binary', 'real')) {
+				bufferfun <- mean
+			} else if (type %in% c('categorical', 'ordinal')) {
+				bufferfun <- NULL
+				warning('type provided is either categorical or ordinal, cannot summarize in buffer, returning frequency table')
+			} else {
+				stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
+			}
+		}
+		# how to summarize buffers with ordinal/categorical
+
 
 		set_eval_attr(
 			raster::extract(
 				layer,
-				x[, .SD, .SDcols = coords],
+				sf::st_coordinates(x),
 				buffer = buffersize,
 				fun = bufferfun
 			),
-			layer = nm,
+			layer = deparse(substitute(layer)),
 			type = type,
 			direction = direction
 		)
-}
-
-#' @export
-#' @describeIn eval_buffer
-eval_buffer.sf <-
-	function(x,
-					 layer,
-					 buffersize,
-					 type,
-					 direction,
-					 coords = NULL) {
-	if (!('geometry' %in% colnames(x))) {
-		stop('geometry column not found in x')
 	}
-
-	if (!inherits(x$geometry, 'sfc_POINT')) {
-		stop('class of geometry column must be sfc_POINT')
-	}
-
-	set_eval_attr(
-		raster::extract(
-			layer,
-			sf::st_coordinates(x),
-			buffer = buffersize,
-			fun = bufferfun
-		),
-		layer = nm,
-		type = type,
-		direction = direction
-	)
-}
 
 
 ###
