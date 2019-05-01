@@ -44,8 +44,26 @@ binary_layer <- function(layer, value, fun) {
 		stop('value must be a numeric.')
 	}
 
-	if (length(value) != 1) {
-		stop('value must be of length one.')
+	if (length(value) == 1) {
+		if (fun == 'equals') {
+			return(layer == value)
+		} else if (fun == 'gt') {
+			return(layer > value)
+		} else if (fun == 'gte') {
+			return(layer >= value)
+		} else if (fun == 'lt') {
+			return(layer < value)
+		} else if (fun == 'lte') {
+			return(layer <= value)
+		} else {
+			stop('fun must be "equals", "gt", "gte", "lt", or "lte" if length of value is 1')
+		}
+	} else if (length(value) > 1) {
+		if (fun == 'in') {
+			return(layer %in% value)
+		} else {
+			stop('fun must be "in" if length of value is > 1')
+		}
 	}
 
 
