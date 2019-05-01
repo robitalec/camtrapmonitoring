@@ -221,6 +221,8 @@ eval_buffer <-
 		warning("buffersize is less than the layer's resolution")
 	}
 
+	# TODO: add crs = crs(layer)
+
 	eval_buffer_(x, layer, buffersize, type, direction, coords)
 }
 
@@ -355,38 +357,40 @@ eval_buffer_.sf <-
 #' data(points)
 #'
 #' points$distWater <- eval_dist(points, water)
-eval_dist <- function(x, y) {
+eval_dist <- function(x, y, coords = NULL, crs = NULL) {
 	if (is.null(x) | is.null(y)) {
 		stop('please provide both x and y')
 	}
 
 	# check types of x and y
+	eval_dist_(x = x, y = y, coords = coords, crs = crs)
+}
 
+#' @export
+#' @describeIn eval_dist
+eval_dist_ <- function(x, y, coords = NULL, crs = NULL) {
+	UseMethod('eval_dist_', x)
+}
+
+#' @export
+#' @describeIn eval_dist
+eval_dist_.sf <- function(x, y, coords = NULL, crs = NULL) {
 	sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
 									by_element = TRUE)
 }
 
 #' @export
 #' @describeIn eval_dist
-eval_dist_ <- function(x, y) {
-	UseMethod('eval_dist_')
-}
-
-#' @export
-#' @describeIn eval_dist
-eval_dist_.sf <- function(x, y) {
-	# sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
-	# 								by_element = TRUE)
-}
-
-#' @export
-#' @describeIn eval_dist
-eval_dist_.data.table <- function(x, y) {
-	# sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
-	# 								by_element = TRUE)
-
-	# []
-}
+eval_dist_.data.table <-
+	function(x,
+					 y = NULL,
+					 coords = NULL,
+					 crs = NULL) {
+		xsf <- sf::st_as_sf(x, coords = coords, crs = crs)
+		sf::st_distance(xsf,
+										y[sf::st_nearest_feature(xsf, y), ],
+										by_element = TRUE)
+	}
 
 
 
