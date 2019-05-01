@@ -353,10 +353,17 @@ eval_buffer_.sf <-
 #' @export
 #'
 #' @examples
+#' # sf objects
 #' data(water)
 #' data(points)
 #'
 #' points$distWater <- eval_dist(points, water)
+#'
+#' # data.table objects
+#' data(DT)
+#' alloc.col(DT)
+#'
+#' DT[, distWater := eval_dist(.SD, water, coords = c('X', 'Y', crs = sf::st_crs(water)))]
 eval_dist <- function(x, y, coords = NULL, crs = NULL) {
 	if (is.null(x) | is.null(y)) {
 		stop('please provide both x and y')
