@@ -22,11 +22,11 @@ ggplot2 figs with geom_sf
 
 
 # Workflow
-`strat_sample` and/or `make_grid` -> `eval_pt`/`eval_buffer` -> `select_ct`
+`sample_ct` and/or `grid_ct` -> `eval_pt`/`eval_buffer` -> `select_ct`
 
 OR
 
-`eval_buffer` -> `select_ct` -> `make_grid` and `make_pair` 
+`eval_buffer` -> `select_ct` -> `grid_ct` and `pair_ct` 
 
 
 
@@ -44,7 +44,7 @@ OR
 data(densitygrid)
 
 # Randomly sample 5 points for each set of polygons in each strata.
-pts <- strat_sample(x = densitygrid, n = 5, col = 'density', returnDT = FALSE)
+pts <- sample_ct(x = densitygrid, n = 5, col = 'density', returnDT = FALSE)
 
 plot(densitygrid, reset = FALSE)
 plot(pts$geometry, add = TRUE)
@@ -54,20 +54,20 @@ plot(pts$geometry, add = TRUE)
 ## Grid around points
 
 ```{r}
-queen <- make_grid(pts, case = 'queen', distance = 100)
+queen <- grid_ct(pts, case = 'queen', distance = 100)
 plot(queen)
 
-rook <- make_grid(pts, case = 'rook', distance = 100)
+rook <- grid_ct(pts, case = 'rook', distance = 100)
 plot(rook)
 
-bishop <- make_grid(pts, case = 'bishop', distance = 100)
+bishop <- grid_ct(pts, case = 'bishop', distance = 100)
 plot(bishop)
 ```
 
 or n
 
 ```{r}
-grid <- make_grid(pts, n = 100, distance = 500)
+grid <- grid_ct(pts, n = 100, distance = 500)
 plot(grid)
 
 ```
@@ -113,7 +113,7 @@ data(dem)
 data(wetland)
 
 # Stratified random sampling
-pts <- strat_sample(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
+pts <- sample_ct(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
 
 # Evaluate layers
 pts[, lc := eval_pt(.SD, lc, type = 'categorical', direction = 'neutral', coords = c('X', 'Y'))]
