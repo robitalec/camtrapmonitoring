@@ -16,10 +16,10 @@
 #' @examples
 #' data(lc)
 #'
-#' bin <- make_binary(lc, 212)
+#' bin <- binary_layer(lc, 212)
 #'
 #' image(bin)
-make_binary <- function(layer, value) {
+binary_layer <- function(layer, value) {
 	if (missing(layer)) {
 		stop('layer must be provided.')
 	}

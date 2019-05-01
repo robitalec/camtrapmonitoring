@@ -133,7 +133,7 @@ eval_pt.sf <-
 #' * 'ordinal' - ranked or ordered data. (e.g.: animal density high/medium/low).
 #' * 'real' - real number variable either interval or ratio scale. (e.g.: digital elevation model).
 #'
-#' The function used to summarize the buffer regions around each point in `x` depends on the data `type` defined. 'categorical' data should likely be transformed into individual binary layers with [make_binary()] so `mean` can be used to determine proportions in a buffer region.
+#' The function used to summarize the buffer regions around each point in `x` depends on the data `type` defined. 'categorical' data should likely be transformed into individual binary layers with [binary_layer()] so `mean` can be used to determine proportions in a buffer region.
 #'
 #' Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by [select_ct()] for ranking and selecting camera trap locations.
 #'
