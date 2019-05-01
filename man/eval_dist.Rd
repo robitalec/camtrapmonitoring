@@ -24,7 +24,7 @@ To avoid the large overhead of creating distance to rasters for small/medium num
 data(water)
 data(points)
 
-eval_dist(points, water)
+points$distWater <- eval_dist(points, water)
 }
 \seealso{
 Other eval: \code{\link{eval_buffer}},
