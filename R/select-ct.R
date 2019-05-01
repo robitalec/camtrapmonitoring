@@ -6,7 +6,7 @@
 #'
 #' `sub` is a named list used to subset the input `x`. It should follow the form `list(colname = value)`or `list(colname = c(values, values))`.
 #'
-#' `by` is a character vector of column names in `x` to group camera trap locations and rank. This should match (at least) the column provided to `strat_sample`, if it was used to generate potential locations.
+#' `by` is a character vector of column names in `x` to group camera trap locations and rank. This should match (at least) the column provided to `sample_ct`, if it was used to generate potential locations.
 #'
 #'
 #' @inheritParams grid_ct
@@ -29,7 +29,7 @@
 #' data(wetland)
 #'
 #' # Stratified random sampling
-#' pts <- strat_sample(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
+#' pts <- sample_ct(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
 #'
 #' # Evaluate layers
 #' pts[, lc := eval_pt(.SD, lc, type = 'categorical', direction = 'neutral', coords = c('X', 'Y'))]
@@ -98,7 +98,7 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 }
 
 
-
+###
 parse_directions <- function(x, col) {
 	d <- attr(x[[col]], 'wildcam')[['direction']]
 

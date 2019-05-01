@@ -25,7 +25,7 @@ Select camera trap locations by subsetting (\code{sub}) and ranking (\code{rank}
 
 \code{sub} is a named list used to subset the input \code{x}. It should follow the form \code{list(colname = value)}or \code{list(colname = c(values, values))}.
 
-\code{by} is a character vector of column names in \code{x} to group camera trap locations and rank. This should match (at least) the column provided to \code{strat_sample}, if it was used to generate potential locations.
+\code{by} is a character vector of column names in \code{x} to group camera trap locations and rank. This should match (at least) the column provided to \code{sample_ct}, if it was used to generate potential locations.
 }
 \examples{
 # Packages
@@ -38,7 +38,7 @@ data(dem)
 data(wetland)
 
 # Stratified random sampling
-pts <- strat_sample(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
+pts <- sample_ct(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
 
 # Evaluate layers
 pts[, lc := eval_pt(.SD, lc, type = 'categorical', direction = 'neutral', coords = c('X', 'Y'))]
