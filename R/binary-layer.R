@@ -62,12 +62,10 @@ binary_layer <- function(layer, value, fun) {
 			stop('fun must be "equals", "gt", "gte", "lt", or "lte" if length of value is 1')
 		}
 	} else if (length(value) > 1) {
-		if (fun == 'in') {
-			return(layer %in% value)
+		if (fun == 'in' | fun == 'equals') {
+			return(raster::`%in%`(layer, value))
 		} else {
 			stop('fun must be "in" if length of value is > 1')
 		}
 	}
-
-
 }
