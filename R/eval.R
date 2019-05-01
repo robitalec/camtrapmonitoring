@@ -17,13 +17,10 @@
 #' @param type one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.
 #' @param direction one of 'positive', 'neutral', 'negative'. See Details.
 #'
-#' @rdname eval_pt-methods
-#' @aliases eval_pt
-#'
 #' @return
 #' @export
 #'
-#' @seealso eval_buffer
+#' @family eval
 #'
 #' @examples
 #' # Load data
@@ -41,45 +38,72 @@ eval_pt <-
 					 type = NULL,
 					 direction = NULL,
 					 coords = NULL) {
-	if (is.null(x)) {
-		stop('x must be provided. either data.table or sf point object.')
+		if (is.null(x)) {
+			stop('x must be provided. either data.table or sf point object.')
+		}
+
+		if (is.null(layer) | !inherits(layer, 'Raster')) {
+			stop('layer must be provided. expected type is raster.')
+		}
+
+		if (is.null(type) | is.null(direction)) {
+			warning(
+				'missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.'
+			)
+		}
+
+		checkls <- list(type, direction)
+		if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
+			stop('type and direction must be of class character')
+		}
+
+		types <- c('categorical', 'binary', 'ordinal', 'real')
+		directions <- c('positive', 'neutral', 'negative')
+
+		if (!is.null(type)) {
+			if (!(type %in% types)) {
+				stop('type must be one of ', paste(types, collapse = ', '))
+			}
+		}
+
+		if (!is.null(direction)) {
+			if (!(direction %in% directions)) {
+				stop('direction must be one of ', paste(direction, collapse = ', '))
+			}
+		}
+
+		eval_pt_(x, layer, type, direction, coords)
 	}
-
-	if (is.null(layer) | !inherits(layer, 'Raster')) {
-		stop('layer must be provided. expected type is raster.')
-	}
-
-	if (is.null(type) | is.null(direction)) {
-		warning('missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.')
-	}
-
-	checkls <- list(type, direction)
-	if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
-		stop('type and direction must be of class character')
-	}
-
-	types <- c('categorical', 'binary', 'ordinal', 'real')
-	directions <- c('positive', 'neutral', 'negative')
-
-	# if type isn't one of
-	# if direction isn't one of
-
-	nm <- deparse(substitute(layer))
-
-	UseMethod('eval_pt', x)
-}
 
 #' @export
-#' @rdname eval_pt-methods
-#' @aliases eval_pt
-eval_pt.data.table <-
+#' @describeIn eval_pt
+eval_pt_ <- 	function(x,
+											layer,
+											type = NULL,
+											direction = NULL,
+											coords = NULL) {
+	UseMethod('eval_pt_')
+}
+
+
+#' @export
+#' @describeIn eval_pt
+eval_pt_.data.table <-
 	function(x,
 					 layer,
 					 type = NULL,
 					 direction = NULL,
 					 coords = NULL) {
-		if (is.null(coords) | length(coords) != 2) {
-			stop('coords of length 2 must be provided if x is a data.table')
+		if (is.null(coords)) {
+			stop('coords must be provided if x is a data.table')
+		}
+
+		if (length(coords) != 2) {
+			stop('coords must be a character vector of length 2')
+		}
+
+		if (any(!(coords %in% colnames(x)))) {
+			stop('geometry column not found in x')
 		}
 
 		if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
@@ -89,16 +113,15 @@ eval_pt.data.table <-
 		set_eval_attr(
 			raster::extract(layer, x[, .SD, .SDcols = coords],
 											na.rm = FALSE),
-			layer = nm,
+			layer = deparse(substitute(layer)),
 			type = type,
 			direction = direction
 		)
 	}
 
 #' @export
-#' @rdname eval_pt-methods
-#' @aliases eval_pt
-eval_pt.sf <-
+#' @describeIn eval_pt
+eval_pt_.sf <-
 	function(x,
 					 layer,
 					 type = NULL,
@@ -115,7 +138,7 @@ eval_pt.sf <-
 		set_eval_attr(
 			raster::extract(layer, sf::st_coordinates(x),
 											na.rm = FALSE),
-			layer = nm,
+			layer = deparse(substitute(layer)),
 			type = type,
 			direction = direction
 		)
@@ -143,10 +166,7 @@ eval_pt.sf <-
 #' @return
 #' @export
 #'
-#' @seealso eval_buffer
-#'
-#' @rdname eval_buffer-methods
-#' @aliases eval_buffer
+#' @family eval
 #'
 #' @examples
 #' # Load data
@@ -181,91 +201,140 @@ eval_buffer <-
 	if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
 		stop('type and direction must be of class character')
 	}
-	nm <- deparse(substitute(layer))
+
+	types <- c('categorical', 'binary', 'ordinal', 'real')
+	directions <- c('positive', 'neutral', 'negative')
+
+	if (!is.null(type)) {
+		if (!(type %in% types)) {
+			stop('type must be one of ', paste(types, collapse = ', '))
+		}
+	}
+
+	if (!is.null(direction)) {
+		if (!(direction %in% directions)) {
+			stop('direction must be one of ', paste(direction, collapse = ', '))
+		}
+	}
 
 	if (any(buffersize < raster::res(layer))) {
 		warning("buffersize is less than the layer's resolution")
 	}
 
-	if (!is.null(type)) {
-		if (type %in% c('binary', 'real')) {
-			bufferfun <- mean
-		} else if (type %in% c('categorical', 'ordinal')) {
-			bufferfun <- NULL
-		} else {
-			stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
-		}
-	} else {
-		bufferfun <- NULL
-	}
+	eval_buffer_(x, layer, buffersize, type, direction, coords)
+}
 
-	# how to summarize buffers with ordinal/categorical
-
-	UseMethod('eval_buffer', x)
+#' @export
+#' @describeIn eval_buffer
+eval_buffer_ <- function(x,
+												 layer,
+												 buffersize,
+												 type,
+												 direction,
+												 coords = NULL) {
+	UseMethod('eval_buffer_')
 }
 
 
+
 #' @export
-#' @aliases eval_buffer
-#' @rdname eval_buffer-methods
-eval_buffer.data.table <-
+#' @describeIn eval_buffer
+eval_buffer_.data.table <-
 	function(x,
 					 layer,
 					 buffersize,
 					 type,
 					 direction,
 					 coords = NULL) {
-	if (is.null(coords) | length(coords) != 2) {
-		stop('coords of length 2 must be provided if x is a data.table')
+		if (is.null(coords)) {
+			stop('coords must be provided if x is a data.table')
+		}
+
+		if (length(coords) != 2) {
+			stop('coords must be a character vector of length 2')
+		}
+
+		if (any(!(coords %in% colnames(x)))) {
+			stop('geometry column not found in x')
+		}
+
+		if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
+			stop('coords provided must be numeric')
+		}
+
+		if (!is.null(type)) {
+			if (type %in% c('binary', 'real')) {
+				bufferfun <- mean
+			} else if (type %in% c('categorical', 'ordinal')) {
+				bufferfun <- NULL
+				warning('type provided is either categorical or ordinal, cannot summarize in buffer, returning frequency table')
+			} else {
+				stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
+			}
+		} else {
+			bufferfun <- NULL
+		}
+		# how to summarize buffers with ordinal/categorical
+
+		set_eval_attr(
+			raster::extract(layer,
+											x[, .SD, .SDcols = coords],
+											buffer = buffersize,
+											fun = bufferfun),
+			layer = deparse(substitute(layer)),
+			type = type,
+			direction = direction
+		)
 	}
 
-	if (!all(vapply(x[, .SD, .SDcols = coords], is.numeric, TRUE))) {
-		stop('coords provided must be numeric')
-	}
+#' @export
+#' @describeIn eval_buffer
+eval_buffer_.sf <-
+	function(x,
+					 layer,
+					 buffersize,
+					 type,
+					 direction,
+					 coords = NULL) {
+		if (!('geometry' %in% colnames(x))) {
+			stop('geometry column not found in x')
+		}
+
+		if (!inherits(x$geometry, 'sfc_POINT')) {
+			stop('class of geometry column must be sfc_POINT')
+		}
+
+		if (!is.null(coords)) {
+			warning('coords provided are ignored because x is an sf object')
+		}
+
+		if (!is.null(type)) {
+			if (type %in% c('binary', 'real')) {
+				bufferfun <- mean
+			} else if (type %in% c('categorical', 'ordinal')) {
+				bufferfun <- NULL
+				warning('type provided is either categorical or ordinal, cannot summarize in buffer, returning frequency table')
+			} else {
+				stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
+			}
+		} else {
+			bufferfun <- NULL
+		}
+		# how to summarize buffers with ordinal/categorical
+
 
 		set_eval_attr(
 			raster::extract(
 				layer,
-				x[, .SD, .SDcols = coords],
+				sf::st_coordinates(x),
 				buffer = buffersize,
 				fun = bufferfun
 			),
-			layer = nm,
+			layer = deparse(substitute(layer)),
 			type = type,
 			direction = direction
 		)
-}
-
-#' @export
-#' @aliases eval_buffer
-#' @rdname eval_buffer-methods
-eval_buffer.sf <-
-	function(x,
-					 layer,
-					 buffersize,
-					 type,
-					 direction,
-					 coords = NULL) {
-	if (!('geometry' %in% colnames(x))) {
-		stop('geometry column not found in x')
 	}
-
-	if (!inherits(x$geometry, 'sfc_POINT')) {
-		stop('class of geometry column must be sfc_POINT')
-	}
-
-	set_eval_attr(
-		raster::extract(
-			layer,
-			sf::st_coordinates(x),
-			buffer = buffersize,
-			fun = bufferfun
-		),
-		layer = nm,
-		type = type,
-		direction = direction
-	)
-}
 
 #' Evaluate distance-to
 #'
@@ -277,6 +346,8 @@ eval_buffer.sf <-
 #' @param y object of class sfg, sfc or sf.
 #'
 #' @return Vector of distances between x and the nearest feature in y.
+#'
+#' @family eval
 #' @export
 #'
 #' @examples
@@ -294,6 +365,28 @@ eval_dist <- function(x, y) {
 	sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
 									by_element = TRUE)
 }
+
+#' @export
+#' @describeIn eval_dist
+eval_dist_ <- function(x, y) {
+	UseMethod('eval_dist_')
+}
+
+#' @export
+#' @describeIn eval_dist
+eval_dist_.sf <- function(x, y) {
+	# sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
+	# 								by_element = TRUE)
+}
+
+#' @export
+#' @describeIn eval_dist
+eval_dist_.data.table <- function(x, y) {
+	# sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
+	# 								by_element = TRUE)
+}
+
+
 
 
 
