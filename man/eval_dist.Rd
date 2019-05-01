@@ -30,6 +30,8 @@ data(points)
 points$distWater <- eval_dist(points, water)
 
 # data.table objects
+library(data.table)
+
 data(DT)
 alloc.col(DT)
 

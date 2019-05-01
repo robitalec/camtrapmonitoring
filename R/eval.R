@@ -360,6 +360,8 @@ eval_buffer_.sf <-
 #' points$distWater <- eval_dist(points, water)
 #'
 #' # data.table objects
+#' library(data.table)
+#'
 #' data(DT)
 #' alloc.col(DT)
 #'
