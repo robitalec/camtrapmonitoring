@@ -1,3 +1,5 @@
+* rename `make_binary` to `binary_layer` [#22](https://gitlab.com/robit.a/wildcam/issues/22).
+
 # wildcam 0.6.2.9000 (2019-03-01)
 * Fix bug in `make_binary`, losing original mask [#18](https://gitlab.com/robit.a/wildcam/issues/18). 
 
