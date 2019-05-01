@@ -382,6 +382,11 @@ eval_dist_ <- function(x, y, coords = NULL, crs = NULL) {
 #' @export
 #' @describeIn eval_dist
 eval_dist_.sf <- function(x, y, coords = NULL, crs = NULL) {
+	if (!(is.null(coords))) {
+		warning('coords ignored since x is an sf object')
+	}
+
+
 	sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
 									by_element = TRUE)
 }
@@ -390,14 +395,24 @@ eval_dist_.sf <- function(x, y, coords = NULL, crs = NULL) {
 #' @describeIn eval_dist
 eval_dist_.data.table <-
 	function(x,
-					 y = NULL,
+					 y,
 					 coords = NULL,
 					 crs = NULL) {
-		xsf <- sf::st_as_sf(x, coords = coords, crs = crs)
+
+		if (is.null(coords)) {
+			warning('coords must be provided if x is a data.table')
+		}
+
+		if (is.null(crs)) {
+			warning('crs must be provided if x is a data.table')
+		}
+
+
+		sf <- sf::st_as_sf(x, coords = coords, crs = crs)
 		sf::st_distance(xsf,
 										y[sf::st_nearest_feature(xsf, y), ],
 										by_element = TRUE)
-	}
+}
 
 
 
