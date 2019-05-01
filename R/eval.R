@@ -116,7 +116,7 @@ eval_pt_.data.table <-
 			layer = deparse(substitute(layer)),
 			type = type,
 			direction = direction
-		)
+		)[]
 	}
 
 #' @export
@@ -284,7 +284,7 @@ eval_buffer_.data.table <-
 			layer = deparse(substitute(layer)),
 			type = type,
 			direction = direction
-		)
+		)[]
 	}
 
 #' @export
@@ -384,6 +384,8 @@ eval_dist_.sf <- function(x, y) {
 eval_dist_.data.table <- function(x, y) {
 	# sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
 	# 								by_element = TRUE)
+
+	# []
 }
 
 
