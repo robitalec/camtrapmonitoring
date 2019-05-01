@@ -310,6 +310,8 @@ eval_buffer_.sf <-
 #' @param y object of class sfg, sfc or sf.
 #'
 #' @return Vector of distances between x and the nearest feature in y.
+#'
+#' @family eval
 #' @export
 #'
 #' @examples
@@ -327,6 +329,28 @@ eval_dist <- function(x, y) {
 	sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
 									by_element = TRUE)
 }
+
+#' @export
+#' @describeIn eval_dist
+eval_dist_ <- function(x, y) {
+	UseMethod('eval_dist_')
+}
+
+#' @export
+#' @describeIn eval_dist
+eval_dist_.sf <- function(x, y) {
+	# sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
+	# 								by_element = TRUE)
+}
+
+#' @export
+#' @describeIn eval_dist
+eval_dist_.data.table <- function(x, y) {
+	# sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
+	# 								by_element = TRUE)
+}
+
+
 
 
 

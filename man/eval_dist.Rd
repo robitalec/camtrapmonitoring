@@ -26,3 +26,8 @@ data(points)
 
 eval_dist(points, water)
 }
+\seealso{
+Other eval: \code{\link{eval_buffer}},
+  \code{\link{eval_pt}}
+}
+\concept{eval}

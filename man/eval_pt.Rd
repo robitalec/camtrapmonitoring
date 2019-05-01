@@ -43,6 +43,7 @@ points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = '
 plot(points["lc"])
 }
 \seealso{
-Other eval: \code{\link{eval_buffer}}
+Other eval: \code{\link{eval_buffer}},
+  \code{\link{eval_dist}}
 }
 \concept{eval}
