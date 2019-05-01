@@ -57,20 +57,8 @@ eval_pt <-
 			stop('type and direction must be of class character')
 		}
 
-		types <- c('categorical', 'binary', 'ordinal', 'real')
-		directions <- c('positive', 'neutral', 'negative')
-
-		if (!is.null(type)) {
-			if (!(type %in% types)) {
-				stop('type must be one of ', paste(types, collapse = ', '))
-			}
-		}
-
-		if (!is.null(direction)) {
-			if (!(direction %in% directions)) {
-				stop('direction must be one of ', paste(direction, collapse = ', '))
-			}
-		}
+		check_type(type)
+		check_direction(direction)
 
 		eval_pt_(x, layer, type, direction, coords)
 	}
@@ -202,20 +190,8 @@ eval_buffer <-
 		stop('type and direction must be of class character')
 	}
 
-	types <- c('categorical', 'binary', 'ordinal', 'real')
-	directions <- c('positive', 'neutral', 'negative')
-
-	if (!is.null(type)) {
-		if (!(type %in% types)) {
-			stop('type must be one of ', paste(types, collapse = ', '))
-		}
-	}
-
-	if (!is.null(direction)) {
-		if (!(direction %in% directions)) {
-			stop('direction must be one of ', paste(direction, collapse = ', '))
-		}
-	}
+	check_type(type)
+	check_direction(direction)
 
 	if (any(buffersize < raster::res(layer))) {
 		warning("buffersize is less than the layer's resolution")
@@ -441,4 +417,25 @@ set_eval_attr <- function(x, layer, type, direction) {
 												type = type,
 												direction = direction
 											))
+}
+
+
+
+###
+check_type <- function(type) {
+	types <- c('categorical', 'binary', 'ordinal', 'real')
+	if (!is.null(type)) {
+		if (!(type %in% types)) {
+			stop('type must be one of ', paste(types, collapse = ', '))
+		}
+	}
+}
+
+check_direction <- function(direction) {
+	directions <- c('positive', 'neutral', 'negative')
+	if (!is.null(direction)) {
+		if (!(direction %in% directions)) {
+			stop('direction must be one of ', paste(direction, collapse = ', '))
+		}
+	}
 }
