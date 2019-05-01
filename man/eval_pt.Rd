@@ -2,10 +2,48 @@
 % Please edit documentation in R/eval.R
 \name{eval_pt}
 \alias{eval_pt}
-\title{Eval layers by point}
+\title{Evaluate camera trap locations by point sampling layers}
 \usage{
-eval_pt(layer, pt, type, direction)
+eval_pt(x, layer, type = NULL, direction = NULL, coords = NULL)
+}
+\arguments{
+\item{x}{data.table or sf points.}
+
+\item{layer}{raster layer.}
+
+\item{type}{one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.}
+
+\item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
+
+\item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}. Expects length = 2 e.g.: c('X', 'Y').}
 }
 \description{
-Eval layers by point
+Using the point locations generated manually or with \code{wildcam} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 }
+\details{
+Type is used to define the data type of the sampled raster layer:
+\itemize{
+\item 'categorical' - one of a limited and usually fixed number of possible values (e.g.: landcover. 1, 2, 3 indicating 'wetland', 'forest', 'agriculture').
+\item 'binary' - also boolean. TRUE/FALSE, presence/absence. (e.g.: raster of wetlands).
+\item 'ordinal' - ranked or ordered data. (e.g.: animal density high/medium/low).
+\item 'real' - real number variable either interval or ratio scale. (e.g.: digital elevation model).
+}
+
+Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by \code{\link[=select_ct]{select_ct()}} for ranking and selecting camera trap locations.
+}
+\examples{
+# Load data
+data(points)
+data(lc)
+
+# Evaluate each point with the land cover layer
+#   type is categorical, and the direction is neutral
+points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = 'neutral')
+
+plot(points["lc"])
+}
+\seealso{
+Other eval: \code{\link{eval_buffer}},
+  \code{\link{eval_dist}}
+}
+\concept{eval}

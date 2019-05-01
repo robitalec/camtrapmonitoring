@@ -2,10 +2,51 @@
 % Please edit documentation in R/eval.R
 \name{eval_buffer}
 \alias{eval_buffer}
-\title{Eval layers by point}
+\title{Evaluate camera trap locations by buffered sampling of layers}
 \usage{
-eval_buffer(layer, pt, buffersize, type, direction)
+eval_buffer(x, layer, buffersize, type, direction, coords = NULL)
+}
+\arguments{
+\item{x}{data.table or sf points.}
+
+\item{layer}{raster layer.}
+
+\item{buffersize}{radius of buffer around each point.}
+
+\item{type}{one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.}
+
+\item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
+
+\item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}. Expects length = 2 e.g.: c('X', 'Y').}
 }
 \description{
-Eval layers by point
+Using the buffered points locations generated manually or with \code{wildcam} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 }
+\details{
+Type is used to define the data type of the sampled raster layer:
+\itemize{
+\item 'categorical' - one of a limited and usually fixed number of possible values (e.g.: landcover. 1, 2, 3 indicating 'wetland', 'forest', 'agriculture').
+\item 'binary' - also boolean. TRUE/FALSE, presence/absence. (e.g.: raster of wetlands).
+\item 'ordinal' - ranked or ordered data. (e.g.: animal density high/medium/low).
+\item 'real' - real number variable either interval or ratio scale. (e.g.: digital elevation model).
+}
+
+The function used to summarize the buffer regions around each point in \code{x} depends on the data \code{type} defined. 'categorical' data should likely be transformed into individual binary layers with \code{\link[=make_binary]{make_binary()}} so \code{mean} can be used to determine proportions in a buffer region.
+
+Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by \code{\link[=select_ct]{select_ct()}} for ranking and selecting camera trap locations.
+}
+\examples{
+# Load data
+data(points)
+data(wetland)
+
+# Evaluate each point with the wetland layer
+points$wetland <- eval_buffer(points, wetland, buffersize = 150,
+      type = 'binary', direction = 'positive')
+
+plot(points["wetland"])
+}
+\seealso{
+Other eval: \code{\link{eval_dist}}, \code{\link{eval_pt}}
+}
+\concept{eval}
