@@ -11,6 +11,8 @@
 
 * rename `dist_to` to `eval_dist` and add attributes like other `eval_*` [#19](https://gitlab.com/robit.a/wildcam/issues/19) and [!12](https://gitlab.com/robit.a/wildcam/merge_requests/12). 
 
+* add basic `data.table` data (DT)
+
 * fix preprocessing and passing to methods with `function_` for `eval_pt`, `eval_dist` (skeleton), `eval_buffer` and `grid_ct`  [!15](https://gitlab.com/robit.a/wildcam/merge_requests/15) 
 
 * rename `make_grid` to `grid_ct` [!14](https://gitlab.com/robit.a/wildcam/merge_requests/14) 
