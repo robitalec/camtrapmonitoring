@@ -12,14 +12,23 @@
 #' A binary raster layer with two values: `TRUE` if pixel matches 'value' provided and `FALSE` if pixel does not match 'value' provided.
 #'
 #' 'value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte', 'lt', 'lte'.
+#'
 #' 'value' may be greater than length 1 if 'fun' is: 'in'.
 #'
 #' @export
 #'
 #' @examples
+#' # fun = 'equals'
 #' data(lc)
 #'
 #' bin <- binary_layer(lc, 212, fun = 'equals')
+#'
+#' image(bin)
+#'
+#' # fun = 'in'
+#' data(lc)
+#'
+#' bin <- binary_layer(lc, c(210, 212), fun = 'in')
 #'
 #' image(bin)
 binary_layer <- function(layer, value, fun) {

@@ -17,6 +17,7 @@ binary_layer(layer, value, fun)
 A binary raster layer with two values: \code{TRUE} if pixel matches 'value' provided and \code{FALSE} if pixel does not match 'value' provided.
 
 'value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte', 'lt', 'lte'.
+
 'value' may be greater than length 1 if 'fun' is: 'in'.
 }
 \description{
