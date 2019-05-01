@@ -1,4 +1,4 @@
-context("test-strat-sample")
+context("test-sample")
 
 # make expected results
 col <- 'density'

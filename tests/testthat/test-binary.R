@@ -1,4 +1,4 @@
-context("test-make-binary")
+context("test-binary")
 
 lc212 <- binary_layer(lc, 212)
 
