@@ -18,9 +18,6 @@
 #'
 #' @export
 #'
-#' @aliases grid_ct
-#' @rdname grid_ct-methods
-#'
 #' @examples
 #' # Point data (sf object)
 #' library(sf)
@@ -49,12 +46,11 @@
 #' DT <- data.table(ID = points$ID, st_coordinates(points))
 #' grid <- grid_ct(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
 grid_ct <- function(x,
-											n,
-											case,
-											distance,
-											id = NULL,
-											coords = NULL) {
-
+										n,
+										case,
+										distance,
+										id = NULL,
+										coords = NULL) {
 	if ((missing(n) & missing(case)) |
 			!missing(n) & !missing(case)) {
 		stop('provide one of n and case and not both.')
@@ -63,11 +59,11 @@ grid_ct <- function(x,
 	if (missing(case)) {
 		tms <- floor(n / 8)
 		s <- seq(1, tms) * distance
-		move <- data.table::CJ(c(0,-s, s), c(0,-s, s))
+		move <- data.table::CJ(c(0, -s, s), c(0, -s, s))
 		move <- move[order(abs(V1) + abs(V2))][1:n]
 	} else if (case == 'queen') {
-		move <- data.table::CJ(c(0,-distance, distance),
-													 c(0,-distance, distance))
+		move <- data.table::CJ(c(0, -distance, distance),
+													 c(0, -distance, distance))
 		move <- move[order(abs(V1), abs(V2))]
 	} else if (case == 'bishop') {
 		move <- rbind(list(0, 0),
@@ -75,8 +71,8 @@ grid_ct <- function(x,
 																 c(-distance, distance)))
 	} else if (case == 'rook') {
 		move <- rbind(list(0, 0),
-									data.table::data.table(c(0, distance, 0,-distance),
-																				 c(distance, 0,-distance, 0)))
+									data.table::data.table(c(0, distance, 0, -distance),
+																				 c(distance, 0, -distance, 0)))
 	} else {
 		stop('case provided must be one of "queen", "rook" or "bishop"')
 	}
@@ -86,21 +82,40 @@ grid_ct <- function(x,
 		stop('distance must be a numeric, greater than 0')
 	}
 
-	UseMethod('grid_ct', x)
+	grid_ct_(
+		x,
+		n = n,
+		case = case,
+		distance = distance,
+		id = id ,
+		coords = coords,
+		move = move
+	)
 }
+
+
+grid_ct_ <- function(x,
+										 n,
+										 case,
+										 distance,
+										 id = NULL,
+										 coords = NULL,
+										 move) {
+	UseMethod('grid_ct_')
+}
+
 
 #' @export
 #' @import data.table
-#' @aliases grid_ct
-#' @rdname grid_ct-methods
-grid_ct.data.table <-
+#' @describeIn grid_ct
+grid_ct_.data.table <-
 	function(x,
 					 n,
 					 case,
 					 distance,
 					 id = NULL,
-					 coords = NULL
-	) {
+					 coords = NULL,
+					 move) {
 		# NSE
 		camID <- NULL
 
@@ -129,17 +144,16 @@ grid_ct.data.table <-
 	}
 
 
-#' @export
-#' @aliases grid_ct
-#' @rdname grid_ct-methods
-grid_ct.sf <- function(x,
-												 n,
-												 case,
-												 distance,
-												 id = NULL,
-												 coords = NULL
-) {
 
+#' @export
+#' @describeIn grid_ct
+grid_ct_.sf <- function(x,
+												n,
+												case,
+												distance,
+												id = NULL,
+												coords = NULL,
+												move) {
 	if (!('geometry' %in% colnames(x))) {
 		stop('geometry column not found in x')
 	}
@@ -148,19 +162,18 @@ grid_ct.sf <- function(x,
 		stop('class of geometry column must be sfc_POINT')
 	}
 
-	r <- x[rep(1:nrow(x),  each = nrow(move)),]
+	r <- x[rep(1:nrow(x),  each = nrow(move)), ]
 
-	out <- sf::st_as_sf(
-		data.frame(r[, colnames(r)[!(grepl('geometry', colnames(r),
-																			 fixed = TRUE))]],
-							 sf::st_coordinates(r) +
-							 	as.matrix(move[rep(1:.N, times = nrow(x))])),
-		coords = c('X', 'Y')
-	)
+	out <- sf::st_as_sf(data.frame(r[, colnames(r)[!(grepl('geometry', colnames(r),
+																												 fixed = TRUE))]],
+																 sf::st_coordinates(r) +
+																 	as.matrix(move[rep(1:.N, times = nrow(x))])),
+											coords = c('X', 'Y'))
 
 	out$camID <- seq.int(1, nrow(out))
 
-	focals <- by(out, out$ID, function(x) min(x$camID))
+	focals <- by(out, out$ID, function(x)
+		min(x$camID))
 	out$focal <- ifelse(out$camID %in% focals, TRUE, FALSE)
 
 	if (is.null(sf::st_crs(x))) {
@@ -169,5 +182,4 @@ grid_ct.sf <- function(x,
 		sf::st_crs(out) <- sf::st_crs(x)
 		return(out)
 	}
-
 }
