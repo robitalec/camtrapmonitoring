@@ -11,7 +11,7 @@ binary_layer(layer, value, fun)
 
 \item{value}{numeric value in 'layer'. see Details.}
 
-\item{fun}{character indicating which function to use to compare layer to value. One of 'equal', 'gt', 'gte', 'lt', 'lte' or 'in'.}
+\item{fun}{character indicating which function to use to compare layer to value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'.}
 }
 \value{
 A binary raster layer with two values: \code{TRUE} if pixel matches 'value' provided and \code{FALSE} if pixel does not match 'value' provided.

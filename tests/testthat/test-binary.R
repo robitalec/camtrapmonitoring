@@ -1,6 +1,6 @@
 context("test-binary")
 
-lc212 <- binary_layer(lc, 212)
+lc212 <- binary_layer(lc, 212, fun = 'equals')
 
 test_that("binary_layer works", {
 
@@ -18,14 +18,19 @@ test_that("binary_layer works", {
 	expect_error(binary_layer(lc),
 							 'value must be provided.')
 
-	expect_error(binary_layer('potato', 212),
+	expect_error(binary_layer('potato', 212, fun = 'equals'),
 							 'layer must be a raster.')
 
-	expect_error(binary_layer(lc, 'potato'),
+	expect_error(binary_layer(lc, 'potato', fun = 'equals'),
 							 'value must be a numeric.')
 
-	expect_error(binary_layer(lc, c(212, 212)),
-							 'value must be of length one.')
+	expect_error(binary_layer(lc, c(212, 210), fun = 'gte'),
+							 'fun must be "in" if length of value is > 1')
+
+	expect_error(binary_layer(lc, 212, fun = 'in'),
+							 'fun must be "equals", "gt", "gte", "lt", or "lte" if length of value is 1')
+
+
 
 })
 
@@ -36,5 +41,5 @@ test_that('binary_layer handles NA', {
 
 	expect_true(NA %in% raster::unique(mlc, na.last = TRUE))
 
-	expect_true(NA %in% raster::unique(binary_layer(mlc, 212), na.last = TRUE))
+	expect_true(NA %in% raster::unique(binary_layer(mlc, 212, fun = 'equals'), na.last = TRUE))
 })
