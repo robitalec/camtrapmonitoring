@@ -298,6 +298,8 @@ eval_buffer_.sf <-
 #'
 #' @return Vector of distances between x and the nearest feature in layer.
 #'
+#' Note attributes are returned like by `eval_pt` and `eval_buffer`. The `type` attribute for distance to a feature (layer) is "real" and the `direction` is left for the user to provide.
+#'
 #' @family eval
 #' @export
 #'
@@ -318,7 +320,6 @@ eval_buffer_.sf <-
 eval_dist <-
 	function(x,
 					 layer,
-					 type = NULL,
 					 direction = NULL,
 					 coords = NULL,
 					 crs = NULL) {
@@ -326,20 +327,18 @@ eval_dist <-
 			stop('please provide both x and layer')
 		}
 
-		if (is.null(type) | is.null(direction)) {
+		if (is.null(direction)) {
 			warning(
-				'missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.'
+				'missing direction. it is recommended to provide these for subsequent selection of camera trap locations.'
 			)
 		}
 
-	check_type(type)
 	check_direction(direction)
 
 		# TODO: check types of x and layer
 		eval_dist_(
 			x = x,
 			layer = layer,
-			type = type,
 			direction = direction,
 			coords = coords,
 			crs = crs
@@ -351,7 +350,6 @@ eval_dist <-
 eval_dist_ <-
 	function(x,
 					 layer,
-					 type = NULL,
 					 direction = NULL,
 					 coords = NULL,
 					 crs = NULL) {
@@ -363,7 +361,6 @@ eval_dist_ <-
 eval_dist_.sf <-
 	function(x,
 					 layer,
-					 type = NULL,
 					 direction = NULL,
 					 coords = NULL,
 					 crs = NULL) {
@@ -375,7 +372,7 @@ eval_dist_.sf <-
 			sf::st_distance(x, layer[sf::st_nearest_feature(x, layer),],
 											by_element = TRUE),
 			layer = deparse(substitute(layer)),
-			type = type,
+			type = 'real',
 			direction = direction
 		)[]
 
@@ -386,7 +383,6 @@ eval_dist_.sf <-
 eval_dist_.data.table <-
 	function(x,
 					 layer,
-					 type = NULL,
 					 direction = NULL,
 					 coords = NULL,
 					 crs = NULL) {
@@ -405,7 +401,7 @@ eval_dist_.data.table <-
 											layer[sf::st_nearest_feature(xsf, layer), ],
 											by_element = TRUE),
 			layer = deparse(substitute(layer)),
-			type = type,
+			type = 'real',
 			direction = direction
 		)[]
 	}

@@ -4,15 +4,12 @@
 \alias{eval_dist}
 \title{Evaluate distance-to}
 \usage{
-eval_dist(x, layer, type = NULL, direction = NULL, coords = NULL,
-  crs = NULL)
+eval_dist(x, layer, direction = NULL, coords = NULL, crs = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}
 
 \item{layer}{object of class sfg, sfc or sf.}
-
-\item{type}{one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.}
 
 \item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
 
@@ -20,6 +17,8 @@ eval_dist(x, layer, type = NULL, direction = NULL, coords = NULL,
 }
 \value{
 Vector of distances between x and the nearest feature in layer.
+
+Note attributes are returned like by \code{eval_pt} and \code{eval_buffer}. The \code{type} attribute for distance to a feature (layer) is "real" and the \code{direction} is left for the user to provide.
 }
 \description{
 Evaluates locations in x by measuring the distance to the nearest feature in layer.

@@ -145,7 +145,7 @@ test_that("eval_buffer, sf", {
 
 
 ## eval_dist
-result <- eval_dist(points, water)
+result <- eval_dist(points, water, type = '')
 inverse <- eval_dist(water, points)
 inside <- eval_dist(points, densitygrid)
 
