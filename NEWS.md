@@ -1,4 +1,3 @@
-# wildcam 0.6.7.9000 (2019-05-29)
 * rename `dist_to` to `eval_dist` and add attributes like other `eval_*` [#19](https://gitlab.com/robit.a/wildcam/issues/19) and [!12](https://gitlab.com/robit.a/wildcam/merge_requests/12). 
 
 
