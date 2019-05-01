@@ -73,6 +73,22 @@ plot(grid)
 ```
 
 
+## Create binary layers
+```{r}
+# Load data
+data(lc)
+
+# 
+binEq <- binary_layer(layer = lc, value = 212, fun = 'equals')
+
+binGt <- binary_layer(layer = lc, value = 200, fun = 'gt')
+
+binIn <- binary_layer(layer = lc, value = c(202, 204), fun = 'in')
+
+plot(binEq)
+plot(binGt)
+plot(binIn)
+```
 
 
 ## Evaluate points
