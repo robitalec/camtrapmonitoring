@@ -1,6 +1,6 @@
 Package: wildcam
 Title: Select and Evaluate Camera Trap Locations
-Version: 0.6.2.9000
+Version: 0.7.2.9000
 Authors@R: 
     person(given = "Alec L.",
            family = "Robitaille",

@@ -2,7 +2,7 @@ context("test-select-ct")
 
 # prep data.table
 pts <-
-	strat_sample(
+	sample_ct(
 		densitygrid,
 		n = 5,
 		type = 'random',
@@ -45,7 +45,7 @@ sel <- select_ct(
 
 # prep sf
 sfpt <-
-	strat_sample(
+	sample_ct(
 		densitygrid,
 		n = 5,
 		type = 'random',
@@ -129,4 +129,26 @@ test_that("select_works, sf", {
 	expect_true(inherits(sfsel, 'sf'))
 
 	expect_true(nrow(sfsel) <= (n * length(unique(pts$density))))
+})
+
+
+test_that("rank works", {
+	# expect_true()
+	# expect taht rank with length 2 works
+
+	# expect that rank with no direction returns error
+
+	pts[, potato := 'potato']
+
+	expect_error(
+		select_ct(
+			pts,
+			n,
+			rank = c('potato'),
+			sub = list(lc = 212),
+			by = 'density'
+		),
+		'columns in rank do not have direction attribute, did you use eval_*?'
+	)
+
 })

@@ -6,6 +6,27 @@
 
 # wildcam 0.6.1.9000 (2019-02-27)
 * Return 'camID' with `make_grid` [!10](https://gitlab.com/robit.a/wildcam/merge_requests/10)
+# wildcam 0.7.2.9000 (2019-05-30)
+* rename `scale_roi` to `scale_layer` [#22](https://gitlab.com/robit.a/wildcam/issues/22). 
+
+
+# wildcam 0.7.1.9000 (2019-05-30)
+* rename `strat_sample` to `sample_ct` [#21](https://gitlab.com/robit.a/wildcam/issues/21) and [!17](https://gitlab.com/robit.a/wildcam/merge_requests/17). 
+
+# wildcam 0.7.0.9000 (2019-05-30)
+* rename `dist_to` to `eval_dist` and add attributes like other `eval_*` [#19](https://gitlab.com/robit.a/wildcam/issues/19) and [!12](https://gitlab.com/robit.a/wildcam/merge_requests/12). 
+
+* fix preprocessing and passing to methods with `function_` for `eval_pt`, `eval_dist` (skeleton), `eval_buffer` and `grid_ct`  [!15](https://gitlab.com/robit.a/wildcam/merge_requests/15)
+
+* rename `make_grid` to `grid_ct` [!14](https://gitlab.com/robit.a/wildcam/merge_requests/14)
+
+* return focal identifier with `make_grid`. 
+
+* fix 'camID' returned by sf method incorrectly. 
+
+* fix lack of error when attributes are null [#20](https://gitlab.com/robit.a/wildcam/issues/20).
+
+* return 'camID' with `make_grid` [!10](https://gitlab.com/robit.a/wildcam/merge_requests/10).
 
 
 # wildcam 0.6.0.9000 (2019-02-26)

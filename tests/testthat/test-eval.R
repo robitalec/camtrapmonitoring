@@ -111,7 +111,7 @@ test_that("eval_buffer, data.table", {
 		eval_buffer(x = DT, layer = lc, buffersize = 50,
 								type = 'categorical', direction = 'neutral',
 								coords = 'X'),
-		'coords of length 2 must be provided if x is a data.table'
+		'coords must be a character vector of length 2'
 	)
 
 
@@ -140,4 +140,52 @@ test_that("eval_buffer, sf", {
 								type = 'categorical', direction = 'neutral'),
 		'class of geometry column must be sfc_POINT'
 	)
+})
+
+
+
+## eval_dist
+result <- eval_dist(points, water, direction = 'positive')
+inverse <- eval_dist(water, points, direction = 'positive')
+inside <- eval_dist(points, densitygrid, direction = 'positive')
+
+
+test_that('eval_dist returns expected', {
+	expect_equal(typeof(result), 'double')
+	expect_equal(class(result), 'units')
+
+	expect_equal(length(result), nrow(points))
+	expect_equal(length(inverse), nrow(water))
+	expect_equal(length(inside), nrow(points))
+})
+
+
+test_that('eval_dist works from point to polygon', {
+	expect_silent(eval_dist(water, points, direction = 'positive'))
+})
+
+test_that('eval_dist works from polygon to point', {
+	expect_silent(eval_dist(points, water, direction = 'positive'))
+
+})
+
+test_that('eval_dist doesnt return negative values', {
+	# since all points are within the densitygrid,
+	# this should be all zeroes
+	expect_true(all(result > units::set_units(0, m)))
+
+	expect_true(all(inside == units::set_units(0, m)))
+})
+
+
+
+test_that('eval_dist handles NAs', {
+	expect_error(eval_dist(x = NULL, layer = points),
+							 'please provide both x and layer')
+
+	expect_error(eval_dist(x = points, layer = NULL),
+							 'please provide both x and layer')
+
+	expect_error(eval_dist(x = NULL, layer = NULL),
+							 'please provide both x and layer')
 })

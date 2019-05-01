@@ -6,10 +6,10 @@
 #'
 #' `sub` is a named list used to subset the input `x`. It should follow the form `list(colname = value)`or `list(colname = c(values, values))`.
 #'
-#' `by` is a character vector of column names in `x` to group camera trap locations and rank. This should match (at least) the column provided to `strat_sample`, if it was used to generate potential locations.
+#' `by` is a character vector of column names in `x` to group camera trap locations and rank. This should match (at least) the column provided to `sample_ct`, if it was used to generate potential locations.
 #'
 #'
-#' @inheritParams make_grid
+#' @inheritParams grid_ct
 #' @param n number of locations to select. if `by` is provided, `select_ct` will select `n` for each group defined in `by`.
 #' @param rank character vector of column name(s) in `x` to rank rows.
 #' @param sub a named list with the form `list(colname = value)`. See Details.
@@ -29,7 +29,7 @@
 #' data(wetland)
 #'
 #' # Stratified random sampling
-#' pts <- strat_sample(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
+#' pts <- sample_ct(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
 #'
 #' # Evaluate layers
 #' pts[, lc := eval_pt(.SD, lc, type = 'categorical', direction = 'neutral', coords = c('X', 'Y'))]
@@ -63,10 +63,7 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 		warning('rank, sub and by are all NULL... selecting n rows  arbitrarily')
 	}
 
-
-
 	directions <- vapply(rank, function(col) parse_directions(x, col), 1L)
-
 
 	if (inherits(x, 'sf')) {
 		t <- 'sf'
@@ -101,10 +98,13 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 }
 
 
-
+###
 parse_directions <- function(x, col) {
 	d <- attr(x[[col]], 'wildcam')[['direction']]
-	if (d == 'positive') {
+
+	if (is.null(d)) {
+		stop('columns in rank do not have direction attribute, did you use eval_*?')
+	} else if (d == 'positive') {
 		1L
 	} else if (d == 'negative') {
 		-1L
