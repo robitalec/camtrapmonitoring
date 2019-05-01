@@ -51,6 +51,10 @@ grid_ct <- function(x,
 										distance,
 										id = NULL,
 										coords = NULL) {
+	# NSE
+	X <- Y <- NULL
+
+
 	if ((missing(n) & missing(case)) |
 			!missing(n) & !missing(case)) {
 		stop('provide one of n and case and not both.')
@@ -59,20 +63,20 @@ grid_ct <- function(x,
 	if (missing(case)) {
 		tms <- floor(n / 8)
 		s <- seq(1, tms) * distance
-		move <- data.table::CJ(c(0, -s, s), c(0, -s, s))
-		move <- move[order(abs(V1) + abs(V2))][1:n]
+		move <- data.table::CJ(X = c(0, -s, s), Y = c(0, -s, s))
+		move <- move[order(abs(X) + abs(Y))][1:n]
 	} else if (case == 'queen') {
-		move <- data.table::CJ(c(0, -distance, distance),
-													 c(0, -distance, distance))
-		move <- move[order(abs(V1), abs(V2))]
+		move <- data.table::CJ(X = c(0, -distance, distance),
+													 Y = c(0, -distance, distance))
+		move <- move[order(abs(X), abs(Y))]
 	} else if (case == 'bishop') {
 		move <- rbind(list(0, 0),
-									data.table::CJ(c(-distance, distance),
-																 c(-distance, distance)))
+									data.table::CJ(X = c(-distance, distance),
+																 Y = c(-distance, distance)))
 	} else if (case == 'rook') {
 		move <- rbind(list(0, 0),
-									data.table::data.table(c(0, distance, 0, -distance),
-																				 c(distance, 0, -distance, 0)))
+									data.table::data.table(X = c(0, distance, 0, -distance),
+																				 Y = c(distance, 0, -distance, 0)))
 	} else {
 		stop('case provided must be one of "queen", "rook" or "bishop"')
 	}
@@ -133,9 +137,9 @@ grid_ct_.data.table <-
 
 		out <- x[rep(1:.N, each = nrow(move))]
 		set(out, j = coords[[1]],
-				value = out[[coords[[1]]]] + as.double(move$V1))
+				value = out[[coords[[1]]]] + as.double(move$X))
 		set(out, j = coords[[2]],
-				value = out[[coords[[2]]]] + as.double(move$V2))
+				value = out[[coords[[2]]]] + as.double(move$Y))
 		out[, camID := .I]
 
 		focals <- out[, .(camID = min(camID)), id]
