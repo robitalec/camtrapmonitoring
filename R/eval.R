@@ -340,14 +340,14 @@ eval_buffer_.sf <-
 
 #' Evaluate distance-to
 #'
-#' Evaluates locations in x by measuring the distance to the nearest feature in y.
+#' Evaluates locations in x by measuring the distance to the nearest feature in layer.
 #'
-#' To avoid the large overhead of creating distance to rasters for small/medium number of sample points, this vector-based distance to determines the nearest feature (y) to each x then calculates the distance between each pair.
+#' To avoid the large overhead of creating distance to rasters for small/medium number of sample points, this vector-based distance to determines the nearest feature (layer) to each x then calculates the distance between each pair.
 #'
 #' @inheritParams eval_pt
-#' @param y object of class sfg, sfc or sf.
+#' @param layer object of class sfg, sfc or sf.
 #'
-#' @return Vector of distances between x and the nearest feature in y.
+#' @return Vector of distances between x and the nearest feature in layer.
 #'
 #' @family eval
 #' @export
@@ -366,30 +366,30 @@ eval_buffer_.sf <-
 #' alloc.col(DT)
 #'
 #' DT[, distWater := eval_dist(.SD, water, coords = c('X', 'Y', crs = sf::st_crs(water)))]
-eval_dist <- function(x, y, coords = NULL, crs = NULL) {
-	if (is.null(x) | is.null(y)) {
-		stop('please provide both x and y')
+eval_dist <- function(x, layer, coords = NULL, crs = NULL) {
+	if (is.null(x) | is.null(layer)) {
+		stop('please provide both x and layer')
 	}
 
-	# check types of x and y
-	eval_dist_(x = x, y = y, coords = coords, crs = crs)
+	# TODO: check types of x and layer
+	eval_dist_(x = x, layer = layer, coords = coords, crs = crs)
 }
 
 #' @export
 #' @describeIn eval_dist
-eval_dist_ <- function(x, y, coords = NULL, crs = NULL) {
+eval_dist_ <- function(x, layer, coords = NULL, crs = NULL) {
 	UseMethod('eval_dist_', x)
 }
 
 #' @export
 #' @describeIn eval_dist
-eval_dist_.sf <- function(x, y, coords = NULL, crs = NULL) {
+eval_dist_.sf <- function(x, layer, coords = NULL, crs = NULL) {
 	if (!(is.null(coords))) {
 		warning('coords ignored since x is an sf object')
 	}
 
 
-	sf::st_distance(x, y[sf::st_nearest_feature(x, y), ],
+	sf::st_distance(x, layer[sf::st_nearest_feature(x, layer), ],
 									by_element = TRUE)
 }
 
@@ -397,7 +397,7 @@ eval_dist_.sf <- function(x, y, coords = NULL, crs = NULL) {
 #' @describeIn eval_dist
 eval_dist_.data.table <-
 	function(x,
-					 y,
+					 layer,
 					 coords = NULL,
 					 crs = NULL) {
 
@@ -412,7 +412,7 @@ eval_dist_.data.table <-
 
 		sf <- sf::st_as_sf(x, coords = coords, crs = crs)
 		sf::st_distance(xsf,
-										y[sf::st_nearest_feature(xsf, y), ],
+										layer[sf::st_nearest_feature(xsf, layer), ],
 										by_element = TRUE)
 }
 
