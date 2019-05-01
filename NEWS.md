@@ -1,23 +1,16 @@
+# wildcam 0.7.0.9000 (2019-05-30)
 * rename `dist_to` to `eval_dist` and add attributes like other `eval_*` [#19](https://gitlab.com/robit.a/wildcam/issues/19) and [!12](https://gitlab.com/robit.a/wildcam/merge_requests/12). 
 
-# wildcam 0.6.7.9000 (2019-05-30)
 * fix preprocessing and passing to methods with `function_` for `eval_pt`, `eval_dist` (skeleton), `eval_buffer` and `grid_ct`  [!15](https://gitlab.com/robit.a/wildcam/merge_requests/15)
 
-
-# wildcam 0.6.6.9000 (2019-05-29)
 * rename `make_grid` to `grid_ct` [!14](https://gitlab.com/robit.a/wildcam/merge_requests/14)
 
-
-# wildcam 0.6.5.9000 (2019-03-01)
 * return focal identifier with `make_grid`. 
 
-# wildcam 0.6.4.9000 (2019-03-01)
 * fix 'camID' returned by sf method incorrectly. 
 
-# wildcam 0.6.3.9000 (2019-03-01)
 * fix lack of error when attributes are null [#20](https://gitlab.com/robit.a/wildcam/issues/20).
 
-# wildcam 0.6.1.9000 (2019-02-27)
 * return 'camID' with `make_grid` [!10](https://gitlab.com/robit.a/wildcam/merge_requests/10).
 
 
