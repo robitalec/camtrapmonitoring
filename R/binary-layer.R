@@ -19,13 +19,21 @@
 #' bin <- binary_layer(lc, 212)
 #'
 #' image(bin)
-binary_layer <- function(layer, value) {
+binary_layer <- function(layer, value, fun) {
 	if (missing(layer)) {
 		stop('layer must be provided.')
 	}
 
 	if (missing(value)) {
 		stop('value must be provided.')
+	}
+
+	if (missing(fun)) {
+		if (length(value) == 1) {
+			message('argument "fun" is missing, defaulting to "equals"')
+		} else if (length(value) > 1) {
+			message('argument "fun" is missing, defaulting to "in"')
+		}
 	}
 
 	if (!inherits(layer, 'Raster')) {
