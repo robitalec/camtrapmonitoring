@@ -6,7 +6,7 @@
 #'
 #' @inheritParams eval_pt
 #' @param value numeric value in 'layer'. see Details.
-#' @param fun character indicating which function to use to compare layer to value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'.
+#' @param fun character indicating which function to use to compare layer to value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'. Default: 'equals'.
 #'
 #' @return
 #' A binary raster layer with two values: `TRUE` if pixel matches 'value' provided and `FALSE` if pixel does not match 'value' provided.
@@ -31,7 +31,7 @@
 #' bin <- binary_layer(lc, c(210, 212), fun = 'in')
 #'
 #' image(bin)
-binary_layer <- function(layer, value, fun) {
+binary_layer <- function(layer, value, fun = 'equals') {
 	if (missing(layer)) {
 		stop('layer must be provided.')
 	}

@@ -4,14 +4,14 @@
 \alias{binary_layer}
 \title{Binary layer}
 \usage{
-binary_layer(layer, value, fun)
+binary_layer(layer, value, fun = "equals")
 }
 \arguments{
 \item{layer}{raster layer.}
 
 \item{value}{numeric value in 'layer'. see Details.}
 
-\item{fun}{character indicating which function to use to compare layer to value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'.}
+\item{fun}{character indicating which function to use to compare layer to value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'. Default: 'equals'.}
 }
 \value{
 A binary raster layer with two values: \code{TRUE} if pixel matches 'value' provided and \code{FALSE} if pixel does not match 'value' provided.
@@ -27,9 +27,17 @@ Make a binary raster layer from input 'layer'.
 Find all pixels matching the 'value' provided given the 'fun' and return a binary raster.
 }
 \examples{
+# fun = 'equals'
 data(lc)
 
 bin <- binary_layer(lc, 212, fun = 'equals')
+
+image(bin)
+
+# fun = 'in'
+data(lc)
+
+bin <- binary_layer(lc, c(210, 212), fun = 'in')
 
 image(bin)
 }
