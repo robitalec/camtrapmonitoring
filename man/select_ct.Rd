@@ -26,6 +26,8 @@ Select camera trap locations by subsetting (\code{sub}) and ranking (\code{rank}
 \code{sub} is a named list used to subset the input \code{x}. It should follow the form \code{list(colname = value)}or \code{list(colname = c(values, values))}.
 
 \code{by} is a character vector of column names in \code{x} to group camera trap locations and rank. This should match (at least) the column provided to \code{sample_ct}, if it was used to generate potential locations.
+
+Note: NAs are omitted from input x before select camera trap locations.
 }
 \examples{
 # Packages
