@@ -391,7 +391,7 @@ eval_dist_.data.table <-
 
 
 		if (is.null(crs)) {
-			warning('crs must be provided if x is a data.table')
+			error('crs must be provided if x is a data.table')
 		}
 
 		xsf <- sf::st_as_sf(x, coords = coords, crs = crs)
