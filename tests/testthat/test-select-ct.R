@@ -75,8 +75,8 @@ sfpt$wetland <- eval_buffer(
 n <- 1
 
 sfsel <- select_ct(
-	sfpt,
-	n,
+	x = sfpt,
+	n = n,
 	rank = c('wetland'),
 	sub = list(lc = 212),
 	by = 'density'
@@ -84,7 +84,7 @@ sfsel <- select_ct(
 
 
 # tests
-test_that("select_works, general", {
+test_that("select works, general", {
 	expect_error(select_ct(),
 		'x is required. either a data.table or sf object.')
 
@@ -100,19 +100,19 @@ test_that("select_works, general", {
 
 	expect_warning(
 		select_ct(
-			sfpt,
-			n,
+			x = sfpt,
+			n = n,
 			rank = NULL,
 			sub = NULL,
 			by = NULL
 		),
-		'rank, sub and by are all NULL... selecting n rows  arbitrarily')
+		'rank, sub and by are all NULL... selecting first n rows  arbitrarily')
 
 	expect_error(
 		select_ct(
 			sfpt,
 			n,
-			rank = c('lc')
+			rank = 'lc'
 		),
 		'cannot rank columns with a neutral direction'
 	)
@@ -134,7 +134,7 @@ test_that("select_works, sf", {
 
 test_that("rank works", {
 	# expect_true()
-	# expect taht rank with length 2 works
+	# expect that rank with length 2 works
 
 	# expect that rank with no direction returns error
 
