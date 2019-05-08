@@ -62,7 +62,13 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 	}
 
 	if (is.null(rank) & is.null(sub) & is.null(by)) {
-		warning('rank, sub and by are all NULL... selecting n rows  arbitrarily')
+		warning('rank, sub and by are all NULL... selecting first n rows arbitrarily')
+	}
+
+	if (any(!(vapply(c(rank, by), is.character, FUN.VALUE = TRUE)))) {
+		stop('by must be a character or character vector.')
+	}
+
 	if (any(!(c(rank, names(sub), by) %in% colnames(x)))) {
 		stop('column names in rank, sub and/or not found in x')
 	}
