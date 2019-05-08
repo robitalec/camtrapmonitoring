@@ -49,11 +49,11 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 	# NAs detected, removing
 	# na.omit
 
-	if (missing(x)) {
+	if (missing(x) | is.null(x)) {
 		stop('x is required. either a data.table or sf object.')
 	}
 
-	if (missing(n)) {
+	if (missing(n) | is.null(x)) {
 		stop('n is required.')
 	}
 
