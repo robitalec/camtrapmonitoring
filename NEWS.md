@@ -1,3 +1,7 @@
+# wildcam 0.8.1.9000 (2019-06-08)
+* improved `select_ct` checks and tests
+
+
 # wildcam 0.8.0.9000 (2019-06-01) 
 
 * added function `binary_layer` for making binary raster layers with equi and non-equi functions (e.g. =, >, <=, %in%) [!11](https://gitlab.com/robit.a/wildcam/merge_requests/11).
