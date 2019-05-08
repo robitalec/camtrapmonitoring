@@ -38,15 +38,15 @@ eval_pt <-
 					 type = NULL,
 					 direction = NULL,
 					 coords = NULL) {
-		if (missing(x) | is.null(x)) {
+		if (missing(x) || is.null(x)) {
 			stop('x must be provided. either data.table or sf point object.')
 		}
 
-		if (missing(layer) | is.null(layer) | !inherits(layer, 'Raster')) {
+		if (missing(layer) || is.null(layer) || !inherits(layer, 'Raster')) {
 			stop('layer must be provided. expected type is raster.')
 		}
 
-		if (is.null(type) | is.null(direction)) {
+		if (is.null(type) || is.null(direction)) {
 			warning(
 				'missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.'
 			)
@@ -159,15 +159,15 @@ eval_buffer <-
 					 type,
 					 direction,
 					 coords = NULL) {
-	if (missing(x) | is.null(x)) {
+	if (missing(x) || is.null(x)) {
 		stop('x must be provided. either data.table or sf point object.')
 	}
 
-	if (missing(layer) | is.null(layer) | !inherits(layer, 'Raster')) {
+	if (missing(layer) || is.null(layer) || !inherits(layer, 'Raster')) {
 		stop('layer must be provided. expected type is raster.')
 	}
 
-	if (is.null(type) | is.null(direction)) {
+	if (is.null(type) || is.null(direction)) {
 		warning('missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.')
 	}
 
@@ -323,7 +323,7 @@ eval_dist <-
 					 direction = NULL,
 					 coords = NULL,
 					 crs = NULL) {
-		if (missing(x) | missing(layer) | is.null(x) | is.null(layer)) {
+		if (missing(x) || missing(layer) || is.null(x) || is.null(layer)) {
 			stop('please provide both x and layer')
 		}
 

@@ -49,19 +49,19 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 	# NAs detected, removing
 	# na.omit
 
-	if (missing(x) | is.null(x)) {
+	if (missing(x) || is.null(x)) {
 		stop('x is required. either a data.table or sf object.')
 	}
 
-	if (missing(n) | is.null(x)) {
+	if (missing(n) || is.null(x)) {
 		stop('n is required.')
 	}
 
-	if (!is.numeric(n) | n < 1) {
+	if (!is.numeric(n) || n < 1) {
 		stop('n must be a positive numeric.')
 	}
 
-	if (is.null(rank) & is.null(sub) & is.null(by)) {
+	if (is.null(rank) && is.null(sub) && is.null(by)) {
 		warning('rank, sub and by are all NULL... selecting first n rows arbitrarily')
 	}
 
