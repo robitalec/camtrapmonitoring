@@ -208,4 +208,35 @@ test_that("by can be greater than length 1", {
 
 
 })
+
+
+test_that("columns must be in x", {
+	pts[, potato := NULL]
+
+	expect_error(
+		select_ct(
+			x = pts,
+			n = n,
+			rank = c('potato')
+		),
+		'column names in rank, sub and/or not found in x'
+	)
+
+	expect_error(
+		select_ct(
+			x = pts,
+			n = n,
+			sub = list(potato = 212)
+		),
+		'column names in rank, sub and/or not found in x'
+	)
+
+	expect_error(
+		select_ct(
+			x = pts,
+			n = n,
+			by = c('potato', 'density')
+		),
+		'column names in rank, sub and/or not found in x'
+	)
 })

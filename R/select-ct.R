@@ -63,6 +63,8 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 
 	if (is.null(rank) & is.null(sub) & is.null(by)) {
 		warning('rank, sub and by are all NULL... selecting n rows  arbitrarily')
+	if (any(!(c(rank, names(sub), by) %in% colnames(x)))) {
+		stop('column names in rank, sub and/or not found in x')
 	}
 
 	directions <- vapply(rank, function(col) parse_directions(x, col), 1L)
