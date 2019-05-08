@@ -106,7 +106,7 @@ test_that("select works, general", {
 			sub = NULL,
 			by = NULL
 		),
-		'rank, sub and by are all NULL... selecting first n rows  arbitrarily')
+		'rank, sub and by are all NULL... selecting first n rows arbitrarily')
 
 	expect_error(
 		select_ct(
@@ -151,4 +151,27 @@ test_that("rank works", {
 		'columns in rank do not have direction attribute, did you use eval_*?'
 	)
 
+})
+
+
+test_that("sub can be null", {
+	expect_silent(select_ct(
+		x = pts,
+		n = n,
+		rank = c('wetland'),
+		# sub = list(lc = 212),
+		by = 'density'
+	))
+
+	expect_silent(select_ct(
+		x = pts,
+		n = n,
+		rank = c('wetland'),
+		sub = NULL,
+		by = 'density'
+	))
+
+})
+	expect_silent(select_ct(
+		x = pts,
 })
