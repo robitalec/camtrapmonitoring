@@ -172,6 +172,40 @@ test_that("sub can be null", {
 	))
 
 })
-	expect_silent(select_ct(
+
+
+test_that("by can be greater than length 1", {
+	# If n is 1, unique in pts should be the same as sel
+	n <- 1
+
+	sel <-
+		select_ct(
+			x = pts,
+			n = n,
+			rank = c('wetland'),
+			by = c('lc', 'density')
+		)
+	expect_equal(sel[, .(lc, density)],
+							 unique(pts[, .(lc, density)]))
+
+
+	# Fake another by column
+	pts[, potato := rep(c('russet', 'yukongold'), length.out = .N)]
+
+	n <- 1
+	sel <- select_ct(
 		x = pts,
+		n = n,
+		rank = c('wetland'),
+		sub = list(lc = 212),
+		by = c('potato', 'density')
+	)
+
+	expect_equal(
+		uniqueN(sel[, .(potato, density)]),
+		uniqueN(pts[lc == 212, .(potato, density)])
+	)
+
+
+})
 })
