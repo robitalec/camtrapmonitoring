@@ -39,7 +39,7 @@ sel <- select_ct(
 	pts,
 	n,
 	rank = c('wetland'),
-	sub = list(lc = 212),
+	sub = expression(lc == 212),
 	by = 'density'
 )
 
@@ -78,7 +78,7 @@ sfsel <- select_ct(
 	x = sfpt,
 	n = n,
 	rank = c('wetland'),
-	sub = list(lc = 212),
+	sub = expression(lc == 212),
 	by = 'density'
 )
 
@@ -145,7 +145,7 @@ test_that("rank works", {
 			pts,
 			n,
 			rank = c('potato'),
-			sub = list(lc = 212),
+			sub = expression(lc == 212),
 			by = 'density'
 		),
 		'columns in rank do not have direction attribute, did you use eval_*?'
@@ -197,7 +197,7 @@ test_that("by can be greater than length 1", {
 		x = pts,
 		n = n,
 		rank = c('wetland'),
-		sub = list(lc = 212),
+		sub = expression(lc == 212),
 		by = c('potato', 'density')
 	)
 
@@ -226,15 +226,6 @@ test_that("columns must be in x", {
 		select_ct(
 			x = pts,
 			n = n,
-			sub = list(potato = 212)
-		),
-		'column names in rank and/or by not found in x.'
-	)
-
-	expect_error(
-		select_ct(
-			x = pts,
-			n = n,
 			by = c('potato', 'density')
 		),
 		'column names in rank and/or by not found in x.'
@@ -243,6 +234,7 @@ test_that("columns must be in x", {
 
 
 test_that('sub accepts expressions', {
+	# Has to be an expression
 	expect_error(
 		select_ct(
 		pts,
@@ -278,6 +270,18 @@ test_that('sub accepts expressions', {
 			sub = 'potato',
 			by = 'density'
 		), 'sub must be an expression.')
+
+	# Has to be a == not =
+	expect_error(
+		select_ct(
+			pts,
+			n,
+			rank = c('wetland'),
+			sub = expression(lc = 212),
+			by = 'density'
+		), 'check expression provided to sub, found "=", instead of "=="')
+
+
 
 
 })
