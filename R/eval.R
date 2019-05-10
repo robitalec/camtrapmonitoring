@@ -295,6 +295,8 @@ eval_buffer_.sf <-
 #'
 #' @inheritParams eval_pt
 #' @param layer object of class sfg, sfc or sf.
+#' @param crs coordinate reference system of the coordinates in x, if x is a data.table. Either an integer with the EPSG code, or character with proj4string (see the 'crs' argument in \link[sf]{st_sf}).
+#'
 #'
 #' @return Vector of distances between x and the nearest feature in layer.
 #'
