@@ -13,7 +13,7 @@ select_ct(x, n, rank = NULL, sub = NULL, by = NULL)
 
 \item{rank}{character vector of column name(s) in \code{x} to rank rows.}
 
-\item{sub}{a named list with the form \code{list(colname = value)}. See Details.}
+\item{sub}{an expression. See Details.}
 
 \item{by}{character vector of column name(s) in \code{x} to form groups. if \code{by} is provided, ranking and subsetting will occur within in each group.}
 }
@@ -23,7 +23,7 @@ Select camera trap locations by subsetting (\code{sub}) and ranking (\code{rank}
 \details{
 \code{n} is the number of locations to select. When groups are defined with \code{by}, the number of locations will be selected for each group.
 
-\code{sub} is a named list used to subset the input \code{x}. It should follow the form \code{list(colname = value)}or \code{list(colname = c(values, values))}.
+\code{sub} is an expression used to subset the input \code{x}. It should not be quoted and follow the form described by \link[data.table]{data.table}'s argument \code{i}. Examples in Details.
 
 \code{by} is a character vector of column names in \code{x} to group camera trap locations and rank. This should match (at least) the column provided to \code{sample_ct}, if it was used to generate potential locations.
 
