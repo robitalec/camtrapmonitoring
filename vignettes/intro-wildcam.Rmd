@@ -141,6 +141,6 @@ pts[, wetland := eval_buffer(.SD, wetland, 100, 'binary', 'negative', coords = c
 # Select n locations
 n <- 1
 
-sel <- select_ct(pts, n, rank = c('wetland'), sub = list(lc = 212), by = 'density')
+sel <- select_ct(pts, n, rank = c('wetland'), sub = expression(lc == 212), by = 'density')
 
 ```
