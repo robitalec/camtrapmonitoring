@@ -33,6 +33,10 @@
 #' plot(densitygrid, reset = FALSE)
 #' plot(pts$geometry, add = TRUE)
 sample_ct <- function(x, n, type, col, returnDT = FALSE) {
+	# NSE
+	geometry <- NULL
+
+
 	if (!(col %in% colnames(x))) {
 		stop('strata column not found in x')
 	}
@@ -195,7 +199,7 @@ grid_ct_.data.table <-
 					 coords = NULL,
 					 move) {
 		# NSE
-		camID <- focal <- NULL
+		camID <- focal <- . <- NULL
 
 		if (is.null(id) | is.null(coords)) {
 			stop('id and coords must be provided with x is a data.table')
