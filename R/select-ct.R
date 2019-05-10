@@ -4,7 +4,7 @@
 #'
 #' `n` is the number of locations to select. When groups are defined with `by`, the number of locations will be selected for each group.
 #'
-#' `sub` is a named list used to subset the input `x`. It should follow the form `list(colname = value)`or `list(colname = c(values, values))`.
+#' `sub` is an expression used to subset the input `x`. It should not be quoted and follow the form described by \link[data.table]{data.table}'s argument `i`. **Note:** if the column provided has a unit (e.g.: those returned by `eval_dist`), the expression should use those units as well. For example, `sub = expression(distwater < as_units(50, 'm')`.
 #'
 #' `by` is a character vector of column names in `x` to group camera trap locations and rank. This should match (at least) the column provided to `sample_ct`, if it was used to generate potential locations.
 #'
@@ -14,7 +14,7 @@
 #' @inheritParams grid_ct
 #' @param n number of locations to select. if `by` is provided, `select_ct` will select `n` for each group defined in `by`.
 #' @param rank character vector of column name(s) in `x` to rank rows.
-#' @param sub a named list with the form `list(colname = value)`. See Details.
+#' @param sub an expression. See Details.
 #' @param by character vector of column name(s) in `x` to form groups. if `by` is provided, ranking and subsetting will occur within in each group.
 #'
 #' @return
@@ -23,12 +23,18 @@
 #' @examples
 #' # Packages
 #' library(data.table)
+#' library(units)
+#' library(sf)
 #'
 #' # Data
 #' data(densitygrid)
 #' data(lc)
 #' data(dem)
 #' data(wetland)
+#' data(water)
+#'
+#' # CRS
+#' utm <- st_crs(water)
 #'
 #' # Stratified random sampling
 #' pts <- sample_ct(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
@@ -40,15 +46,14 @@
 #'
 #' pts[, wetland := eval_buffer(.SD, wetland, 100, 'binary', 'negative', coords = c('X', 'Y'))]
 #'
+#' pts[, distwater := eval_dist(.SD, water, direction = 'positive', coords = c('X', 'Y'), crs = utm)]
+#'
 #' # Select n locations
 #' n <- 1
 #'
-#' sel <- select_ct(pts, n, rank = c('wetland'), sub = list(lc = 212), by = 'density')
+#' sel <- select_ct(pts, n, rank = c('wetland'), sub = expression(distwater > as_units(50, 'm')), by = c('lc', 'density'))
 #'
 select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
-	# NAs detected, removing
-	# na.omit
-
 	if (missing(x) || is.null(x)) {
 		stop('x is required. either a data.table or sf object.')
 	}
@@ -69,15 +74,27 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 		stop('by must be a character or character vector.')
 	}
 
-	if (any(!(c(rank, names(sub), by) %in% colnames(x)))) {
-		stop('column names in rank, sub and/or not found in x')
+	if (any(!(c(rank, by) %in% colnames(x)))) {
+		stop('column names in rank and/or by not found in x.')
 	}
+
+	if (!is.null(sub)) {
+		if (!is.expression(sub)) {
+			stop('sub must be an expression.')
+		}
+		checkSub <- deparse(sub)
+
+		if (grepl('=', checkSub) && !(grepl('==', checkSub))) {
+			stop('check expression provided to sub, found "=", instead of "=="')
+		}
+	}
+
 
 	directions <- vapply(rank, function(col) parse_directions(x, col), 1L)
 
 	if (inherits(x, 'sf')) {
 		t <- 'sf'
-		x <- as.data.table(x)
+		x <- data.table::as.data.table(x)
 	} else if (inherits(x, 'data.table')) {
 		t <- 'dt'
 	} else {
@@ -90,13 +107,13 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 				stats::na.omit(x),
 				cols = c(by, names(directions)),
 				order = c(rep(1, length(by)), directions)
-			)[, .SD[seq(1, n)], by]
+			)[, .SD[seq(1, n)], by = by]
 		} else {
 			data.table::setorderv(
-				stats::na.omit(x)[sub, on = names(sub)],
+				stats::na.omit(x)[eval(sub)],
 				cols = c(by, names(directions)),
 				order = c(rep(1, length(by)), directions)
-			)[, .SD[seq(1, n)], by]
+			)[, .SD[seq(1, n)], by = by]
 		}
 	}
 
