@@ -240,3 +240,44 @@ test_that("columns must be in x", {
 		'column names in rank, sub and/or not found in x'
 	)
 })
+
+
+test_that('sub accepts expressions', {
+	expect_error(
+		select_ct(
+		pts,
+		n,
+		rank = c('wetland'),
+		sub = list(lc = 212),
+		by = 'density'
+	), 'sub must be an expression.')
+
+	expect_error(
+		select_ct(
+			pts,
+			n,
+			rank = c('wetland'),
+			sub = data.frame(lc = 212),
+			by = 'density'
+		), 'sub must be an expression.')
+
+	expect_error(
+		select_ct(
+			pts,
+			n,
+			rank = c('wetland'),
+			sub = 13,
+			by = 'density'
+		), 'sub must be an expression.')
+
+	expect_error(
+		select_ct(
+			pts,
+			n,
+			rank = c('wetland'),
+			sub = 'potato',
+			by = 'density'
+		), 'sub must be an expression.')
+
+
+})

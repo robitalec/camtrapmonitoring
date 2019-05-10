@@ -46,9 +46,6 @@
 #' sel <- select_ct(pts, n, rank = c('wetland'), sub = list(lc = 212), by = 'density')
 #'
 select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
-	# NAs detected, removing
-	# na.omit
-
 	if (missing(x) || is.null(x)) {
 		stop('x is required. either a data.table or sf object.')
 	}
@@ -70,14 +67,18 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 	}
 
 	if (any(!(c(rank, by) %in% colnames(x)))) {
-		stop('column names in rank and/or by not found in x')
+		stop('column names in rank and/or by not found in x.')
+	}
+
+	if (!is.expression(sub)) {
+		stop('sub must be an expression.')
 	}
 
 	directions <- vapply(rank, function(col) parse_directions(x, col), 1L)
 
 	if (inherits(x, 'sf')) {
 		t <- 'sf'
-		x <- as.data.table(x)
+		x <- data.table::as.data.table(x)
 	} else if (inherits(x, 'data.table')) {
 		t <- 'dt'
 	} else {
@@ -90,13 +91,13 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 				stats::na.omit(x),
 				cols = c(by, names(directions)),
 				order = c(rep(1, length(by)), directions)
-			)[, .SD[seq(1, n)], by]
+			)[, .SD[seq(1, n)], by = by]
 		} else {
 			data.table::setorderv(
 				stats::na.omit(x)[eval(sub)],
 				cols = c(by, names(directions)),
 				order = c(rep(1, length(by)), directions)
-			)[, .SD[seq(1, n)], by]
+			)[, .SD[seq(1, n)], by = by]
 		}
 	}
 
