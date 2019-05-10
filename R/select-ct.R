@@ -23,12 +23,17 @@
 #' @examples
 #' # Packages
 #' library(data.table)
+#' library(units)
 #'
 #' # Data
 #' data(densitygrid)
 #' data(lc)
 #' data(dem)
 #' data(wetland)
+#' data(water)
+#'
+#' # CRS
+#' utm <- st_crs(water)
 #'
 #' # Stratified random sampling
 #' pts <- sample_ct(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
@@ -40,10 +45,12 @@
 #'
 #' pts[, wetland := eval_buffer(.SD, wetland, 100, 'binary', 'negative', coords = c('X', 'Y'))]
 #'
+#' pts[, distwater := eval_dist(.SD, water, direction = 'positive', coords = c('X', 'Y'), crs = utm)]
+#'
 #' # Select n locations
 #' n <- 1
 #'
-#' sel <- select_ct(pts, n, rank = c('wetland'), sub = list(lc = 212), by = 'density')
+#' sel <- select_ct(pts, n, rank = c('wetland'), sub = expression(distwater > as_units(50, 'm')), by = c('lc', 'density'))
 #'
 select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 	if (missing(x) || is.null(x)) {
