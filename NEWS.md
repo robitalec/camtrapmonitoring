@@ -1,3 +1,6 @@
+# wildcam 0.8.2.9000 (2019-06-10)
+* changed `select_ct`'s argument 'sub' to accept an expression, directly passed to `data.table`'s i without a join step. 
+
 # wildcam 0.8.1.9000 (2019-06-08)
 * improved `select_ct` checks and tests
 
