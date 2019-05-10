@@ -93,7 +93,7 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 			)[, .SD[seq(1, n)], by]
 		} else {
 			data.table::setorderv(
-				stats::na.omit(x)[sub, on = names(sub)],
+				stats::na.omit(x)[eval(sub)],
 				cols = c(by, names(directions)),
 				order = c(rep(1, length(by)), directions)
 			)[, .SD[seq(1, n)], by]
