@@ -4,7 +4,7 @@
 #'
 #' `n` is the number of locations to select. When groups are defined with `by`, the number of locations will be selected for each group.
 #'
-#' `sub` is an expression used to subset the input `x`. It should not be quoted and follow the form described by \link[data.table]{data.table}'s argument `i`. Examples in Details.
+#' `sub` is an expression used to subset the input `x`. It should not be quoted and follow the form described by \link[data.table]{data.table}'s argument `i`. **Note:** if the column provided has a unit (e.g.: those returned by `eval_dist`), the expression should use those units as well. For example, `sub = expression(distwater < as_units(50, 'm')`.
 #'
 #' `by` is a character vector of column names in `x` to group camera trap locations and rank. This should match (at least) the column provided to `sample_ct`, if it was used to generate potential locations.
 #'
