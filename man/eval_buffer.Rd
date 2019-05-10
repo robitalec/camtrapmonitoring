@@ -2,9 +2,20 @@
 % Please edit documentation in R/eval.R
 \name{eval_buffer}
 \alias{eval_buffer}
+\alias{eval_buffer_}
+\alias{eval_buffer_.data.table}
+\alias{eval_buffer_.sf}
 \title{Evaluate camera trap locations by buffered sampling of layers}
 \usage{
 eval_buffer(x, layer, buffersize, type, direction, coords = NULL)
+
+eval_buffer_(x, layer, buffersize, type, direction, coords = NULL)
+
+\method{eval_buffer_}{data.table}(x, layer, buffersize, type, direction,
+  coords = NULL)
+
+\method{eval_buffer_}{sf}(x, layer, buffersize, type, direction,
+  coords = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}

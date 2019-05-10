@@ -2,9 +2,20 @@
 % Please edit documentation in R/eval.R
 \name{eval_pt}
 \alias{eval_pt}
+\alias{eval_pt_}
+\alias{eval_pt_.data.table}
+\alias{eval_pt_.sf}
 \title{Evaluate camera trap locations by point sampling layers}
 \usage{
 eval_pt(x, layer, type = NULL, direction = NULL, coords = NULL)
+
+eval_pt_(x, layer, type = NULL, direction = NULL, coords = NULL)
+
+\method{eval_pt_}{data.table}(x, layer, type = NULL, direction = NULL,
+  coords = NULL)
+
+\method{eval_pt_}{sf}(x, layer, type = NULL, direction = NULL,
+  coords = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}

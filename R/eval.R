@@ -64,7 +64,7 @@ eval_pt <-
 	}
 
 #' @export
-#' @describeIn eval_pt
+#' @rdname eval_pt
 eval_pt_ <- 	function(x,
 											layer,
 											type = NULL,
@@ -75,7 +75,7 @@ eval_pt_ <- 	function(x,
 
 
 #' @export
-#' @describeIn eval_pt
+#' @rdname eval_pt
 eval_pt_.data.table <-
 	function(x,
 					 layer,
@@ -94,7 +94,7 @@ eval_pt_.data.table <-
 }
 
 #' @export
-#' @describeIn eval_pt
+#' @rdname eval_pt
 eval_pt_.sf <-
 	function(x,
 					 layer,
@@ -189,7 +189,7 @@ eval_buffer <-
 }
 
 #' @export
-#' @describeIn eval_buffer
+#' @rdname eval_buffer
 eval_buffer_ <- function(x,
 												 layer,
 												 buffersize,
@@ -202,7 +202,7 @@ eval_buffer_ <- function(x,
 
 
 #' @export
-#' @describeIn eval_buffer
+#' @rdname eval_buffer
 eval_buffer_.data.table <-
 	function(x,
 					 layer,
@@ -239,7 +239,7 @@ eval_buffer_.data.table <-
 	}
 
 #' @export
-#' @describeIn eval_buffer
+#' @rdname eval_buffer
 eval_buffer_.sf <-
 	function(x,
 					 layer,
@@ -348,7 +348,7 @@ eval_dist <-
 }
 
 #' @export
-#' @describeIn eval_dist
+#' @rdname eval_dist
 eval_dist_ <-
 	function(x,
 					 layer,
@@ -359,7 +359,7 @@ eval_dist_ <-
 	}
 
 #' @export
-#' @describeIn eval_dist
+#' @rdname eval_dist
 eval_dist_.sf <-
 	function(x,
 					 layer,
@@ -381,7 +381,7 @@ eval_dist_.sf <-
 	}
 
 #' @export
-#' @describeIn eval_dist
+#' @rdname eval_dist
 eval_dist_.data.table <-
 	function(x,
 					 layer,

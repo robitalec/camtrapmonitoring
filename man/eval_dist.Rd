@@ -2,9 +2,20 @@
 % Please edit documentation in R/eval.R
 \name{eval_dist}
 \alias{eval_dist}
+\alias{eval_dist_}
+\alias{eval_dist_.sf}
+\alias{eval_dist_.data.table}
 \title{Evaluate distance-to}
 \usage{
 eval_dist(x, layer, direction = NULL, coords = NULL, crs = NULL)
+
+eval_dist_(x, layer, direction = NULL, coords = NULL, crs = NULL)
+
+\method{eval_dist_}{sf}(x, layer, direction = NULL, coords = NULL,
+  crs = NULL)
+
+\method{eval_dist_}{data.table}(x, layer, direction = NULL,
+  coords = NULL, crs = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}
