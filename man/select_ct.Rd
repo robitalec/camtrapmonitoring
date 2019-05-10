@@ -33,6 +33,7 @@ Note: NAs are omitted from input x before select camera trap locations.
 # Packages
 library(data.table)
 library(units)
+library(sf)
 
 # Data
 data(densitygrid)

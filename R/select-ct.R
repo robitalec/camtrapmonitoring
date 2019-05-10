@@ -24,6 +24,7 @@
 #' # Packages
 #' library(data.table)
 #' library(units)
+#' library(sf)
 #'
 #' # Data
 #' data(densitygrid)
