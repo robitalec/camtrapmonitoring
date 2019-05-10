@@ -69,8 +69,8 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 		stop('by must be a character or character vector.')
 	}
 
-	if (any(!(c(rank, names(sub), by) %in% colnames(x)))) {
-		stop('column names in rank, sub and/or not found in x')
+	if (any(!(c(rank, by) %in% colnames(x)))) {
+		stop('column names in rank and/or by not found in x')
 	}
 
 	directions <- vapply(rank, function(col) parse_directions(x, col), 1L)
