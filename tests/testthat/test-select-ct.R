@@ -219,7 +219,7 @@ test_that("columns must be in x", {
 			n = n,
 			rank = c('potato')
 		),
-		'column names in rank, sub and/or not found in x'
+		'column names in rank and/or by not found in x.'
 	)
 
 	expect_error(
@@ -228,7 +228,7 @@ test_that("columns must be in x", {
 			n = n,
 			sub = list(potato = 212)
 		),
-		'column names in rank, sub and/or not found in x'
+		'column names in rank and/or by not found in x.'
 	)
 
 	expect_error(
@@ -237,7 +237,7 @@ test_that("columns must be in x", {
 			n = n,
 			by = c('potato', 'density')
 		),
-		'column names in rank, sub and/or not found in x'
+		'column names in rank and/or by not found in x.'
 	)
 })
 
