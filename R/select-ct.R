@@ -73,6 +73,7 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 	if (!is.expression(sub)) {
 		stop('sub must be an expression.')
 	}
+		checkSub <- deparse(sub)
 
 	directions <- vapply(rank, function(col) parse_directions(x, col), 1L)
 
