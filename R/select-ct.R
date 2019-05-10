@@ -70,10 +70,17 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 		stop('column names in rank and/or by not found in x.')
 	}
 
-	if (!is.expression(sub)) {
-		stop('sub must be an expression.')
-	}
+	if (!is.null(sub)) {
+		if (!is.expression(sub)) {
+			stop('sub must be an expression.')
+		}
 		checkSub <- deparse(sub)
+
+		if (grepl('=', checkSub) && !(grepl('==', checkSub))) {
+			stop('check expression provided to sub, found "=", instead of "=="')
+		}
+	}
+
 
 	directions <- vapply(rank, function(col) parse_directions(x, col), 1L)
 
