@@ -337,7 +337,6 @@ eval_dist <-
 
 	check_direction(direction)
 
-		# TODO: check types of x and layer
 		eval_dist_(
 			x = x,
 			layer = layer,
@@ -393,7 +392,7 @@ eval_dist_.data.table <-
 
 
 		if (is.null(crs)) {
-			error('crs must be provided if x is a data.table')
+			stop('crs must be provided if x is a data.table')
 		}
 
 		xsf <- sf::st_as_sf(x, coords = coords, crs = crs)
