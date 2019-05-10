@@ -145,7 +145,7 @@ eval_pt_.sf <-
 #' @examples
 #' # Load data
 #' data(points)
-#' data(wetland)
+#' data("wetland")
 #'
 #' # Evaluate each point with the wetland layer
 #' points$wetland <- eval_buffer(points, wetland, buffersize = 150,
@@ -308,7 +308,7 @@ eval_buffer_.sf <-
 #' data(water)
 #' data(points)
 #'
-#' points$distWater <- eval_dist(points, water)
+#' points$distWater <- eval_dist(points, water, direction = 'negative')
 #'
 #' # data.table objects
 #' library(data.table)
@@ -316,7 +316,7 @@ eval_buffer_.sf <-
 #' data(DT)
 #' alloc.col(DT)
 #'
-#' DT[, distWater := eval_dist(.SD, water, coords = c('X', 'Y', crs = sf::st_crs(water)))]
+#' DT[, distWater := eval_dist(.SD, water, coords = c('X', 'Y'), direction = 'positive', crs = sf::st_crs(water))]
 eval_dist <-
 	function(x,
 					 layer,

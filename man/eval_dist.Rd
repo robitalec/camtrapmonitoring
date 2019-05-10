@@ -31,7 +31,7 @@ To avoid the large overhead of creating distance to rasters for small/medium num
 data(water)
 data(points)
 
-points$distWater <- eval_dist(points, water)
+points$distWater <- eval_dist(points, water, direction = 'negative')
 
 # data.table objects
 library(data.table)
@@ -39,7 +39,7 @@ library(data.table)
 data(DT)
 alloc.col(DT)
 
-DT[, distWater := eval_dist(.SD, water, coords = c('X', 'Y', crs = sf::st_crs(water)))]
+DT[, distWater := eval_dist(.SD, water, coords = c('X', 'Y'), direction = 'positive', crs = sf::st_crs(water))]
 }
 \seealso{
 Other eval: \code{\link{eval_buffer}},

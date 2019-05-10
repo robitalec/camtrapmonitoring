@@ -38,7 +38,7 @@ Direction is used to define the user's priority or preference for this layer. Fo
 \examples{
 # Load data
 data(points)
-data(wetland)
+data("wetland")
 
 # Evaluate each point with the wetland layer
 points$wetland <- eval_buffer(points, wetland, buffersize = 150,
