@@ -24,7 +24,7 @@ mb_bbox_roads <- st_bbox(st_transform(mb_extent, st_crs(mb_roads)))
 
 
 # Crop --------------------------------------------------------------------
-mb_roads_crop <- st_crop(mb_roads, mb_bbox_roads)
+rocky_lake_roads <- st_crop(mb_roads, mb_bbox_roads)
 
 
 
