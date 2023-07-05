@@ -17,8 +17,6 @@ knitr::opts_chunk$set(
 
 # wildcam
 
-Test
-
 ## Installation
 
 You can install the development version of wildcam with:
