@@ -7,6 +7,8 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 
 # wildcam
 
+Test
+
 ## Installation
 
 You can install the development version of wildcam with:
