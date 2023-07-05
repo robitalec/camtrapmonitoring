@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```
 
 
-ggplot2 figs with geom_sf
+<!-- ggplot2 figs with geom_sf -->
 
 
 
