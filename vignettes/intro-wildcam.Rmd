@@ -1,0 +1,155 @@
+---
+title: "Introduction to `wildcam`"
+author: "Alec L. Robitaille"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+<!-- ggplot2 figs with geom_sf -->
+
+# Packages
+
+```{r}
+library(wildcam)
+```
+
+
+# Workflow
+
+`sample_ct` and/or `grid_ct` -> `eval_pt`/`eval_buffer` -> `select_ct`
+
+OR
+
+`eval_buffer` -> `select_ct` -> `grid_ct` and `pair_ct` 
+
+
+
+# What you'll need
+
+* study area polygon
+* layers of relevant variables (e.g. roads, animal density, waterways, etc.)
+* camera trap protocol (how many cameras, placement strategy)
+
+
+# Selecting potential camera trap locations
+## Randomly sampling points in different regions (stratified sampling)
+
+```{r}
+# Example polygons with density levels 1, 2 and 3.
+data(densitygrid)
+
+# Randomly sample 5 points for each set of polygons in each strata.
+pts <- sample_ct(x = densitygrid, n = 5, type = 'random', col = 'density', returnDT = FALSE)
+
+plot(densitygrid, reset = FALSE)
+plot(pts$geometry, add = TRUE)
+
+```
+
+## Grid around points
+
+```{r}
+queen <- grid_ct(pts, case = 'queen', distance = 100)
+plot(queen)
+
+rook <- grid_ct(pts, case = 'rook', distance = 100)
+plot(rook)
+
+bishop <- grid_ct(pts, case = 'bishop', distance = 100)
+plot(bishop)
+```
+
+or n
+
+```{r}
+grid <- grid_ct(pts, n = 100, distance = 500)
+plot(grid)
+
+```
+
+
+<!--
+## Create binary layers
+```
+# Load data
+data(lc)
+
+#
+binEq <- binary_layer(layer = lc, value = 212, fun = 'equals')
+
+binGt <- binary_layer(layer = lc, value = 200, fun = 'gt')
+
+binIn <- binary_layer(layer = lc, value = c(202, 204), fun = 'in')
+
+plot(binEq)
+plot(binGt)
+plot(binIn)
+```
+-->
+
+## Evaluate points
+```{r}
+# Load data
+data(points)
+data(lc)
+
+# Evaluate each point with the land cover layer
+#   type is categorical, and the direction is neutral
+points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = 'neutral')
+
+plot(points["lc"])
+```
+
+
+## Evaluate buffers
+```{r}
+# Load data
+data(wetland)
+
+# Evaluate each point with the wetland layer
+points$wetland <- eval_buffer(x = points, layer = wetland, buffersize = 150, type = 'binary', direction = 'positive')
+
+plot(points["wetland"])
+```
+
+
+# Select
+```{r}
+# Packages
+library(data.table)
+
+# Data
+data(densitygrid)
+data(lc)
+data(dem)
+data(wetland)
+
+# Stratified random sampling
+pts <- sample_ct(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
+
+# Evaluate layers
+pts[, lc := eval_pt(.SD, lc, type = 'categorical', direction = 'neutral', coords = c('X', 'Y'))]
+
+pts[, dem := eval_buffer(.SD, dem, 100, type = 'real', direction = 'positive', coords = c('X', 'Y'))]
+
+pts[, wetland := eval_buffer(.SD, wetland, 100, 'binary', 'negative', coords = c('X', 'Y'))]
+
+# Select n locations
+n <- 1
+
+# TODO: fix type
+# sel <- select_ct(pts, n, rank = c('wetland'), sub = expression(lc == 212), by = 'density')
+
+```
