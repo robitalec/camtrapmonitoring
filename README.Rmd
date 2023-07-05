@@ -23,8 +23,8 @@ Test
 
 You can install the development version of wildcam with:
 
-``` r
-remotes::install_gitlab("robit.a/wildcam")
+```{r, eval = FALSE}
+remotes::install_github("robitalec/wildcam")
 ```
 
 
