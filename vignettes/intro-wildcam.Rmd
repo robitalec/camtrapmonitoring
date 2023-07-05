@@ -27,6 +27,7 @@ library(wildcam)
 
 
 # Workflow
+
 `sample_ct` and/or `grid_ct` -> `eval_pt`/`eval_buffer` -> `select_ct`
 
 OR
@@ -36,6 +37,7 @@ OR
 
 
 # What you'll need
+
 * study area polygon
 * layers of relevant variables (e.g. roads, animal density, waterways, etc.)
 * camera trap protocol (how many cameras, placement strategy)
@@ -49,7 +51,7 @@ OR
 data(densitygrid)
 
 # Randomly sample 5 points for each set of polygons in each strata.
-pts <- sample_ct(x = densitygrid, n = 5, col = 'density', returnDT = FALSE)
+pts <- sample_ct(x = densitygrid, n = 5, type = 'random', col = 'density', returnDT = FALSE)
 
 plot(densitygrid, reset = FALSE)
 plot(pts$geometry, add = TRUE)
