@@ -47,3 +47,17 @@
 "clearwater_lake_hydro"
 
 
+
+#' Example species density
+#'
+#' A dataset containing simulated species density near Clearwater Lake, Manitoba.
+#'
+#' Simulated species density with three levels "High", "Medium", Low" with
+#' probabilities 0.1, 0.3, 0.6. Grid size is 2 km x 2 km.
+#'
+#' @format An `sf` object with 272 features and 1 variable "density".
+#'
+#' @examples
+#' data(clearwater_lake_density)
+#' plot(clearwater_lake_density)
+"clearwater_lake_density"
