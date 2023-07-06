@@ -1,4 +1,4 @@
-# === Set up rocky_lake_roads ---------------------------------------------
+# === Set up clearwater_lake_roads ---------------------------------------------
 
 
 
@@ -16,17 +16,17 @@ mb_roads <- st_read('nrn_rrn_mb_GPKG/NRN_MB_6_0_GPKG_en.gpkg',
 
 
 # Extent ------------------------------------------------------------------
-mb_extent <- st_as_sf(data.frame(x = c(-101.72,-100.94), y = c(53.91, 54.37)),
-											coords = c('x', 'y'), crs = 4326)
+# Load Clearwater Lake extent
+source('data-raw/clearwater_lake_extent.R')
 
-mb_bbox_roads <- st_bbox(st_transform(mb_extent, st_crs(mb_roads)))
+clearwater_bbox <- st_bbox(st_transform(clearwater_lake_extent, st_crs(mb_roads)))
 
 
 
 # Crop --------------------------------------------------------------------
-rocky_lake_roads <- st_crop(mb_roads, mb_bbox_roads)
+clearwater_lake_roads <- st_crop(mb_roads, clearwater_bbox)
 
 
 
 # Save --------------------------------------------------------------------
-usethis::use_data(rocky_lake_roads, overwrite = TRUE)
+usethis::use_data(clearwater_lake_roads, overwrite = TRUE)
