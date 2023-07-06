@@ -21,7 +21,8 @@ Suggests:
     knitr,
     rmarkdown,
     ggplot2,
-    usethis
+    usethis,
+    osmdata
 VignetteBuilder: knitr
 Imports: 
     data.table,
