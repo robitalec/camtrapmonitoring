@@ -9,7 +9,7 @@
 	- roads
 	- wetlands
 * add scripts to track data origin under data-raw/ [#3](https://github.com/robitalec/wildcam/pull/3)
-
+* reorganize source code [#5](https://github.com/robitalec/wildcam/pull/5)
 
 
 # wildcam 0.9.0.9000 (2023-07-05)
