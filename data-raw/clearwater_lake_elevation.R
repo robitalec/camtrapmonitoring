@@ -5,6 +5,7 @@
 # Packages ----------------------------------------------------------------
 library(elevatr)
 library(sf)
+library(terra)
 
 
 
@@ -24,4 +25,4 @@ clearwater_lake_elevation <- get_elev_raster(clearwater_extent_trans, z = 12)
 
 
 # Save --------------------------------------------------------------------
-usethis::use_data(clearwater_lake_elevation, overwrite = TRUE)
+writeRaster(clearwater_lake_elevation, file.path('inst', 'extdata', 'clearwater_lake_elevation.tif'))
