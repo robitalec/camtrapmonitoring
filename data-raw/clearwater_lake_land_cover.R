@@ -34,4 +34,5 @@ clearwater_lake_land_cover <- project(ca_lc_crop, crs$wkt)
 
 
 # Save --------------------------------------------------------------------
+# Save land cover data as external file in package
 writeRaster(clearwater_lake_land_cover, file.path('inst', 'extdata', 'clearwater_lake_land_cover.tif'))

@@ -25,4 +25,5 @@ clearwater_lake_elevation <- get_elev_raster(clearwater_extent_trans, z = 12)
 
 
 # Save --------------------------------------------------------------------
+# Save elevation data as external file in package
 writeRaster(clearwater_lake_elevation, file.path('inst', 'extdata', 'clearwater_lake_elevation.tif'))

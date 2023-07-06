@@ -35,4 +35,5 @@ clearwater_lake_roads <- st_transform(clearwater_roads_crop, crs)
 
 
 # Save --------------------------------------------------------------------
+# Save roads data as R object in package
 usethis::use_data(clearwater_lake_roads, overwrite = TRUE)

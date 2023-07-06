@@ -29,4 +29,5 @@ clearwater_lake_wetlands <- st_transform(q$osm_polygons, crs)
 
 
 # Save --------------------------------------------------------------------
+# Save wetlands data as R object in package
 usethis::use_data(clearwater_lake_wetlands, overwrite = TRUE)

@@ -32,4 +32,5 @@ clearwater_lake_hydro <- st_transform(clearwater_lake_hydro, crs)
 
 
 # Save --------------------------------------------------------------------
+# Save hydro data as R object in package
 usethis::use_data(clearwater_lake_hydro, overwrite = TRUE)

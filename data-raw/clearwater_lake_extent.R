@@ -17,4 +17,5 @@ clearwater_lake_extent <- st_as_sf(
 
 
 # Save --------------------------------------------------------------------
+# Save extent data as R object in package
 usethis::use_data(clearwater_lake_extent, overwrite = TRUE)

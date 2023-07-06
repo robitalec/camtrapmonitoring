@@ -31,4 +31,5 @@ clearwater_lake_density$density <- sample(
 
 
 # Save --------------------------------------------------------------------
+# Save density data as R object in package
 usethis::use_data(clearwater_lake_density, overwrite = TRUE)
