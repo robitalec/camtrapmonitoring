@@ -20,7 +20,9 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    ggplot2
+    ggplot2,
+    usethis,
+    osmdata
 VignetteBuilder: knitr
 Imports: 
     data.table,

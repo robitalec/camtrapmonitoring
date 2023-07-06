@@ -1,36 +1,63 @@
-#' Example water polygons
+#' Example roads
 #'
-#' A dataset containing three polygons representing three lakes in Manitoba.
+#' A dataset containing roads near Clearwater Lake, Manitoba.
 #'
-#' @format An `sf` object with 3 polygons and four variables:
+#' Roads are from the Canadian National Road Network (NRN) with all corresponding fields.
 #'
-#' * ID: individual identifier, numeric type
-#' * PERIMETER: perimeter of the water body
-#' * AREA: area of the water body
-#' * geometry: `sfc` simple feature column
+#' @format An `sf` object with 172 roads and 48 variables. See the source below for details.
 #'
-#' The projection for this layer is UTM 14N WGS84. The proj4string for this layer is "+proj=utm +zone=14 +datum=WGS84 +units=m +no_defs", EPSG code 32614.
-#'
-#' @source [Manitoba Land Initiative](http://mli2.gov.mb.ca/roads_hwys/index.html)
-#'
+#' @source <https://open.canada.ca/data/en/dataset/3d282116-e556-400c-9306-ca1a3cada77f>
 #' @examples
-#' data(water)
-#' plot(water)
-"water"
+#' data(clearwater_lake_roads)
+#' plot(clearwater_lake_roads)
+"clearwater_lake_roads"
 
 
-#' Example points
+#' Example hydrology features
 #'
-#' A dataset containing 5 random points nearby three lakes in Manitoba (`data(water)`).
+#' A dataset containing hydrology features (in this case, major lakes)
+#' near Clearwater Lake, Manitoba.
 #'
-#' @format An `sf` object with 5 points and two variables:
+#' Hydrology features are from Open Street Map, downloaded using the {osmdata}
+#' package.
 #'
-#' * ID: individual identifier, numeric type
-#' * geometry: `sfc` simple feature column
+#' @format An `sf` object with 5 features and 8 fields. See the source below for details.
 #'
-#' The projection for this layer is UTM 14N WGS84. The proj4string for this layer is "+proj=utm +zone=14 +datum=WGS84 +units=m +no_defs", EPSG code 32614.
+#' @source  Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017). “osmdata.” _Journal of Open Source Software_, *2*(14), 305. doi:10.21105/joss.00305 <https://doi.org/10.21105/joss.00305>, <https://joss.theoj.org/papers/10.21105/joss.00305>.
+#' @examples
+#' data(clearwater_lake_hydro)
+#' plot(clearwater_lake_hydro)
+"clearwater_lake_hydro"
+
+
+
+#' Example wetland features
+#'
+#' A dataset containing wetland features near Clearwater Lake, Manitoba.
+#'
+#' Hydrology features are from Open Street Map, downloaded using the {osmdata}
+#' package.
+#'
+#' @format An `sf` object with 5 features and 8 fields. See the source below for details.
+#'
+#' @source  Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017). “osmdata.” _Journal of Open Source Software_, *2*(14), 305. doi:10.21105/joss.00305 <https://doi.org/10.21105/joss.00305>, <https://joss.theoj.org/papers/10.21105/joss.00305>.
+#' @examples
+#' data(clearwater_lake_hydro)
+#' plot(clearwater_lake_hydro)
+"clearwater_lake_hydro"
+
+
+
+#' Example species density
+#'
+#' A dataset containing simulated species density near Clearwater Lake, Manitoba.
+#'
+#' Simulated species density with three levels "High", "Medium", Low" with
+#' probabilities 0.1, 0.3, 0.6. Grid size is 2 km x 2 km.
+#'
+#' @format An `sf` object with 272 features and 1 variable "density".
 #'
 #' @examples
-#' data(points)
-#' plot(points)
-"points"
+#' data(clearwater_lake_density)
+#' plot(clearwater_lake_density)
+"clearwater_lake_density"
