@@ -1,3 +1,8 @@
+# wildcam 0.9.1.9000 (2023-07-06)
+
+* add new data for area near Clearwater Lake, Manitoba [#3](https://github.com/robitalec/wildcam/pull/3)
+
+
 # wildcam 0.9.0.9000 (2023-07-05)
 
 * move main development from https://gitlab.com/robitalec/wildcam to https://github.com/robitalec/wildcam
