@@ -28,3 +28,19 @@
 #' data(clearwater_lake_hydro)
 #' plot(clearwater_lake_hydro)
 "clearwater_lake_hydro"
+
+
+#' Example land cover
+#'
+#' A dataset containing land cover classes nearby Clearwater Lake, Manitoba.
+#'
+#' Land cover classes are from 2020 Land Cover of Canada.
+#'
+#' @format An `SpatRaster` object. See the source below for details.
+#'
+#' @source  <https://open.canada.ca/data/en/dataset/ee1580ab-a23d-4f86-a09b-79763677eb47>
+#' @examples
+#' data(clearwater_lake_hydro)
+#' plot(clearwater_lake_hydro)
+"clearwater_lake_land_cover"
+
