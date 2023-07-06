@@ -11,11 +11,9 @@ eval_dist(x, layer, direction = NULL, coords = NULL, crs = NULL)
 
 eval_dist_(x, layer, direction = NULL, coords = NULL, crs = NULL)
 
-\method{eval_dist_}{sf}(x, layer, direction = NULL, coords = NULL,
-  crs = NULL)
+\method{eval_dist_}{sf}(x, layer, direction = NULL, coords = NULL, crs = NULL)
 
-\method{eval_dist_}{data.table}(x, layer, direction = NULL,
-  coords = NULL, crs = NULL)
+\method{eval_dist_}{data.table}(x, layer, direction = NULL, coords = NULL, crs = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}
@@ -55,7 +53,8 @@ alloc.col(DT)
 DT[, distWater := eval_dist(.SD, water, coords = c('X', 'Y'), direction = 'positive', crs = sf::st_crs(water))]
 }
 \seealso{
-Other eval: \code{\link{eval_buffer}},
-  \code{\link{eval_pt}}
+Other eval: 
+\code{\link{eval_buffer}()},
+\code{\link{eval_pt}()}
 }
 \concept{eval}
