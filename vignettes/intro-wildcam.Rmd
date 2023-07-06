@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 # Packages
 
-```{r}
+```r
 library(wildcam)
 ```
 
@@ -46,7 +46,7 @@ OR
 # Selecting potential camera trap locations
 ## Randomly sampling points in different regions (stratified sampling)
 
-```{r}
+```r
 # Example polygons with density levels 1, 2 and 3.
 data(densitygrid)
 
@@ -60,7 +60,7 @@ plot(pts$geometry, add = TRUE)
 
 ## Grid around points
 
-```{r}
+```r
 queen <- grid_ct(pts, case = 'queen', distance = 100)
 plot(queen)
 
@@ -73,7 +73,7 @@ plot(bishop)
 
 or n
 
-```{r}
+```r
 grid <- grid_ct(pts, n = 100, distance = 500)
 plot(grid)
 
@@ -100,7 +100,7 @@ plot(binIn)
 -->
 
 ## Evaluate points
-```{r}
+```r
 # Load data
 data(points)
 data(lc)
@@ -114,7 +114,7 @@ plot(points["lc"])
 
 
 ## Evaluate buffers
-```{r}
+```r
 # Load data
 data(wetland)
 
@@ -126,7 +126,7 @@ plot(points["wetland"])
 
 
 # Select
-```{r}
+```r
 # Packages
 library(data.table)
 
