@@ -24,7 +24,13 @@ clearwater_bbox <- st_bbox(st_transform(clearwater_lake_extent, st_crs(mb_roads)
 
 
 # Crop --------------------------------------------------------------------
-clearwater_lake_roads <- st_crop(mb_roads, clearwater_bbox)
+clearwater_roads_crop <- st_crop(mb_roads, clearwater_bbox)
+
+
+
+# Reproject ---------------------------------------------------------------
+crs <- st_crs(32614)
+clearwater_lake_roads <- st_transform(clearwater_roads_crop, crs)
 
 
 

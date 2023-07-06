@@ -21,6 +21,7 @@ source('data-raw/clearwater_lake_extent.R')
 clearwater_extent_trans <- st_transform(clearwater_lake_extent, st_crs(ca_lc))
 
 
+
 # Crop --------------------------------------------------------------------
 ca_lc_crop <- crop(ca_lc, clearwater_extent_trans)
 
@@ -29,6 +30,7 @@ ca_lc_crop <- crop(ca_lc, clearwater_extent_trans)
 # Reproject ---------------------------------------------------------------
 crs <- st_crs(32614)
 clearwater_lake_land_cover <- project(ca_lc_crop, crs$wkt)
+
 
 
 # Save --------------------------------------------------------------------
