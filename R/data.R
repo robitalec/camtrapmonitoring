@@ -1,6 +1,6 @@
 #' Example roads
 #'
-#' A dataset containing roads nearby Clearwater Lake, Manitoba.
+#' A dataset containing roads near Clearwater Lake, Manitoba.
 #'
 #' Roads are from the Canadian National Road Network (NRN) with all corresponding fields.
 #'
@@ -16,7 +16,7 @@
 #' Example hydrology features
 #'
 #' A dataset containing hydrology features (in this case, major lakes)
-#' nearby Clearwater Lake, Manitoba.
+#' near Clearwater Lake, Manitoba.
 #'
 #' Hydrology features are from Open Street Map, downloaded using the {osmdata}
 #' package.
@@ -32,7 +32,7 @@
 
 #' Example land cover
 #'
-#' A dataset containing land cover classes nearby Clearwater Lake, Manitoba.
+#' A dataset containing wetland features near Clearwater Lake, Manitoba.
 #'
 #' Land cover classes are from 2020 Land Cover of Canada.
 #'
