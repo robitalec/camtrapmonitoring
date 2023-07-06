@@ -1,4 +1,4 @@
-# === Set up clearwater_lake_roads ---------------------------------------------
+# === Set up clearwater_lake_roads ----------------------------------------
 
 
 
@@ -8,8 +8,8 @@ library(sf)
 
 
 # Data source -------------------------------------------------------------
-# https://open.canada.ca/data/en/dataset/3d282116-e556-400c-9306-ca1a3cada77f
 # National Road Network - NRN - GeoBase Series - NRN Manitoba GEOPACKAGE
+# https://open.canada.ca/data/en/dataset/3d282116-e556-400c-9306-ca1a3cada77f
 mb_roads <- st_read('nrn_rrn_mb_GPKG/NRN_MB_6_0_GPKG_en.gpkg',
 										layer = 'NRN_MB_6_0_ROADSEG')
 
