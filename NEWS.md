@@ -1,12 +1,22 @@
 # wildcam 0.9.1.9000 (2023-07-06)
 
 * add new data for area near Clearwater Lake, Manitoba [#3](https://github.com/robitalec/wildcam/pull/3)
+	- density
+	- elevation (external tif)
+	- extent
+	- hydro
+	- land cover (external tif)
+	- roads
+	- wetlands
+* add scripts to track data origin under data-raw/ [#3](https://github.com/robitalec/wildcam/pull/3)
+
 
 
 # wildcam 0.9.0.9000 (2023-07-05)
 
 * move main development from https://gitlab.com/robitalec/wildcam to https://github.com/robitalec/wildcam
 * rough draft intro vignette [#1](https://github.com/robitalec/wildcam/pull/1)
+
 
 
 # wildcam 0.8.2.9000 (2019-06-10)
