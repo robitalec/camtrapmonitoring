@@ -23,7 +23,7 @@ Select camera trap locations by subsetting (\code{sub}) and ranking (\code{rank}
 \details{
 \code{n} is the number of locations to select. When groups are defined with \code{by}, the number of locations will be selected for each group.
 
-\code{sub} is an expression used to subset the input \code{x}. It should not be quoted and follow the form described by \link[data.table]{data.table}'s argument \code{i}. \strong{Note:} if the column provided has a unit (e.g.: those returned by \code{eval_dist}), the expression should use those units as well. For example, \code{sub = expression(distwater < as_units(50, 'm')}.
+\code{sub} is an expression used to subset the input \code{x}. It should not be quoted and follow the form described by \link[data.table]{data.table}'s argument \code{i}. \strong{Note:} if the column provided has a unit (e.g.: those returned by \code{eval_dist}), the expression should use those units as well. For example, \verb{sub = expression(distwater < as_units(50, 'm')}.
 
 \code{by} is a character vector of column names in \code{x} to group camera trap locations and rank. This should match (at least) the column provided to \code{sample_ct}, if it was used to generate potential locations.
 

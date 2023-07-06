@@ -11,11 +11,9 @@ eval_pt(x, layer, type = NULL, direction = NULL, coords = NULL)
 
 eval_pt_(x, layer, type = NULL, direction = NULL, coords = NULL)
 
-\method{eval_pt_}{data.table}(x, layer, type = NULL, direction = NULL,
-  coords = NULL)
+\method{eval_pt_}{data.table}(x, layer, type = NULL, direction = NULL, coords = NULL)
 
-\method{eval_pt_}{sf}(x, layer, type = NULL, direction = NULL,
-  coords = NULL)
+\method{eval_pt_}{sf}(x, layer, type = NULL, direction = NULL, coords = NULL)
 }
 \arguments{
 \item{x}{data.table or sf points.}
@@ -54,7 +52,8 @@ points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = '
 plot(points["lc"])
 }
 \seealso{
-Other eval: \code{\link{eval_buffer}},
-  \code{\link{eval_dist}}
+Other eval: 
+\code{\link{eval_buffer}()},
+\code{\link{eval_dist}()}
 }
 \concept{eval}
