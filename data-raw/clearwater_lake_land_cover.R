@@ -18,11 +18,17 @@ ca_lc <- rast('landcover-2020-classification.tif')
 # Load Clearwater Lake extent
 source('data-raw/clearwater_lake_extent.R')
 
+clearwater_extent_trans <- st_transform(clearwater_lake_extent, st_crs(ca_lc))
 
 
 # Crop --------------------------------------------------------------------
-clearwater_lake_land_cover <- crop(ca_lc, clearwater_lake_extent)
+ca_lc_crop <- crop(ca_lc, clearwater_extent_trans)
 
+
+
+# Reproject ---------------------------------------------------------------
+crs <- st_crs(32614)
+clearwater_lake_land_cover <- project(ca_lc_crop, crs$wkt)
 
 
 # Save --------------------------------------------------------------------
