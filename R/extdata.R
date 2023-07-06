@@ -21,7 +21,7 @@
 #' - 18 Water/Eau
 #' - 19 Snow and Ice/Neige et glace
 #'
-#' @format An external tiff file to be read in with {terra} as a `SpatRaster` object. See the source below for details.
+#' @format An external tif file to be read in with {terra} as a `SpatRaster` object. See the source below for details.
 #'
 #' @name clearwater_lake_land_cover
 #' @source  <https://open.canada.ca/data/en/dataset/ee1580ab-a23d-4f86-a09b-79763677eb47>
@@ -30,5 +30,26 @@
 #' clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "wildcam")
 #' clearwater_lake_land_cover <- rast(clearwater_lc_path)
 #' plot(clearwater_lake_land_cover)
+NULL
+
+
+
+#' Example elevation
+#'
+#' A dataset containing elevation near Clearwater Lake, Manitoba.
+#'
+#' Elevation data are from the AWS using the {elevatr} package.
+#'
+#' The units are meters.
+#'
+#' @format An external tif file to be read in with {terra} as a `SpatRaster` object.
+#'
+#' @name clearwater_lake_elevation
+#' @source  Hollister, J.W. (2022). elevatr: Access Elevation Data from Various APIs. R package version 0.4.2. <https://CRAN.R-project.org/package=elevatr/>
+#' @examples
+#' library(terra)
+#' clearwater_elev_path <- system.file("extdata", "clearwater_lake_elevation.tif", package = "wildcam")
+#' clearwater_lake_elevation <- rast(clearwater_elev_path)
+#' plot(clearwater_lake_elevation)
 NULL
 
