@@ -34,4 +34,4 @@ clearwater_lake_land_cover <- project(ca_lc_crop, crs$wkt)
 
 
 # Save --------------------------------------------------------------------
-usethis::use_data(clearwater_lake_land_cover, overwrite = TRUE)
+writeRaster(clearwater_lake_land_cover, file.path('inst', 'extdata', 'clearwater_lake_land_cover.tif'))
