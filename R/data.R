@@ -30,19 +30,20 @@
 "clearwater_lake_hydro"
 
 
-#' Example land cover
+
+#' Example wetland features
 #'
 #' A dataset containing wetland features near Clearwater Lake, Manitoba.
 #'
-#' Land cover classes are from 2020 Land Cover of Canada.
+#' Hydrology features are from Open Street Map, downloaded using the {osmdata}
+#' package.
 #'
-#' @format An external tiff file to be read in with {terra} as an `SpatRaster` object. See the source below for details.
+#' @format An `sf` object with 5 features and 8 fields. See the source below for details.
 #'
-#' @source  <https://open.canada.ca/data/en/dataset/ee1580ab-a23d-4f86-a09b-79763677eb47>
+#' @source  Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017). “osmdata.” _Journal of Open Source Software_, *2*(14), 305. doi:10.21105/joss.00305 <https://doi.org/10.21105/joss.00305>, <https://joss.theoj.org/papers/10.21105/joss.00305>.
 #' @examples
-#' library(terra)
-#' clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "wildcam")
-#' clearwater_lake_land_cover <- rast(clearwater_lc_path)
-#' plot(clearwater_lake_land_cover)
-"clearwater_lake_land_cover"
+#' data(clearwater_lake_hydro)
+#' plot(clearwater_lake_hydro)
+"clearwater_lake_hydro"
+
 
