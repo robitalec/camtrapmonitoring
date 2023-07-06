@@ -9,7 +9,7 @@ library(sf)
 
 # Extent ------------------------------------------------------------------
 clearwater_lake_extent <- st_as_sf(
-	data.frame(x = c(-101.38,-100.88), y = c(53.90, 54.18)),
+	data.frame(x = c(-101.38, -100.88), y = c(53.90, 54.18)),
 	coords = c('x', 'y'),
 	crs = 4326
 )
