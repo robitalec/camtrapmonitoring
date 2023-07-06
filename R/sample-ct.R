@@ -2,7 +2,7 @@
 #'
 #' Sample potential camera trap locations in each region defined by unique values in col in x.
 #'
-#' Random or regular sampling. Polygons cannot be assigned to multiple values. Optionally return a `data.table` if 'returnDT' is TRUE or an `sf` object if FALSE.
+#' Random or regular sampling. Polygons cannot be assigned to multiple values.
 #'
 #' If you'd like to sample a polygon, but not stratified by any `col`, simply use \link[sf]{st_sample}.
 #'
@@ -12,14 +12,14 @@
 #' @param col column in x indicating strata
 #' @param returnDT return a `data.table` (TRUE) or `sf` (FALSE) object
 #'
-#' @return Either a `sf` object or a `data.table` with a \code{sfc} (simple feature column).
+#' @return `sf` object
 #' @export
 #'
 #' @examples
-#' # Example polygons with density levels 1, 2 and 3
-#' data(densitygrid)
+#' # Example polygons with density levels High, Medium, Low
+#' data(clearwater_lake_density)
 #'
-#' # Randomly sample 5 points for each set of polygons in each strata
+#' # Randomly sample 5 points for each density level
 #' pts <- sample_ct(x = densitygrid, n = 5, type = 'random',
 #' col = 'density', returnDT = FALSE)
 #'
@@ -32,7 +32,7 @@
 #'
 #' plot(densitygrid, reset = FALSE)
 #' plot(pts$geometry, add = TRUE)
-sample_ct <- function(x, n, type, col, returnDT = FALSE) {
+sample_ct <- function(x, n, type, col = NULL) {
 	# NSE
 	geometry <- NULL
 
