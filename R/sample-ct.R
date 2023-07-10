@@ -10,7 +10,6 @@
 #' @param n number of random points
 #' @param type of sampling. either 'random' or 'regular'.
 #' @param col column in x indicating strata
-#' @param returnDT return a `data.table` (TRUE) or `sf` (FALSE) object
 #'
 #' @return `sf` object
 #' @export
