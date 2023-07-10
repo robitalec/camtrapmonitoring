@@ -2,13 +2,11 @@
 #'
 #' Set up grids around focal points. For example, sample points in your study area and use `grid_ct` to establish a grid of camera traps around each.
 #'
-#' @param x data.table or sf points.
-#' @param n number of points around each focal point. `n` overrides the `case` argument, do not provide both. See details.
+#' @inheritParams sample_ct
+#' @param n number of points around each focal point. `n` overrides the `case` argument, do not provide both - see Details.
 #' @param case "queen", "rook" or "bishop". Ignored if `n` is provided.
 #' @param distance distance between adjacent camera traps. Don't worry about the hypotenuse.
-#' @param id column in `x` indicating id of focal point. Only used when x is a `data.table`.
-#' @param coords columns in `x` indicating names of coordinate columns of focal point. Only used when x is a `data.table`. Expects length = 2 e.g.: c('X', 'Y').
-#'
+
 #' @return
 #'
 #' Extended data.table either nine times the length of input DT for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case. See examples.
@@ -39,19 +37,12 @@
 #' ## Make grid with n
 #' grid <- grid_ct(points, n = 25, distance = 100)
 #' plot(grid)
-#'
-#' # data.table input
-#' library(data.table)
-#' DT <- data.table(ID = points$ID, st_coordinates(points))
-#' grid <- grid_ct(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
 grid_ct <- function(x,
 										n,
 										case,
 										distance,
 										id = NULL,
 										coords = NULL) {
-	# NSE
-	X <- Y <- NULL
 
 
 	if ((missing(n) & missing(case)) |
