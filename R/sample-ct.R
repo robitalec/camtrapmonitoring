@@ -49,24 +49,19 @@ sample_ct <- function(x, n, type, col = NULL) {
 	} else {
 		stopifnot('col not found in x' = col %in% colnames(x))
 
-	DT <- lapply(lvls, function(l) {
-		s <- sf::st_sf(
-			geometry = sf::st_sample(x[x[[col]] == l, ], n, type = type,
-															 exact = TRUE))
-		s[[col]] <- l
-		return(s)
-	})
+		strata <- unique(x[[col]])
 
-	if (returnDT) {
-		out <-
-			data.table::rbindlist(DT)[,
-																c('X', 'Y') := data.table::as.data.table(sf::st_coordinates(geometry))]
-		data.table::set(out, j = 'geometry', value = NULL)
-		data.table::set(out, j = 'ID', value = 1:nrow(out))
-		return(out)
-	} else {
-		out <- do.call(rbind, DT)
-		out$ID <- 1:nrow(out)
-		return(out)
+		stratified <- lapply(strata, function(y) {
+			s <- sf::st_sf(
+				geometry = sf::st_sample(x[x[[col]] == y, ], n, type = type,
+																 exact = TRUE))
+			s[[col]] <- y
+			return(s)
+		})
+
+		out <- do.call(rbind, stratified)
 	}
+
+
+	return(out)
 }
