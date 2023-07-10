@@ -44,6 +44,10 @@ sample_ct <- function(x, n, type, col = NULL) {
 	# 	stop('no strata found')
 	# }
 
+	if (is.null(col)) {
+		out <- sf::st_as_sf(sf::st_sample(x, n, type = type, exact = TRUE))
+	} else {
+		stopifnot('col not found in x' = col %in% colnames(x))
 
 	DT <- lapply(lvls, function(l) {
 		s <- sf::st_sf(
