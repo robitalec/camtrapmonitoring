@@ -23,7 +23,7 @@ clearwater_lake_density <- st_make_grid(clearwater_extent_trans, cellsize = 2e3)
 # Simulate some species density
 clearwater_lake_density$density <- sample(
 	factor(c(3, 2, 1), labels = c('High', 'Medium', 'Low')),
-	size = nrow(clearwater_lake_grid),
+	size = nrow(clearwater_lake_density),
 	replace = TRUE,
 	prob = c(0.1, 0.3, 0.6)
 )
