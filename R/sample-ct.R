@@ -32,8 +32,6 @@
 #' plot(clearwater_lake_density, reset = FALSE)
 #' plot(pts$geometry, add = TRUE)
 sample_ct <- function(x, n, type, col = NULL) {
-	# NSE
-	geometry <- NULL
 
 
 	if (!(col %in% colnames(x))) {
