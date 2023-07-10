@@ -1,4 +1,4 @@
-#' Stratified camera trap sampling
+#' Camera trap sampling
 #'
 #' Sample potential camera trap locations in each region defined by unique values in col in x.
 #'
