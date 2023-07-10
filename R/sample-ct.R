@@ -31,6 +31,8 @@
 #' plot(pts_regular, add = TRUE, pch = 2)
 sample_ct <- function(x, n, type, col = NULL) {
 
+	stopifnot('x is missing' = !missing(type))
+	stopifnot('n is missing' = !missing(type))
 	stopifnot('type is missing' = !missing(type))
 
 	# stopifnot('type must be either "regular" or "random"' =
