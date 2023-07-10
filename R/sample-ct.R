@@ -1,17 +1,15 @@
 #' Camera trap sampling
 #'
-#' Sample potential camera trap locations in each region defined by unique values in col in x.
+#' Sample potential camera trap locations. For stratified sampling, provide a
+#' suitable column to stratify by. Alternatively, \link[sf]{st_sample} is used
+#' directly to sample points across all features.
 #'
-#' Random or regular sampling. Polygons cannot be assigned to multiple values.
-#'
-#' If you'd like to sample a polygon, but not stratified by any `col`, simply use \link[sf]{st_sample}.
-#'
-#' @param x polygon object of class `sf`
+#' @param x spatial feature object
 #' @param n number of random points
-#' @param type of sampling. either 'random' or 'regular'.
-#' @param col column in x indicating strata
+#' @param type type of sampling, see \link[sf]{st_sample}
+#' @param col column name in x indicating strata
 #'
-#' @return `sf` object
+#' @return `sf` object with POINT geometry
 #' @export
 #'
 #' @examples
