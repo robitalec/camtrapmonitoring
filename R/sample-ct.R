@@ -30,18 +30,13 @@
 #' plot(clearwater_lake_density, reset = FALSE)
 #' plot(pts_regular, add = TRUE, pch = 2)
 sample_ct <- function(x, n, type, col = NULL) {
-
 	stopifnot('x is missing' = !missing(type))
 	stopifnot('n is missing' = !missing(type))
 	stopifnot('type is missing' = !missing(type))
 
-	# stopifnot('type must be either "regular" or "random"' =
-	# 						type %in% c('regular', 'random'))
+	stopifnot('type must be one of "regular", "random", or "hexagonal"' =
+							type %in% c('regular', 'random', 'hexagonal'))
 
-
-	# if (is.null(lvls)) {
-	# 	stop('no strata found')
-	# }
 
 	if (is.null(col)) {
 		out <- sf::st_as_sf(sf::st_sample(x, n, type = type, exact = TRUE))
