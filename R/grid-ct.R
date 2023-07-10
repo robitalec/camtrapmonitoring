@@ -49,7 +49,6 @@ grid_ct <- function(x,
 			!missing(n) & !missing(case)) {
 		stop('provide one of n and case and not both.')
 	}
-
 	if (missing(case)) {
 		tms <- floor(n / 8)
 		s <- seq(1, tms) * distance
@@ -98,10 +97,6 @@ grid_ct <- function(x,
 		min(x$camID))
 	out$focal <- ifelse(out$camID %in% focals, TRUE, FALSE)
 
-	if (is.null(sf::st_crs(x))) {
-		return(out)
-	} else {
-		sf::st_crs(out) <- sf::st_crs(x)
-		return(out)
-	}
+	sf::st_crs(out) <- sf::st_crs(x)
+	return(out)
 }
