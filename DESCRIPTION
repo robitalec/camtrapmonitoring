@@ -25,8 +25,7 @@ Suggests:
     osmdata,
     elevatr
 VignetteBuilder: knitr
-Imports: 
-    data.table,
+Imports:
     sf (>= 0.7-3),
     units,
     raster
