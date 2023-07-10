@@ -34,19 +34,15 @@
 sample_ct <- function(x, n, type, col = NULL) {
 
 
-	if (!(col %in% colnames(x))) {
-		stop('strata column not found in x')
-	}
+	stopifnot('type is missing' = !missing(type))
 
-	if (missing(type) | !(type %in% c('regular', 'random'))) {
-		stop('type must be provided. either "regular" or "random".')
-	}
+	# stopifnot('type must be either "regular" or "random"' =
+	# 						type %in% c('regular', 'random'))
 
-	lvls <- unique(x[[col]])
 
-	if (is.null(lvls)) {
-		stop('no strata found')
-	}
+	# if (is.null(lvls)) {
+	# 	stop('no strata found')
+	# }
 
 
 	DT <- lapply(lvls, function(l) {
