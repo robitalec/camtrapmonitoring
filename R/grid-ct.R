@@ -40,9 +40,7 @@
 grid_ct <- function(x,
 										n,
 										case,
-										distance,
-										id = NULL,
-										coords = NULL) {
+										distance) {
 
 
 	if ((missing(n) & missing(case)) |
