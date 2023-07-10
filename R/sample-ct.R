@@ -13,24 +13,23 @@
 #' @export
 #'
 #' @examples
-#' # Example polygons with density levels High, Medium, Low
+#' # Example grid with density levels (High, Medium, Low)
 #' data(clearwater_lake_density)
 #'
-#' # Randomly sample 5 points for each density level
-#' pts <- sample_ct(x = clearwater_lake_density, n = 5, type = 'random',
-#' col = 'density')
+#' # Stratified random points for each density level
+#' pts_random <- sample_ct(x = clearwater_lake_density, n = 20, type = 'random', col = 'density')
 #'
+#' # Plot density grid and sampled points
 #' plot(clearwater_lake_density, reset = FALSE)
-#' plot(pts$geometry, add = TRUE)
+#' plot(pts_random, add = TRUE, pch = 1)
 #'
-#' # Sample 5 regular points for each set of polygons in each strata
-#' pts <- sample_ct(x = clearwater_lake_density, n = 20, type = 'regular',
-#' col = 'density', returnDT = FALSE)
+#' # Regular sampled points across all features
+#' pts_regular <- sample_ct(x = clearwater_lake_density, n = 20, type = 'regular')
 #'
+#' # Plot density grid and sampled points
 #' plot(clearwater_lake_density, reset = FALSE)
-#' plot(pts$geometry, add = TRUE)
+#' plot(pts_regular, add = TRUE, pch = 2)
 sample_ct <- function(x, n, type, col = NULL) {
-
 
 	stopifnot('type is missing' = !missing(type))
 
