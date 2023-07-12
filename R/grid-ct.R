@@ -57,6 +57,15 @@ grid_ct <- function(x,
 	coords_moved_sf <- st_as_sf(data.frame(coords_moved), coords = c('X', 'Y'))
 
 	x_moved <- st_set_geometry(x_rep, st_geometry(coords_moved_sf))
+
+	x_moved$id_grid_ct <- seq.int(nrow(x_moved))
+
+	focals <- by(x_moved, x_moved[[id]], function(chunk) min(chunk[['id_grid_ct']]))
+	x_moved$focal <- ifelse(x_moved[['id_grid_ct']] %in% focals, TRUE, FALSE)
+
+	st_crs(x_moved) <- st_crs(x)
+	return(x_moved)
+}
 	if ((missing(n) & missing(case)) |
 			!missing(n) & !missing(case)) {
 		stop('provide one of n and case and not both.')
