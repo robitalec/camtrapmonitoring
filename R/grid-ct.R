@@ -45,6 +45,8 @@ grid_ct <- function(x,
 	stopifnot('x is of geometry type POINT' =
 							sf::st_geometry_type(x, FALSE) == 'POINT')
 	stopifnot(id %in% colnames(x))
+
+	move <- grid_move(case = case, n = n, distance = distance)
 	if ((missing(n) & missing(case)) |
 			!missing(n) & !missing(case)) {
 		stop('provide one of n and case and not both.')
