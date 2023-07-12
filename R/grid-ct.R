@@ -32,9 +32,10 @@
 #' n_grid <- grid_ct(pts, n = 25, distance = 100)
 #' plot(n_grid['id_grid_ct'])
 grid_ct <- function(x,
-										n,
 										case,
-										distance) {
+										distance,
+										id = 'id_sample_ct',
+										n) {
 
 
 	if ((missing(n) & missing(case)) |
