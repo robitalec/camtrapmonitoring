@@ -27,4 +27,6 @@ remotes::install_github("robitalec/wildcam")
 ```
 
 
-This package depends on `data.table`, `sf`, `raster` and `units`. System dependencies include `udunits` ([see here for installation](https://github.com/r-quantities/units#installation)), and GDAL, GEOS and PROJ4 ([see here for installation](https://github.com/r-spatial/sf/#installing)). Windows users, make sure to use [RTools](https://cran.r-project.org/bin/windows/Rtools/). 
+This package depends on `sf`, `terra`, `distanceto` and `units`. System dependencies include `udunits` ([see here for installation](https://github.com/r-quantities/units#installation)), and GDAL, GEOS and PROJ4 ([see here for installation](https://github.com/r-spatial/sf/#installing)). Windows users, make sure to use [RTools](https://cran.r-project.org/bin/windows/Rtools/). 
+
+

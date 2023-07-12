@@ -15,7 +15,7 @@ You can install the development version of wildcam with:
 remotes::install_github("robitalec/wildcam")
 ```
 
-This package depends on `data.table`, `sf`, `raster` and `units`. System
+This package depends on `sf`, `terra`, `distanceto` and `units`. System
 dependencies include `udunits` ([see here for
 installation](https://github.com/r-quantities/units#installation)), and
 GDAL, GEOS and PROJ4 ([see here for
