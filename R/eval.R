@@ -44,47 +44,34 @@ eval_pt <-
 					 type = NULL,
 					 direction = NULL,
 					 coords = NULL) {
-		if (missing(x) || is.null(x)) {
-			stop('x must be provided. either data.table or sf point object.')
+		if (missing(x) || is.null(x) || !inherits(x, 'SpatRaster')) {
+			stop('x must be provided. expected type is SpatRaster.')
+		}
+		if (missing(y) || is.null(y)) {
+			stop('y must be provided. either data.table or sf point object.')
 		}
 
-		if (missing(layer) || is.null(layer) || !inherits(layer, 'Raster')) {
-			stop('layer must be provided. expected type is raster.')
-		}
+		# if (is.null(type) || is.null(direction)) {
+		# 	warning(
+		# 		'missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.'
+		# 	)
+		# }
 
-		if (is.null(type) || is.null(direction)) {
-			warning(
-				'missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.'
-			)
-		}
+		# checkls <- list(type, direction)
+		# if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
+		# 	stop('type and direction must be of class character')
+		# }
 
-		checkls <- list(type, direction)
-		if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
-			stop('type and direction must be of class character')
-		}
+		# check_type(type)
+		# check_direction(direction)
 
-		check_type(type)
-		check_direction(direction)
+		# type = NULL,
+		# direction = NULL,
+		# coords = NULL) {
+		stopifnot('y is not of class sf' = inherits(y, 'sf'))
+		stopifnot('y is not of geometry type POINT' =
+								sf::st_geometry_type(y, FALSE) == 'POINT')
 
-					 # type = NULL,
-					 # direction = NULL,
-					 # coords = NULL) {
-		if (!('geometry' %in% colnames(x))) {
-			stop('geometry column not found in x')
-		}
-
-		if (!inherits(x$geometry, 'sfc_POINT')) {
-			stop('class of geometry column must be sfc_POINT')
-		}
-
-		set_eval_attr(
-			raster::extract(layer, sf::st_coordinates(x),
-											na.rm = FALSE),
-			layer = deparse(substitute(layer)),
-			type = type,
-			direction = direction
-		)
-}
 
 
 #' Evaluate camera trap locations by buffered sampling of layers
