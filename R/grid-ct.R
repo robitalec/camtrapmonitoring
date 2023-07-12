@@ -1,11 +1,14 @@
 #' Make camera trap grids
 #'
-#' Set up grids around focal points. For example, sample points in your study area and use `grid_ct` to establish a grid of camera traps around each.
+#' Set up grids around focal points. For example, sample points in your study
+#' area with `sample_ct` then use `grid_ct` to establish a grid of camera traps
+#' around each.
 #'
 #' @inheritParams sample_ct
-#' @param n number of points around each focal point. `n` overrides the `case` argument, do not provide both - see Details.
 #' @param case "queen", "rook" or "bishop". Ignored if `n` is provided.
 #' @param distance distance between adjacent camera traps. Don't worry about the hypotenuse.
+#' @param id default: "id_sample_ct" generated automatically from `sample_ct`
+#' @param n number of points around each focal point. `n` overrides the `case` argument, do not provide both - see Details.
 
 #' @return
 #'
