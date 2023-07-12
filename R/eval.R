@@ -72,6 +72,19 @@ eval_pt <-
 		stopifnot('y is not of geometry type POINT' =
 								sf::st_geometry_type(y, FALSE) == 'POINT')
 
+		terra::extract(
+			x = x,
+			y = y,
+			layer = layer,
+			na.rm = FALSE,
+			simple = TRUE,
+			ID = FALSE
+		)[[layer]]
+			# layer = deparse(substitute(layer)),
+			# type = type,
+			# direction = direction
+		# )
+	}
 
 
 #' Evaluate camera trap locations by buffered sampling of layers
