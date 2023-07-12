@@ -7,14 +7,12 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 
 # wildcam
 
-Test
-
 ## Installation
 
 You can install the development version of wildcam with:
 
 ``` r
-remotes::install_gitlab("robit.a/wildcam")
+remotes::install_github("robitalec/wildcam")
 ```
 
 This package depends on `data.table`, `sf`, `raster` and `units`. System
