@@ -24,15 +24,19 @@
 #' @family eval
 #'
 #' @examples
-#' # Load data
-#' data(points)
-#' data(lc)
+#' data("clearwater_lake_density")
+#' clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'wildcam'))
+#'
+#' # Sample points
+#' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
+#'
+#' # Make grid with queen's case
+#' queen <- grid_ct(pts, case = 'queen', distance = 100)
 #'
 #' # Evaluate each point with the land cover layer
-#' #   type is categorical, and the direction is neutral
-#' points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = 'neutral')
+#' queen$lc <- eval_pt(x = points, layer = clearwater_lake_land_cover, type = 'categorical', direction = 'neutral')
 #'
-#' plot(points["lc"])
+#' plot(queen["lc"])
 eval_pt <-
 	function(x,
 					 layer,
