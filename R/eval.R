@@ -12,8 +12,9 @@
 #' Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by [select_ct()] for ranking and selecting camera trap locations.
 #'
 #'
-#' @inheritParams grid_ct
-#' @param layer raster layer.
+#' @param x SpatRaster layer (terra package)
+#' @param y spatial feature object
+#' @param layer default 1, see terra::extract
 #' @param type one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.
 #' @param direction one of 'positive', 'neutral', 'negative'. See Details.
 #'
