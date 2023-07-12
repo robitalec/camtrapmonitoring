@@ -48,7 +48,7 @@ eval_pt <-
 			stop('x must be provided. expected type is SpatRaster.')
 		}
 		if (missing(y) || is.null(y)) {
-			stop('y must be provided. either data.table or sf point object.')
+			stop('y must be provided.')
 		}
 
 		# if (is.null(type) || is.null(direction)) {
@@ -139,7 +139,7 @@ eval_buffer <-
 			stop('x must be provided. expected type is SpatRaster.')
 		}
 		if (missing(y) || is.null(y)) {
-			stop('y must be provided. either data.table or sf point object.')
+			stop('y must be provided.')
 		}
 
 		# if (is.null(type) || is.null(direction)) {
