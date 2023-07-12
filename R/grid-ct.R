@@ -19,27 +19,18 @@
 #' @export
 #'
 #' @examples
-#' # Point data (sf object)
-#' library(sf)
-#' data(points)
-#' plot(points)
+#' data("clearwater_lake_density")
+#' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
 #'
-#' ## Make grid with case
-#' queen <- grid_ct(points, case = 'queen', distance = 100)
-#' plot(queen)
+#' # Make grid with case, eg. 'queen'
+#' queen <- grid_ct(pts, case = 'queen', distance = 100)
 #'
-#' # Focal individuals
+#' # Plot
 #' plot(queen['focal'])
 #'
-#' rook <- grid_ct(points, case = 'rook', distance = 100)
-#' plot(rook)
-#'
-#' bishop <- grid_ct(points, case = 'bishop', distance = 100)
-#' plot(bishop)
-#'
-#' ## Make grid with n
-#' grid <- grid_ct(points, n = 25, distance = 100)
-#' plot(grid)
+#' # Make grid with n
+#' n_grid <- grid_ct(pts, n = 25, distance = 100)
+#' plot(n_grid['id_grid_ct'])
 grid_ct <- function(x,
 										n,
 										case,
