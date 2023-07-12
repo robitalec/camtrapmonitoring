@@ -16,15 +16,13 @@ eval_pt_(x, layer, type = NULL, direction = NULL, coords = NULL)
 \method{eval_pt_}{sf}(x, layer, type = NULL, direction = NULL, coords = NULL)
 }
 \arguments{
-\item{x}{data.table or sf points.}
+\item{x}{spatial feature object}
 
 \item{layer}{raster layer.}
 
 \item{type}{one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.}
 
 \item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
-
-\item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}. Expects length = 2 e.g.: c('X', 'Y').}
 }
 \description{
 Using the point locations generated manually or with \code{wildcam} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.

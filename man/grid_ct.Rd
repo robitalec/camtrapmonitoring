@@ -4,20 +4,18 @@
 \alias{grid_ct}
 \title{Make camera trap grids}
 \usage{
-grid_ct(x, n, case, distance, id = NULL, coords = NULL)
+grid_ct(x, case, distance, id = "id_sample_ct", n)
 }
 \arguments{
-\item{x}{data.table or sf points.}
-
-\item{n}{number of points around each focal point. \code{n} overrides the \code{case} argument, do not provide both. See details.}
+\item{x}{spatial feature object}
 
 \item{case}{"queen", "rook" or "bishop". Ignored if \code{n} is provided.}
 
 \item{distance}{distance between adjacent camera traps. Don't worry about the hypotenuse.}
 
-\item{id}{column in \code{x} indicating id of focal point. Only used when x is a \code{data.table}.}
+\item{id}{default: "id_sample_ct" generated automatically from \code{sample_ct}}
 
-\item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}. Expects length = 2 e.g.: c('X', 'Y').}
+\item{n}{number of points around each focal point. \code{n} overrides the \code{case} argument, do not provide both - see Details.}
 }
 \value{
 Extended data.table either nine times the length of input DT for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case. See examples.
@@ -25,33 +23,21 @@ Extended data.table either nine times the length of input DT for 'queen' case or
 The logical 'focal' column indicates which point is the focal or center camera trap.
 }
 \description{
-Set up grids around focal points. For example, sample points in your study area and use \code{grid_ct} to establish a grid of camera traps around each.
+Set up grids around focal points. For example, sample points in your study
+area with \code{sample_ct} then use \code{grid_ct} to establish a grid of camera traps
+around each.
 }
 \examples{
-# Point data (sf object)
-library(sf)
-data(points)
-plot(points)
+data("clearwater_lake_density")
+pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
 
-## Make grid with case
-queen <- grid_ct(points, case = 'queen', distance = 100)
-plot(queen)
+# Make grid with case, eg. 'queen'
+queen <- grid_ct(pts, case = 'queen', distance = 100)
 
-# Focal individuals
+# Plot
 plot(queen['focal'])
 
-rook <- grid_ct(points, case = 'rook', distance = 100)
-plot(rook)
-
-bishop <- grid_ct(points, case = 'bishop', distance = 100)
-plot(bishop)
-
-## Make grid with n
-grid <- grid_ct(points, n = 25, distance = 100)
-plot(grid)
-
-# data.table input
-library(data.table)
-DT <- data.table(ID = points$ID, st_coordinates(points))
-grid <- grid_ct(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
+# Make grid with n
+n_grid <- grid_ct(pts, n = 25, distance = 100)
+plot(n_grid['id_grid_ct'])
 }

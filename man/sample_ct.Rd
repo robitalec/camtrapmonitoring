@@ -2,47 +2,42 @@
 % Please edit documentation in R/sample-ct.R
 \name{sample_ct}
 \alias{sample_ct}
-\title{Stratified camera trap sampling}
+\title{Camera trap sampling}
 \usage{
-sample_ct(x, n, type, col, returnDT = FALSE)
+sample_ct(x, n, type, col = NULL)
 }
 \arguments{
-\item{x}{polygon object of class \code{sf}}
+\item{x}{spatial feature object}
 
 \item{n}{number of random points}
 
-\item{type}{of sampling. either 'random' or 'regular'.}
+\item{type}{type of sampling, see \link[sf]{st_sample}}
 
-\item{col}{column in x indicating strata}
-
-\item{returnDT}{return a \code{data.table} (TRUE) or \code{sf} (FALSE) object}
+\item{col}{column name in x indicating strata}
 }
 \value{
-Either a \code{sf} object or a \code{data.table} with a \code{sfc} (simple feature column).
+\code{sf} object with POINT geometry
 }
 \description{
-Sample potential camera trap locations in each region defined by unique values in col in x.
-}
-\details{
-Random or regular sampling. Polygons cannot be assigned to multiple values. Optionally return a \code{data.table} if 'returnDT' is TRUE or an \code{sf} object if FALSE.
-
-If you'd like to sample a polygon, but not stratified by any \code{col}, simply use \link[sf]{st_sample}.
+Sample potential camera trap locations. For stratified sampling, provide a
+suitable column to stratify by. Alternatively, \link[sf]{st_sample} is used
+directly to sample points across all features.
 }
 \examples{
-# Example polygons with density levels 1, 2 and 3
-data(densitygrid)
+# Example grid with density levels (High, Medium, Low)
+data(clearwater_lake_density)
 
-# Randomly sample 5 points for each set of polygons in each strata
-pts <- sample_ct(x = densitygrid, n = 5, type = 'random',
-col = 'density', returnDT = FALSE)
+# Stratified random points for each density level
+pts_random <- sample_ct(x = clearwater_lake_density, n = 20, type = 'random', col = 'density')
 
-plot(densitygrid, reset = FALSE)
-plot(pts$geometry, add = TRUE)
+# Plot density grid and sampled points
+plot(clearwater_lake_density, reset = FALSE)
+plot(pts_random, add = TRUE, pch = 1)
 
-# Sample 5 regular points for each set of polygons in each strata
-pts <- sample_ct(x = densitygrid, n = 20, type = 'regular',
-col = 'density', returnDT = FALSE)
+# Regular sampled points across all features
+pts_regular <- sample_ct(x = clearwater_lake_density, n = 20, type = 'regular')
 
-plot(densitygrid, reset = FALSE)
-plot(pts$geometry, add = TRUE)
+# Plot density grid and sampled points
+plot(clearwater_lake_density, reset = FALSE)
+plot(pts_regular, add = TRUE, pch = 2)
 }

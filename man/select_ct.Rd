@@ -7,7 +7,7 @@
 select_ct(x, n, rank = NULL, sub = NULL, by = NULL)
 }
 \arguments{
-\item{x}{data.table or sf points.}
+\item{x}{spatial feature object}
 
 \item{n}{number of locations to select. if \code{by} is provided, \code{select_ct} will select \code{n} for each group defined in \code{by}.}
 
