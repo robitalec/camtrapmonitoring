@@ -1,70 +1,73 @@
+# Context -----------------------------------------------------------------
 context("test-sample")
 
-# make expected results
-col <- 'density'
-pts <- sample_ct(densitygrid, 10, type = 'random',
-										col = col, returnDT = TRUE)
 
-# tests
-test_that("basics", {
-	expect_error(sample_ct(densitygrid, 10, type = 'random', col = 'potato'),
+
+# Data --------------------------------------------------------------------
+data("clearwater_lake_density")
+col <- 'density'
+
+
+
+# Tests -------------------------------------------------------------------
+test_that("checks error as expected", {
+	expect_error(sample_ct(clearwater_lake_density, 10, type = 'random', col = 'potato'),
 							 error = 'strata column not found in x')
 
-	densitygrid$potato <- NA
-	expect_error(sample_ct(densitygrid, 10, type = 'random', col = 'potato'),
+	clearwater_lake_density$potato <- NA
+	expect_error(sample_ct(clearwater_lake_density, 10, type = 'random', col = 'potato'),
 							 error = 'no strata found')
 
-	expect_error(sample_ct(densitygrid, 10, col = col),
+	expect_error(sample_ct(clearwater_lake_density, 10, col = col),
 							 error = 'type must be provided. either "regular" or "random"')
-
 })
 
-test_that("with data.table return", {
-	pts <- sample_ct(densitygrid, 10, type = 'random',
-											col = col, returnDT = TRUE)
+
+
+test_that("levels returned in output match input", {
+	pts <- sample_ct(clearwater_lake_density,
+									 10,
+									 type = 'random',
+									 col = col)
 
 	expect_equivalent(unique(pts[[col]]),
-										unique(densitygrid[[col]]))
-
-
-	expect_true(inherits(pts, 'data.table'))
-
+										unique(clearwater_lake_density[[col]]))
 })
 
-test_that("with sf return", {
-	pts <- sample_ct(densitygrid, 10, type = 'random',
-											col = col, returnDT = FALSE)
 
-	expect_equivalent(unique(pts[[col]]),
-										unique(densitygrid[[col]]))
 
-	expect_true(inherits(pts, 'sf'))
+test_that("returns sf object", {
+	pts <- sample_ct(clearwater_lake_density, 10, type = 'random',
+											col = col)
+
+	expect_s3_class(pts, 'sf')
 })
+
 
 
 test_that("type of col is well handled", {
 	# factor
-	densitygrid$tryfactor <- as.factor(densitygrid$density)
-	pts <- sample_ct(densitygrid, 10, type = 'random',
-											col = 'tryfactor', returnDT = FALSE)
+	clearwater_lake_density$tryfactor <- as.factor(clearwater_lake_density$density)
+	pts <- sample_ct(clearwater_lake_density, 10, type = 'random',
+											col = 'tryfactor')
 
 	expect_equivalent(unique(pts[['tryfactor']]),
-										unique(densitygrid[['tryfactor']]))
+										unique(clearwater_lake_density[['tryfactor']]))
 
 	# numeric
-	densitygrid$trynum <- sample(1:3, size = 4, replace = TRUE)
-	pts <- sample_ct(densitygrid, 10, type = 'random',
-											col = 'trynum', returnDT = FALSE)
+	clearwater_lake_density$trynum <- sample(1:3, size = 4, replace = TRUE)
+	pts <- sample_ct(clearwater_lake_density, 10, type = 'random',
+											col = 'trynum')
 
 	expect_equivalent(unique(pts[['trynum']]),
-										unique(densitygrid[['trynum']]))
+										unique(clearwater_lake_density[['trynum']]))
 
 	# boolean
-	densitygrid$trybool <- sample(c(TRUE, FALSE), size = 4, replace = TRUE)
-	pts <- sample_ct(densitygrid, 10, type = 'random',
-											col = 'trybool', returnDT = FALSE)
+	clearwater_lake_density$trybool <- sample(c(TRUE, FALSE), size = 4, replace = TRUE)
+	pts <- sample_ct(clearwater_lake_density, 10, type = 'random',
+											col = 'trybool')
 
 	expect_equivalent(unique(pts[['trybool']]),
-										unique(densitygrid[['trybool']]))
+										unique(clearwater_lake_density[['trybool']]))
 
 })

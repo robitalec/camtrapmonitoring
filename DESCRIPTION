@@ -25,9 +25,9 @@ Suggests:
     osmdata,
     elevatr
 VignetteBuilder: knitr
-Imports: 
-    data.table,
+Imports:
     sf (>= 0.7-3),
     units,
-    raster
+    terra,
+    distanceto
 Depends: R (>= 2.10)

@@ -16,13 +16,11 @@ eval_dist_(x, layer, direction = NULL, coords = NULL, crs = NULL)
 \method{eval_dist_}{data.table}(x, layer, direction = NULL, coords = NULL, crs = NULL)
 }
 \arguments{
-\item{x}{data.table or sf points.}
+\item{x}{spatial feature object}
 
 \item{layer}{object of class sfg, sfc or sf.}
 
 \item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
-
-\item{coords}{columns in \code{x} indicating names of coordinate columns of focal point. Only used when x is a \code{data.table}. Expects length = 2 e.g.: c('X', 'Y').}
 
 \item{crs}{coordinate reference system of the coordinates in x, if x is a data.table. Either an integer with the EPSG code, or character with proj4string (see the 'crs' argument in \link[sf]{st_sf}).}
 }

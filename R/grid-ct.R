@@ -1,188 +1,102 @@
 #' Make camera trap grids
 #'
-#' Set up grids around focal points. For example, sample points in your study area and use `grid_ct` to establish a grid of camera traps around each.
+#' Set up grids around focal points. For example, sample points in your study
+#' area with `sample_ct` then use `grid_ct` to establish a grid of camera traps
+#' around each.
 #'
-#' @param x data.table or sf points.
-#' @param n number of points around each focal point. `n` overrides the `case` argument, do not provide both. See details.
+#' @inheritParams sample_ct
 #' @param case "queen", "rook" or "bishop". Ignored if `n` is provided.
 #' @param distance distance between adjacent camera traps. Don't worry about the hypotenuse.
-#' @param id column in `x` indicating id of focal point. Only used when x is a `data.table`.
-#' @param coords columns in `x` indicating names of coordinate columns of focal point. Only used when x is a `data.table`. Expects length = 2 e.g.: c('X', 'Y').
-#'
+#' @param id default: "id_sample_ct" generated automatically from `sample_ct`
+#' @param n number of points around each focal point. `n` overrides the `case` argument, do not provide both - see Details.
+
 #' @return
 #'
-#' Extended data.table either nine times the length of input DT for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case. See examples.
+#' Extended sf object either nine times the length of input x for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case. Otherwise n * number the length of input x. See examples.
 #'
 #' The logical 'focal' column indicates which point is the focal or center camera trap.
 #'
 #' @export
 #'
 #' @examples
-#' # Point data (sf object)
-#' library(sf)
-#' data(points)
-#' plot(points)
+#' data("clearwater_lake_density")
+#' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
 #'
-#' ## Make grid with case
-#' queen <- grid_ct(points, case = 'queen', distance = 100)
-#' plot(queen)
+#' # Make grid with case, eg. 'queen'
+#' queen <- grid_ct(pts, case = 'queen', distance = 100)
 #'
-#' # Focal individuals
+#' # Plot
 #' plot(queen['focal'])
 #'
-#' rook <- grid_ct(points, case = 'rook', distance = 100)
-#' plot(rook)
-#'
-#' bishop <- grid_ct(points, case = 'bishop', distance = 100)
-#' plot(bishop)
-#'
-#' ## Make grid with n
-#' grid <- grid_ct(points, n = 25, distance = 100)
-#' plot(grid)
-#'
-#' # data.table input
-#' library(data.table)
-#' DT <- data.table(ID = points$ID, st_coordinates(points))
-#' grid <- grid_ct(DT, case = 'queen', distance = 100, id = 'ID', coords = c('X', 'Y'))
+#' # Make grid with n
+#' n_grid <- grid_ct(pts, n = 25, distance = 100)
+#' plot(n_grid['id_grid_ct'])
 grid_ct <- function(x,
-										n,
 										case,
 										distance,
-										id = NULL,
-										coords = NULL) {
-	# NSE
-	X <- Y <- NULL
+										id = 'id_sample_ct',
+										n) {
+
+	if (distance < 0 | !is.numeric(distance)) {
+		stop('distance must be a numeric, greater than 0')
+	}
+
+	stopifnot('x is not of class sf' = inherits(x, 'sf'))
+	stopifnot('x is not of geometry type POINT' =
+							sf::st_geometry_type(x, FALSE) == 'POINT')
+	stopifnot(id %in% colnames(x))
+
+	move <- grid_move(case = case, n = n, distance = distance)
+
+	x_rep <- x[rep(seq.int(nrow(x)), each = nrow(move)), ]
+	x_rep_coords <- st_coordinates(x_rep)
+
+	move_rep <- move[rep(seq.int(nrow(move)), nrow(x)), ]
+
+	coords_moved <- x_rep_coords + as.matrix(move_rep)
+	coords_moved_sf <- st_as_sf(data.frame(coords_moved), coords = c('X', 'Y'))
+
+	x_moved <- st_set_geometry(x_rep, st_geometry(coords_moved_sf))
+
+	x_moved$id_grid_ct <- seq.int(nrow(x_moved))
+
+	focals <- by(x_moved, x_moved[[id]], function(chunk) min(chunk[['id_grid_ct']]))
+	x_moved$focal <- ifelse(x_moved[['id_grid_ct']] %in% focals, TRUE, FALSE)
+
+	st_crs(x_moved) <- st_crs(x)
+	return(x_moved)
+}
 
 
+
+grid_move <- function(case, n, distance) {
 	if ((missing(n) & missing(case)) |
 			!missing(n) & !missing(case)) {
 		stop('provide one of n and case and not both.')
 	}
 
 	if (missing(case)) {
-		tms <- floor(n / 8)
-		s <- seq(1, tms) * distance
-		move <- data.table::CJ(X = c(0, -s, s), Y = c(0, -s, s))
-		move <- move[order(abs(X) + abs(Y))][1:n]
+		tms <- ceiling(n / 8)
+		s <- seq.int(tms) * distance
+		gd <- expand.grid(X = c(0, -s, s), Y = c(0, -s, s))
+		abs_dist <- abs(sqrt(rowSums(gd ^ 2)))
+		gd[order(abs_dist),][seq.int(n),]
 	} else if (case == 'queen') {
-		move <- data.table::CJ(X = c(0, -distance, distance),
-													 Y = c(0, -distance, distance))
-		move <- move[order(abs(X), abs(Y))]
+		expand.grid(X = c(0, -distance, distance),
+								Y = c(0, -distance, distance))
 	} else if (case == 'bishop') {
-		move <- rbind(list(0, 0),
-									data.table::CJ(X = c(-distance, distance),
-																 Y = c(-distance, distance)))
+		rbind(
+			list(0, 0),
+			expand.grid(X = c(-distance, distance),
+									Y = c(-distance, distance))
+		)
 	} else if (case == 'rook') {
-		move <- rbind(list(0, 0),
-									data.table::data.table(X = c(0, distance, 0, -distance),
-																				 Y = c(distance, 0, -distance, 0)))
+		rbind(
+			list(0, 0),
+			data.frame(X = c(0, distance, 0, -distance),
+								 Y = c(distance, 0, -distance, 0))
+		)
 	} else {
 		stop('case provided must be one of "queen", "rook" or "bishop"')
-	}
-
-
-	if (distance < 0 | !is.numeric(distance)) {
-		stop('distance must be a numeric, greater than 0')
-	}
-
-	grid_ct_(
-		x,
-		n = n,
-		case = case,
-		distance = distance,
-		id = id ,
-		coords = coords,
-		move = move
-	)
-}
-
-
-grid_ct_ <- function(x,
-										 n,
-										 case,
-										 distance,
-										 id = NULL,
-										 coords = NULL,
-										 move) {
-	UseMethod('grid_ct_')
-}
-
-
-#' @export
-#' @import data.table
-#' @describeIn grid_ct
-grid_ct_.data.table <-
-	function(x,
-					 n,
-					 case,
-					 distance,
-					 id = NULL,
-					 coords = NULL,
-					 move) {
-		# NSE
-		camID <- focal <- . <- NULL
-
-		if (is.null(id) | is.null(coords)) {
-			stop('id and coords must be provided with x is a data.table')
-		}
-
-		if (!(id %in% colnames(x))) {
-			stop('id provided not found in colnames(x)')
-		}
-
-		if (!(all(coords %in% colnames(x)))) {
-			stop('coords provided not found in colnames(x)')
-		}
-
-		out <- x[rep(1:.N, each = nrow(move))]
-		set(out, j = coords[[1]],
-				value = out[[coords[[1]]]] + as.double(move$X))
-		set(out, j = coords[[2]],
-				value = out[[coords[[2]]]] + as.double(move$Y))
-		out[, camID := .I]
-
-		focals <- out[, .(camID = min(camID)), id]
-		out[, focal := ifelse(camID %in% focals$camID, TRUE, FALSE)]
-		return(out)
-	}
-
-
-
-#' @export
-#' @describeIn grid_ct
-grid_ct_.sf <- function(x,
-												n,
-												case,
-												distance,
-												id = NULL,
-												coords = NULL,
-												move) {
-	if (!('geometry' %in% colnames(x))) {
-		stop('geometry column not found in x')
-	}
-
-	if (!inherits(x[['geometry']], 'sfc_POINT')) {
-		stop('class of geometry column must be sfc_POINT')
-	}
-
-	r <- x[rep(1:nrow(x),  each = nrow(move)), ]
-
-	out <- sf::st_as_sf(data.frame(r[, colnames(r)[!(grepl('geometry', colnames(r),
-																												 fixed = TRUE))]],
-																 sf::st_coordinates(r) +
-																 	as.matrix(move[rep(1:.N, times = nrow(x))])),
-											coords = c('X', 'Y'))
-
-	out$camID <- seq.int(1, nrow(out))
-
-	focals <- by(out, out$ID, function(x)
-		min(x$camID))
-	out$focal <- ifelse(out$camID %in% focals, TRUE, FALSE)
-
-	if (is.null(sf::st_crs(x))) {
-		return(out)
-	} else {
-		sf::st_crs(out) <- sf::st_crs(x)
-		return(out)
 	}
 }

@@ -1,75 +1,61 @@
-#' Stratified camera trap sampling
+#' Camera trap sampling
 #'
-#' Sample potential camera trap locations in each region defined by unique values in col in x.
+#' Sample potential camera trap locations. For stratified sampling, provide a
+#' suitable column to stratify by. Alternatively, \link[sf]{st_sample} is used
+#' directly to sample points across all features.
 #'
-#' Random or regular sampling. Polygons cannot be assigned to multiple values. Optionally return a `data.table` if 'returnDT' is TRUE or an `sf` object if FALSE.
-#'
-#' If you'd like to sample a polygon, but not stratified by any `col`, simply use \link[sf]{st_sample}.
-#'
-#' @param x polygon object of class `sf`
+#' @param x spatial feature object
 #' @param n number of random points
-#' @param type of sampling. either 'random' or 'regular'.
-#' @param col column in x indicating strata
-#' @param returnDT return a `data.table` (TRUE) or `sf` (FALSE) object
+#' @param type type of sampling, see \link[sf]{st_sample}
+#' @param col column name in x indicating strata
 #'
-#' @return Either a `sf` object or a `data.table` with a \code{sfc} (simple feature column).
+#' @return `sf` object with POINT geometry
 #' @export
 #'
 #' @examples
-#' # Example polygons with density levels 1, 2 and 3
-#' data(densitygrid)
+#' # Example grid with density levels (High, Medium, Low)
+#' data(clearwater_lake_density)
 #'
-#' # Randomly sample 5 points for each set of polygons in each strata
-#' pts <- sample_ct(x = densitygrid, n = 5, type = 'random',
-#' col = 'density', returnDT = FALSE)
+#' # Stratified random points for each density level
+#' pts_random <- sample_ct(x = clearwater_lake_density, n = 20, type = 'random', col = 'density')
 #'
-#' plot(densitygrid, reset = FALSE)
-#' plot(pts$geometry, add = TRUE)
+#' # Plot density grid and sampled points
+#' plot(clearwater_lake_density, reset = FALSE)
+#' plot(pts_random, add = TRUE, pch = 1)
 #'
-#' # Sample 5 regular points for each set of polygons in each strata
-#' pts <- sample_ct(x = densitygrid, n = 20, type = 'regular',
-#' col = 'density', returnDT = FALSE)
+#' # Regular sampled points across all features
+#' pts_regular <- sample_ct(x = clearwater_lake_density, n = 20, type = 'regular')
 #'
-#' plot(densitygrid, reset = FALSE)
-#' plot(pts$geometry, add = TRUE)
-sample_ct <- function(x, n, type, col, returnDT = FALSE) {
-	# NSE
-	geometry <- NULL
+#' # Plot density grid and sampled points
+#' plot(clearwater_lake_density, reset = FALSE)
+#' plot(pts_regular, add = TRUE, pch = 2)
+sample_ct <- function(x, n, type, col = NULL) {
+	stopifnot('x is missing' = !missing(type))
+	stopifnot('n is missing' = !missing(type))
+	stopifnot('type is missing' = !missing(type))
+
+	stopifnot('type must be one of "regular", "random", or "hexagonal"' =
+							type %in% c('regular', 'random', 'hexagonal'))
 
 
-	if (!(col %in% colnames(x))) {
-		stop('strata column not found in x')
-	}
-
-	if (missing(type) | !(type %in% c('regular', 'random'))) {
-		stop('type must be provided. either "regular" or "random".')
-	}
-
-	lvls <- unique(x[[col]])
-
-	if (is.null(lvls)) {
-		stop('no strata found')
-	}
-
-
-	DT <- lapply(lvls, function(l) {
-		s <- sf::st_sf(
-			geometry = sf::st_sample(x[x[[col]] == l, ], n, type = type,
-															 exact = TRUE))
-		s[[col]] <- l
-		return(s)
-	})
-
-	if (returnDT) {
-		out <-
-			data.table::rbindlist(DT)[,
-																c('X', 'Y') := data.table::as.data.table(sf::st_coordinates(geometry))]
-		data.table::set(out, j = 'geometry', value = NULL)
-		data.table::set(out, j = 'ID', value = 1:nrow(out))
-		return(out)
+	if (is.null(col)) {
+		out <- sf::st_as_sf(sf::st_sample(x, n, type = type, exact = TRUE))
 	} else {
-		out <- do.call(rbind, DT)
-		out$ID <- 1:nrow(out)
-		return(out)
+		stopifnot('col not found in x' = col %in% colnames(x))
+
+		strata <- unique(x[[col]])
+
+		stratified <- lapply(strata, function(y) {
+			s <- sf::st_sf(
+				geometry = sf::st_sample(x[x[[col]] == y, ], n, type = type,
+																 exact = TRUE))
+			s[[col]] <- y
+			return(s)
+		})
+
+		out <- do.call(rbind, stratified)
 	}
+
+	out$id_sample_ct <- seq.int(nrow(out))
+	return(out)
 }
