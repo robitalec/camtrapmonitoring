@@ -66,15 +66,21 @@ grid_ct <- function(x,
 	st_crs(x_moved) <- st_crs(x)
 	return(x_moved)
 }
+
+
+
+grid_move <- function(case, n, distance) {
 	if ((missing(n) & missing(case)) |
 			!missing(n) & !missing(case)) {
 		stop('provide one of n and case and not both.')
 	}
+
 	if (missing(case)) {
-		tms <- floor(n / 8)
-		s <- seq(1, tms) * distance
-		move <- data.table::CJ(X = c(0, -s, s), Y = c(0, -s, s))
-		move <- move[order(abs(X) + abs(Y))][1:n]
+		tms <- ceiling(n / 8)
+		s <- seq.int(tms) * distance
+		gd <- expand.grid(X = c(0, -s, s), Y = c(0, -s, s))
+		abs_dist <- abs(sqrt(rowSums(gd ^ 2)))
+		gd[order(abs_dist),][seq.int(n),]
 	} else if (case == 'queen') {
 		move <- data.table::CJ(X = c(0, -distance, distance),
 													 Y = c(0, -distance, distance))
