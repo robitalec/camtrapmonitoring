@@ -41,8 +41,8 @@ grid_ct <- function(x,
 		stop('distance must be a numeric, greater than 0')
 	}
 
-	stopifnot('x is of class sf' = inherits(x, 'sf'))
-	stopifnot('x is of geometry type POINT' =
+	stopifnot('x is not of class sf' = inherits(x, 'sf'))
+	stopifnot('x is not of geometry type POINT' =
 							sf::st_geometry_type(x, FALSE) == 'POINT')
 	stopifnot(id %in% colnames(x))
 
