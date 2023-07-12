@@ -37,7 +37,14 @@ grid_ct <- function(x,
 										id = 'id_sample_ct',
 										n) {
 
+	if (distance < 0 | !is.numeric(distance)) {
+		stop('distance must be a numeric, greater than 0')
+	}
 
+	stopifnot('x is of class sf' = inherits(x, 'sf'))
+	stopifnot('x is of geometry type POINT' =
+							sf::st_geometry_type(x, FALSE) == 'POINT')
+	stopifnot(id %in% colnames(x))
 	if ((missing(n) & missing(case)) |
 			!missing(n) & !missing(case)) {
 		stop('provide one of n and case and not both.')
