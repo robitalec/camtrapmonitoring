@@ -47,6 +47,16 @@ grid_ct <- function(x,
 	stopifnot(id %in% colnames(x))
 
 	move <- grid_move(case = case, n = n, distance = distance)
+
+	x_rep <- x[rep(seq.int(nrow(x)), each = nrow(move)), ]
+	x_rep_coords <- st_coordinates(x_rep)
+
+	move_rep <- move[rep(seq.int(nrow(move)), nrow(x)), ]
+
+	coords_moved <- x_rep_coords + as.matrix(move_rep)
+	coords_moved_sf <- st_as_sf(data.frame(coords_moved), coords = c('X', 'Y'))
+
+	x_moved <- st_set_geometry(x_rep, st_geometry(coords_moved_sf))
 	if ((missing(n) & missing(case)) |
 			!missing(n) & !missing(case)) {
 		stop('provide one of n and case and not both.')
