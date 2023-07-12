@@ -230,35 +230,33 @@ eval_buffer <-
 #' plot(queen["dist_wetland"])
 eval_dist <-
 	function(x,
-					 layer,
-					 direction = NULL,
-					 coords = NULL,
-					 crs = NULL) {
-		if (missing(x) || missing(layer) || is.null(x) || is.null(layer)) {
-			stop('please provide both x and layer')
+					 y,
+					 measure = NULL,
+					 direction = NULL) {
+		if (missing(x) || missing(y) || is.null(x) || is.null(y)) {
+			stop('please provide both x and y')
 		}
 
-		if (is.null(direction)) {
-			warning(
-				'missing direction. it is recommended to provide these for subsequent selection of camera trap locations.'
-			)
-		}
-
-		check_direction(direction)
+		# if (is.null(direction)) {
+		# 	warning(
+		# 		'missing direction. it is recommended to provide these for subsequent selection of camera trap locations.'
+		# 	)
+		# }
+		#
+		# check_direction(direction)
 
 		# direction = NULL,
 		# coords = NULL,
 		# crs = NULL) {
-		if (!(is.null(coords))) {
-			warning('coords ignored since x is an sf object')
-		}
+		# if (!(is.null(coords))) {
+		# 	warning('coords ignored since x is an sf object')
+		# }
 
-		set_eval_attr(
-			sf::st_distance(x, layer[sf::st_nearest_feature(x, layer),],
-											by_element = TRUE),
-			layer = deparse(substitute(layer)),
-			type = 'real',
-			direction = direction
-		)[]
+		# set_eval_attr(
+		distanceto::distance_to(y, x, measure = measure)
+		# 	layer = deparse(substitute(layer)),
+		# 	type = 'real',
+		# 	direction = direction
+		# )[]
 
 	}
