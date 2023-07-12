@@ -80,9 +80,9 @@ eval_pt <-
 			simple = TRUE,
 			ID = FALSE
 		)[[layer]]
-			# layer = deparse(substitute(layer)),
-			# type = type,
-			# direction = direction
+		# layer = deparse(substitute(layer)),
+		# type = type,
+		# direction = direction
 		# )
 	}
 
@@ -203,9 +203,6 @@ eval_buffer <-
 #' To avoid the large overhead of creating distance to rasters for small/medium number of sample points, this vector-based distance to determines the nearest feature (layer) to each x then calculates the distance between each pair.
 #'
 #' @inheritParams eval_pt
-#' @param layer object of class sfg, sfc or sf.
-#' @param crs coordinate reference system of the coordinates in x, if x is a data.table. Either an integer with the EPSG code, or character with proj4string (see the 'crs' argument in \link[sf]{st_sf}).
-#'
 #' @param measure measure type see geodist::geodist for details
 #'
 #' @return Vector of distances between x and the nearest feature in layer.
@@ -216,19 +213,21 @@ eval_buffer <-
 #' @export
 #'
 #' @examples
-#' # sf objects
-#' data(water)
-#' data(points)
+#' library(terra)
+#' data("clearwater_lake_density")
+#' data("clearwater_lake_wetlands")
 #'
-#' points$distWater <- eval_dist(points, water, direction = 'negative')
+#' # Sample points
+#' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
 #'
-#' # data.table objects
-#' library(data.table)
+#' # Make grid with queen's case
+#' queen <- grid_ct(pts, case = 'queen', distance = 100)
 #'
-#' data(DT)
-#' alloc.col(DT)
+#' # Evaluate each point with the land cover layer
+#' queen$dist_wetland <- eval_dist(x = clearwater_lake_wetlands, y = queen)
 #'
-#' DT[, distWater := eval_dist(.SD, water, coords = c('X', 'Y'), direction = 'positive', crs = sf::st_crs(water))]
+#' # Plot
+#' plot(queen["dist_wetland"])
 eval_dist <-
 	function(x,
 					 layer,
