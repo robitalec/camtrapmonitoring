@@ -127,76 +127,71 @@ eval_pt <-
 #' plot(queen["elev"])
 eval_buffer <-
 	function(x,
-					 layer,
-					 buffersize,
+					 y,
+					 buffer_size,
+					 buffer_fun = mean,
+					 layer = 1,
 					 type,
 					 direction,
 					 coords = NULL) {
-	if (missing(x) || is.null(x)) {
-		stop('x must be provided. either data.table or sf point object.')
-	}
 
-	if (missing(layer) || is.null(layer) || !inherits(layer, 'Raster')) {
-		stop('layer must be provided. expected type is raster.')
-	}
-
-	if (is.null(type) || is.null(direction)) {
-		warning('missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.')
-	}
-
-	checkls <- list(type, direction)
-	if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
-		stop('type and direction must be of class character')
-	}
-
-	check_type(type)
-	check_direction(direction)
-
-	if (any(buffersize < raster::res(layer))) {
-		warning("buffersize is less than the layer's resolution")
-	}
-
-	# TODO: add crs = crs(layer)
-
-					 # coords = NULL) {
-		if (!('geometry' %in% colnames(x))) {
-			stop('geometry column not found in x')
+		if (missing(x) || is.null(x) || !inherits(x, 'SpatRaster')) {
+			stop('x must be provided. expected type is SpatRaster.')
+		}
+		if (missing(y) || is.null(y)) {
+			stop('y must be provided. either data.table or sf point object.')
 		}
 
-		if (!inherits(x$geometry, 'sfc_POINT')) {
-			stop('class of geometry column must be sfc_POINT')
+		# if (is.null(type) || is.null(direction)) {
+		# 	warning('missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.')
+		# }
+		#
+		# checkls <- list(type, direction)
+		# if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
+		# 	stop('type and direction must be of class character')
+		# }
+		#
+		# check_type(type)
+		# check_direction(direction)
+
+		if (any(buffer_size < terra::res(x))) {
+			warning("buffer_size is less than the x's resolution")
 		}
 
-		if (!is.null(coords)) {
-			warning('coords provided are ignored because x is an sf object')
-		}
+		# TODO: add crs = crs(layer)
 
-		if (!is.null(type)) {
-			if (type %in% c('binary', 'real')) {
-				bufferfun <- mean
-			} else if (type %in% c('categorical', 'ordinal')) {
-				bufferfun <- NULL
-				warning('type provided is either categorical or ordinal, cannot summarize in buffer, returning frequency table')
-			} else {
-				stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
-			}
-		} else {
-			bufferfun <- NULL
-		}
+		# coords = NULL) {
+		stopifnot('y is not of class sf' = inherits(y, 'sf'))
+		stopifnot('y is not of geometry type POINT' =
+								sf::st_geometry_type(y, FALSE) == 'POINT')
+
+
+		# if (!is.null(coords)) {
+		# 	warning('coords provided are ignored because x is an sf object')
+		# }
+
+		# if (!is.null(type)) {
+		# 	if (type %in% c('binary', 'real')) {
+		# 		bufferfun <- mean
+		# 	} else if (type %in% c('categorical', 'ordinal')) {
+		# 		bufferfun <- NULL
+		# 		warning('type provided is either categorical or ordinal, cannot summarize in buffer, returning frequency table')
+		# 	} else {
+		# 		stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
+		# 	}
+		# } else {
+		# 	bufferfun <- NULL
+		# }
 		# how to summarize buffers with ordinal/categorical
 
-
-		set_eval_attr(
-			raster::extract(
-				layer,
-				sf::st_coordinates(x),
-				buffer = buffersize,
-				fun = bufferfun
-			),
-			layer = deparse(substitute(layer)),
-			type = type,
-			direction = direction
-		)
+		terra::extract(
+			x = x,
+			y = st_buffer(y, dist = buffer_size),
+			layer = layer,
+			na.rm = FALSE,
+			fun = buffer_fun,
+			ID = FALSE
+		)[[layer]]
 	}
 
 
@@ -249,11 +244,11 @@ eval_dist <-
 			)
 		}
 
-	check_direction(direction)
+		check_direction(direction)
 
-					 # direction = NULL,
-					 # coords = NULL,
-					 # crs = NULL) {
+		# direction = NULL,
+		# coords = NULL,
+		# crs = NULL) {
 		if (!(is.null(coords))) {
 			warning('coords ignored since x is an sf object')
 		}
@@ -266,4 +261,4 @@ eval_dist <-
 			direction = direction
 		)[]
 
-}
+	}
