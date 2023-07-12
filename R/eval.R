@@ -60,47 +60,9 @@ eval_pt <-
 		check_type(type)
 		check_direction(direction)
 
-		eval_pt_(x, layer, type, direction, coords)
-	}
-
-#' @export
-#' @rdname eval_pt
-eval_pt_ <- 	function(x,
-											layer,
-											type = NULL,
-											direction = NULL,
-											coords = NULL) {
-	UseMethod('eval_pt_')
-}
-
-
-#' @export
-#' @rdname eval_pt
-eval_pt_.data.table <-
-	function(x,
-					 layer,
-					 type = NULL,
-					 direction = NULL,
-					 coords = NULL) {
-		check_coords(x, coords)
-
-		set_eval_attr(
-			raster::extract(layer, x[, .SD, .SDcols = coords],
-											na.rm = FALSE),
-			layer = deparse(substitute(layer)),
-			type = type,
-			direction = direction
-		)[]
-}
-
-#' @export
-#' @rdname eval_pt
-eval_pt_.sf <-
-	function(x,
-					 layer,
-					 type = NULL,
-					 direction = NULL,
-					 coords = NULL) {
+					 # type = NULL,
+					 # direction = NULL,
+					 # coords = NULL) {
 		if (!('geometry' %in% colnames(x))) {
 			stop('geometry column not found in x')
 		}
@@ -116,7 +78,7 @@ eval_pt_.sf <-
 			type = type,
 			direction = direction
 		)
-	}
+}
 
 
 #' Evaluate camera trap locations by buffered sampling of layers
@@ -185,68 +147,7 @@ eval_buffer <-
 
 	# TODO: add crs = crs(layer)
 
-	eval_buffer_(x, layer, buffersize, type, direction, coords)
-}
-
-#' @export
-#' @rdname eval_buffer
-eval_buffer_ <- function(x,
-												 layer,
-												 buffersize,
-												 type,
-												 direction,
-												 coords = NULL) {
-	UseMethod('eval_buffer_')
-}
-
-
-
-#' @export
-#' @rdname eval_buffer
-eval_buffer_.data.table <-
-	function(x,
-					 layer,
-					 buffersize,
-					 type,
-					 direction,
-					 coords = NULL) {
-
-		check_coords(x, coords)
-
-		if (!is.null(type)) {
-			if (type %in% c('binary', 'real')) {
-				bufferfun <- mean
-			} else if (type %in% c('categorical', 'ordinal')) {
-				bufferfun <- NULL
-				warning('type provided is either categorical or ordinal, cannot summarize in buffer, returning frequency table')
-			} else {
-				stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
-			}
-		} else {
-			bufferfun <- NULL
-		}
-		# how to summarize buffers with ordinal/categorical
-
-		set_eval_attr(
-			raster::extract(layer,
-											x[, .SD, .SDcols = coords],
-											buffer = buffersize,
-											fun = bufferfun),
-			layer = deparse(substitute(layer)),
-			type = type,
-			direction = direction
-		)[]
-	}
-
-#' @export
-#' @rdname eval_buffer
-eval_buffer_.sf <-
-	function(x,
-					 layer,
-					 buffersize,
-					 type,
-					 direction,
-					 coords = NULL) {
+					 # coords = NULL) {
 		if (!('geometry' %in% colnames(x))) {
 			stop('geometry column not found in x')
 		}
@@ -286,6 +187,8 @@ eval_buffer_.sf <-
 			direction = direction
 		)
 	}
+
+
 
 #' Evaluate distance-to
 #'
@@ -337,34 +240,9 @@ eval_dist <-
 
 	check_direction(direction)
 
-		eval_dist_(
-			x = x,
-			layer = layer,
-			direction = direction,
-			coords = coords,
-			crs = crs
-		)
-}
-
-#' @export
-#' @rdname eval_dist
-eval_dist_ <-
-	function(x,
-					 layer,
-					 direction = NULL,
-					 coords = NULL,
-					 crs = NULL) {
-		UseMethod('eval_dist_', x)
-	}
-
-#' @export
-#' @rdname eval_dist
-eval_dist_.sf <-
-	function(x,
-					 layer,
-					 direction = NULL,
-					 coords = NULL,
-					 crs = NULL) {
+					 # direction = NULL,
+					 # coords = NULL,
+					 # crs = NULL) {
 		if (!(is.null(coords))) {
 			warning('coords ignored since x is an sf object')
 		}
@@ -377,32 +255,4 @@ eval_dist_.sf <-
 			direction = direction
 		)[]
 
-	}
-
-#' @export
-#' @rdname eval_dist
-eval_dist_.data.table <-
-	function(x,
-					 layer,
-					 direction = NULL,
-					 coords = NULL,
-					 crs = NULL) {
-
-		check_coords(x, coords)
-
-
-		if (is.null(crs)) {
-			stop('crs must be provided if x is a data.table')
-		}
-
-		xsf <- sf::st_as_sf(x, coords = coords, crs = crs)
-
-		set_eval_attr(
-			sf::st_distance(xsf,
-											layer[sf::st_nearest_feature(xsf, layer), ],
-											by_element = TRUE),
-			layer = deparse(substitute(layer)),
-			type = 'real',
-			direction = direction
-		)[]
-	}
+}
