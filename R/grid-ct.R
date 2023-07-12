@@ -99,34 +99,4 @@ grid_move <- function(case, n, distance) {
 	} else {
 		stop('case provided must be one of "queen", "rook" or "bishop"')
 	}
-
-
-	if (distance < 0 | !is.numeric(distance)) {
-		stop('distance must be a numeric, greater than 0')
-	}
-
-	if (!('geometry' %in% colnames(x))) {
-		stop('geometry column not found in x')
-	}
-
-	if (!inherits(x[['geometry']], 'sfc_POINT')) {
-		stop('class of geometry column must be sfc_POINT')
-	}
-
-	r <- x[rep(1:nrow(x),  each = nrow(move)), ]
-
-	out <- sf::st_as_sf(data.frame(r[, colnames(r)[!(grepl('geometry', colnames(r),
-																												 fixed = TRUE))]],
-																 sf::st_coordinates(r) +
-																 	as.matrix(move[rep(1:.N, times = nrow(x))])),
-											coords = c('X', 'Y'))
-
-	out$camID <- seq.int(1, nrow(out))
-
-	focals <- by(out, out$ID, function(x)
-		min(x$camID))
-	out$focal <- ifelse(out$camID %in% focals, TRUE, FALSE)
-
-	sf::st_crs(out) <- sf::st_crs(x)
-	return(out)
 }
