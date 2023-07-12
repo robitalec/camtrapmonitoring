@@ -82,17 +82,20 @@ grid_move <- function(case, n, distance) {
 		abs_dist <- abs(sqrt(rowSums(gd ^ 2)))
 		gd[order(abs_dist),][seq.int(n),]
 	} else if (case == 'queen') {
-		move <- data.table::CJ(X = c(0, -distance, distance),
-													 Y = c(0, -distance, distance))
-		move <- move[order(abs(X), abs(Y))]
+		expand.grid(X = c(0, -distance, distance),
+								Y = c(0, -distance, distance))
 	} else if (case == 'bishop') {
-		move <- rbind(list(0, 0),
-									data.table::CJ(X = c(-distance, distance),
-																 Y = c(-distance, distance)))
+		rbind(
+			list(0, 0),
+			expand.grid(X = c(-distance, distance),
+									Y = c(-distance, distance))
+		)
 	} else if (case == 'rook') {
-		move <- rbind(list(0, 0),
-									data.table::data.table(X = c(0, distance, 0, -distance),
-																				 Y = c(distance, 0, -distance, 0)))
+		rbind(
+			list(0, 0),
+			data.frame(X = c(0, distance, 0, -distance),
+								 Y = c(distance, 0, -distance, 0))
+		)
 	} else {
 		stop('case provided must be one of "queen", "rook" or "bishop"')
 	}
