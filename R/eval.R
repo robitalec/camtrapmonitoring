@@ -39,7 +39,8 @@
 #' plot(queen["lc"])
 eval_pt <-
 	function(x,
-					 layer,
+					 y,
+					 layer = 1,
 					 type = NULL,
 					 direction = NULL,
 					 coords = NULL) {
