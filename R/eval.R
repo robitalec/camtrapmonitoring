@@ -111,15 +111,20 @@ eval_pt <-
 #' @family eval
 #'
 #' @examples
-#' # Load data
-#' data(points)
-#' data("wetland")
+#' library(terra)
+#' data("clearwater_lake_density")
+#' clearwater_lake_elevation <- rast(system.file('extdata', 'clearwater_lake_elevation.tif', package = 'wildcam'))
 #'
-#' # Evaluate each point with the wetland layer
-#' points$wetland <- eval_buffer(points, wetland, buffersize = 150,
-#'       type = 'binary', direction = 'positive')
+#' # Sample points
+#' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
 #'
-#' plot(points["wetland"])
+#' # Make grid with queen's case
+#' queen <- grid_ct(pts, case = 'queen', distance = 100)
+#'
+#' # Evaluate each point with the land cover layer
+#' queen$elev <- eval_buffer(x = clearwater_lake_elevation, y = queen, buffer_size = 150)
+#'
+#' plot(queen["elev"])
 eval_buffer <-
 	function(x,
 					 layer,
