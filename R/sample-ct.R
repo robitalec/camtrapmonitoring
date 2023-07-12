@@ -56,6 +56,6 @@ sample_ct <- function(x, n, type, col = NULL) {
 		out <- do.call(rbind, stratified)
 	}
 
-
+	out$id_sample_ct <- seq.int(nrow(out))
 	return(out)
 }
