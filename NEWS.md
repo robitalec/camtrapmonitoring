@@ -3,6 +3,8 @@
 * removed data.table methods from `sample_ct`, `grid_ct` and `eval_*` functions [#7](https://github.com/robitalec/wildcam/pull/7)
 	- adds dependency on `distanceto`
 * replaced `raster` with `terra` [#7](https://github.com/robitalec/wildcam/pull/7)
+* delete old example data [#4](https://github.com/robitalec/wildcam/pull/4)
+* document new data [#6](https://github.com/robitalec/wildcam/pull/6)
 
 
 # wildcam 0.9.1.9000 (2023-07-06)
