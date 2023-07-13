@@ -192,7 +192,7 @@ plot(select_pts)
 
 
 # Sorting criteria
-ordered <- order(-select_pts$wetland_dist, select_pts$hydro_dist)
+ordered <- order(select_pts$wetland_dist, -select_pts$hydro_dist)
 
 order_select_pts <- select_pts[ordered,]
 print(order_select_pts)
