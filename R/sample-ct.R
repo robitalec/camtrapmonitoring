@@ -5,7 +5,7 @@
 #' directly to sample points across all features.
 #'
 #' @param x spatial feature object
-#' @param n number of random points
+#' @param n number of random points, if a column name is provided to `col` n represents the number of random points per strata
 #' @param type type of sampling, see \link[sf]{st_sample}
 #' @param col column name in x indicating strata
 #'
