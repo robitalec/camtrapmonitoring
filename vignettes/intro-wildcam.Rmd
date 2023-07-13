@@ -66,35 +66,32 @@ pts <- sample_ct(
 plot(pts)
 ```
 
-# Selecting potential camera trap locations
-## Randomly sampling points in different regions (stratified sampling)
 
-```r
-# Example polygons with density levels 1, 2 and 3.
-data(densitygrid)
 
-# Randomly sample 5 points for each set of polygons in each strata.
-pts <- sample_ct(x = densitygrid, n = 5, type = 'random', col = 'density', returnDT = FALSE)
+## Evaluating candidate camera trap locations
 
-plot(densitygrid, reset = FALSE)
-plot(pts$geometry, add = TRUE)
+To evaluate candidate camera trap locations, determine each spatial layer 
+required and the criteria associated with it. For example:
 
-```
+Deployment feasibility
 
-## Grid around points
+- elevation
+	- measure: point sample
+	- measure: buffered point sample
+- roads
+	- measure: distance to roads
+	
+Characteristics of candidate locations
 
-```r
-queen <- grid_ct(pts, case = 'queen', distance = 100)
-plot(queen)
+- land cover
+	- measure: point sample
+- hydrology
+	- measure: distance to major lakes
+- wetlands
+	- measure: distance to wetlands
 
-rook <- grid_ct(pts, case = 'rook', distance = 100)
-plot(rook)
 
-bishop <- grid_ct(pts, case = 'bishop', distance = 100)
-plot(bishop)
-```
 
-or n
 
 ```r
 grid <- grid_ct(pts, n = 100, distance = 500)
