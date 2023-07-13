@@ -29,7 +29,7 @@ ca_lc_crop <- crop(ca_lc, clearwater_extent_trans)
 
 # Reproject ---------------------------------------------------------------
 crs <- st_crs(32614)
-clearwater_lake_land_cover <- project(ca_lc_crop, crs$wkt)
+clearwater_lake_land_cover <- project(ca_lc_crop, crs$wkt, method = 'near')
 
 
 
