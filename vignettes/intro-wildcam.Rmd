@@ -19,10 +19,20 @@ knitr::opts_chunk$set(
 
 <!-- ggplot2 figs with geom_sf -->
 
-# Packages
+The {wildcam} package provides functions for planning and evaluating camera
+trap surveys. The recommended approach is to first sample a set of candidate 
+camera trap locations larger than the intended number of locations. Next, 
+these candidate locations are evaluated using spatial layers to measure their
+deployment feasibility (such as distance to road) and to quantify their bias 
+and coverage of project-specific characteristics (such as placement across 
+land cover classes). 
 
-```r
+{wildcam} is designed to work with modern spatial R packages: {sf} and {terra}.
+
+```{r}
 library(wildcam)
+library(sf)
+library(terra)
 ```
 
 
