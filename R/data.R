@@ -42,9 +42,9 @@
 #'
 #' @source  Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017). “osmdata.” _Journal of Open Source Software_, *2*(14), 305. doi:10.21105/joss.00305 <https://doi.org/10.21105/joss.00305>, <https://joss.theoj.org/papers/10.21105/joss.00305>.
 #' @examples
-#' data(clearwater_lake_hydro)
-#' plot(clearwater_lake_hydro)
-"clearwater_lake_hydro"
+#' data(clearwater_lake_wetlands)
+#' plot(clearwater_lake_wetlands)
+"clearwater_lake_wetlands"
 
 
 

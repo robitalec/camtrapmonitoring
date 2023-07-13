@@ -9,7 +9,7 @@ sample_ct(x, n, type, col = NULL)
 \arguments{
 \item{x}{spatial feature object}
 
-\item{n}{number of random points}
+\item{n}{number of random points, if a column name is provided to \code{col} n represents the number of random points per strata}
 
 \item{type}{type of sampling, see \link[sf]{st_sample}}
 
