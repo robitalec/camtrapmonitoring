@@ -160,31 +160,39 @@ plot(pts)
 ```
 
 
-# Select
-```r
-# Packages
-library(data.table)
+## Selection from candidate camera trap locations
 
-# Data
-data(densitygrid)
-data(lc)
-data(dem)
-data(wetland)
+To select camera trap locations, define the criteria for selecting and sorting 
+candidate locations. 
 
-# Stratified random sampling
-pts <- sample_ct(densitygrid, n = 5, type = 'random', col = 'density', returnDT = TRUE)
+Criteria for selection:
 
-# Evaluate layers
-pts[, lc := eval_pt(.SD, lc, type = 'categorical', direction = 'neutral', coords = c('X', 'Y'))]
+- Maximum distance from road: 3000 m
+- Maximum elevation: 300 m
+- Select only forest land cover classes: 1, 2, 5, 6
 
-pts[, dem := eval_buffer(.SD, dem, 100, type = 'real', direction = 'positive', coords = c('X', 'Y'))]
+Criteria for sorting:
 
-pts[, wetland := eval_buffer(.SD, wetland, 100, 'binary', 'negative', coords = c('X', 'Y'))]
+- Nearer to wetlands
+- Farther from major lakes
 
-# Select n locations
-n <- 1
+```{r}
+# Selection criteria
+max_road_dist_m <- 3000
+max_elev_m <- 300
+ls_lc_classes <- c(1, 2, 5, 6)
 
-# TODO: fix type
-# sel <- select_ct(pts, n, rank = c('wetland'), sub = expression(lc == 212), by = 'density')
+# Select out of candidate points
+select_pts <- pts[pts$road_dist < max_road_dist_m &
+										pts$elev_pt < max_elev_m &
+										pts$lc_pt %in% ls_lc_classes,]
 
+plot(select_pts)
+
+
+# Sorting criteria
+ordered <- order(-select_pts$wetland_dist, select_pts$hydro_dist)
+
+order_select_pts <- select_pts[ordered,]
+print(order_select_pts)
 ```
