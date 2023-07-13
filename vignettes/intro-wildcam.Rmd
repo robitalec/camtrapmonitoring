@@ -25,8 +25,8 @@ trap surveys. The recommended approach is to first sample a set of candidate
 camera trap locations larger than the intended number of locations. Next, 
 these candidate locations are evaluated using spatial layers to measure their
 deployment feasibility (such as distance to road) and to quantify their bias 
-and coverage of project-specific characteristics (such as placement across 
-land cover classes). 
+and coverage of project-specific characteristics (such as distribution across 
+specific land cover classes). 
 
 {wildcam} is designed to work with modern spatial R packages: {sf} and {terra}.
 
@@ -77,26 +77,26 @@ required and the criteria associated with it. For example:
 Deployment feasibility
 
 - elevation
-	- measure: point sample
-	- measure: buffered point sample
+	- point sample
+	- buffered point sample
 - roads
-	- measure: distance to roads
+	- distance to
 	
 Characteristics of candidate locations
 
 - land cover
-	- measure: point sample
+	- point sample
 - hydrology
-	- measure: distance to major lakes
+	- distance to
 - wetlands
-	- measure: distance to wetlands
+	- distance to
 
 
 
 ### Deployment feasibility
 
-First, we will evaluate the deployment feasibility layers. Note the elevation
-example data is an external TIF file that can be loaded with the
+First, we will evaluate the deployment feasibility layers. Note the example
+elevation data is an external TIF file that can be loaded with the
 {terra} package. 
 
 The `eval_*` family of functions return the vector of values for each candidate
@@ -132,7 +132,7 @@ plot(pts)
 ### Characteristics of candidate locations
 
 Next, we will evaluate the characteristics of candidate locations.  Note the 
-land cover example data is an external TIF file that can be loaded with the
+example land cover data is an external TIF file that can be loaded with the
 {terra} package. 
 
 ```{r}
@@ -168,7 +168,7 @@ candidate locations.
 
 Criteria for selection:
 
-- Maximum distance from road: 3000 m
+- Maximum distance from roads: 3000 m
 - Maximum elevation: 300 m
 - Select only forest land cover classes: 1, 2, 5, 6
 
