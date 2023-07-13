@@ -55,7 +55,7 @@ simulated species density.
 ```{r}
 data("clearwater_lake_density")
 
-plot(clearwater_lake_density)
+plot(clearwater_lake_density, key.width = lcm(5))
 
 pts <- sample_ct(
 	clearwater_lake_density, 
