@@ -135,8 +135,8 @@ eval_buffer <-
 					 direction,
 					 coords = NULL) {
 
-		if (missing(x) || is.null(x) || !inherits(x, 'SpatRaster')) {
-			stop('x must be provided. expected type is SpatRaster.')
+		if (missing(x) || is.null(x)) {# || !inherits(x, 'SpatRaster')) {
+			stop('x must be provided.')# expected type is SpatRaster.')
 		}
 		if (missing(y) || is.null(y)) {
 			stop('y must be provided.')
@@ -184,14 +184,28 @@ eval_buffer <-
 		# }
 		# how to summarize buffers with ordinal/categorical
 
-		terra::extract(
-			x = x,
-			y = st_buffer(y, dist = buffer_size),
-			layer = layer,
-			na.rm = FALSE,
-			fun = buffer_fun,
-			ID = FALSE
-		)[[layer]]
+		if (inherits(x, "SpatRaster")) {
+			terra::extract(
+				x = x,
+				y = st_buffer(y, dist = buffer_size),
+				layer = layer,
+				na.rm = FALSE,
+				fun = buffer_fun,
+				ID = FALSE
+			)[[layer]]
+		} else if (inherits(x, "sf")) {
+			# TODO: intersect buffered points with unioned x and return area / buffer area
+			x_unioned <- st_union(x)
+			y_buffered <- st_buffer(y, buffer_size)
+			xy_intersection <- st_intersection(y_buffered, x_unioned)
+
+			y_buffered_area <- st_area(y_buffered)
+			# out <- rep(NA, length(y_buffered_area))
+			# out[xy_intersection]
+
+			# xy_intersects <- st_intersects(y_buffered, x_unioned)
+		}
+
 	}
 
 
