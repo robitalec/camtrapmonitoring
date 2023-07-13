@@ -1,3 +1,9 @@
+# wildcam 0.10.1.9000 (2023-07-13)
+
+* edits to introductory vignette [#9](https://github.com/robitalec/wildcam/pull/9)
+
+
+
 # wildcam 0.10.0.9000 (2023-07-13)
 
 * removed data.table methods from `sample_ct`, `grid_ct` and `eval_*` functions [#7](https://github.com/robitalec/wildcam/pull/7)
@@ -5,6 +11,7 @@
 * replaced `raster` with `terra` [#7](https://github.com/robitalec/wildcam/pull/7)
 * delete old example data [#4](https://github.com/robitalec/wildcam/pull/4)
 * document new data [#6](https://github.com/robitalec/wildcam/pull/6)
+
 
 
 # wildcam 0.9.1.9000 (2023-07-06)
@@ -19,6 +26,7 @@
 	- wetlands
 * add scripts to track data origin under data-raw/ [#3](https://github.com/robitalec/wildcam/pull/3)
 * reorganize source code [#5](https://github.com/robitalec/wildcam/pull/5)
+
 
 
 # wildcam 0.9.0.9000 (2023-07-05)
