@@ -2,29 +2,31 @@
 % Please edit documentation in R/eval.R
 \name{eval_buffer}
 \alias{eval_buffer}
-\alias{eval_buffer_}
-\alias{eval_buffer_.data.table}
-\alias{eval_buffer_.sf}
 \title{Evaluate camera trap locations by buffered sampling of layers}
 \usage{
-eval_buffer(x, layer, buffersize, type, direction, coords = NULL)
-
-eval_buffer_(x, layer, buffersize, type, direction, coords = NULL)
-
-\method{eval_buffer_}{data.table}(x, layer, buffersize, type, direction, coords = NULL)
-
-\method{eval_buffer_}{sf}(x, layer, buffersize, type, direction, coords = NULL)
+eval_buffer(
+  x,
+  y,
+  buffer_size,
+  buffer_fun = mean,
+  layer = 1,
+  type,
+  direction,
+  coords = NULL
+)
 }
 \arguments{
-\item{x}{spatial feature object}
+\item{x}{SpatRaster layer (terra package)}
 
-\item{layer}{raster layer.}
+\item{y}{spatial feature object}
 
-\item{buffersize}{radius of buffer around each point.}
+\item{layer}{default 1, see terra::extract}
 
 \item{type}{one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.}
 
 \item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
+
+\item{buffersize}{radius of buffer around each point.}
 }
 \description{
 Using the buffered points locations generated manually or with \code{wildcam} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
@@ -43,15 +45,20 @@ The function used to summarize the buffer regions around each point in \code{x} 
 Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by \code{\link[=select_ct]{select_ct()}} for ranking and selecting camera trap locations.
 }
 \examples{
-# Load data
-data(points)
-data("wetland")
+library(terra)
+data("clearwater_lake_density")
+clearwater_lake_elevation <- rast(system.file('extdata', 'clearwater_lake_elevation.tif', package = 'wildcam'))
 
-# Evaluate each point with the wetland layer
-points$wetland <- eval_buffer(points, wetland, buffersize = 150,
-      type = 'binary', direction = 'positive')
+# Sample points
+pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
 
-plot(points["wetland"])
+# Make grid with queen's case
+queen <- grid_ct(pts, case = 'queen', distance = 100)
+
+# Evaluate each point with the land cover layer
+queen$elev <- eval_buffer(x = clearwater_lake_elevation, y = queen, buffer_size = 150)
+
+plot(queen["elev"])
 }
 \seealso{
 Other eval: 

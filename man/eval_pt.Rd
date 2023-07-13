@@ -2,23 +2,16 @@
 % Please edit documentation in R/eval.R
 \name{eval_pt}
 \alias{eval_pt}
-\alias{eval_pt_}
-\alias{eval_pt_.data.table}
-\alias{eval_pt_.sf}
 \title{Evaluate camera trap locations by point sampling layers}
 \usage{
-eval_pt(x, layer, type = NULL, direction = NULL, coords = NULL)
-
-eval_pt_(x, layer, type = NULL, direction = NULL, coords = NULL)
-
-\method{eval_pt_}{data.table}(x, layer, type = NULL, direction = NULL, coords = NULL)
-
-\method{eval_pt_}{sf}(x, layer, type = NULL, direction = NULL, coords = NULL)
+eval_pt(x, y, layer = 1, type = NULL, direction = NULL, coords = NULL)
 }
 \arguments{
-\item{x}{spatial feature object}
+\item{x}{SpatRaster layer (terra package)}
 
-\item{layer}{raster layer.}
+\item{y}{spatial feature object}
+
+\item{layer}{default 1, see terra::extract}
 
 \item{type}{one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.}
 
@@ -39,15 +32,19 @@ Type is used to define the data type of the sampled raster layer:
 Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by \code{\link[=select_ct]{select_ct()}} for ranking and selecting camera trap locations.
 }
 \examples{
-# Load data
-data(points)
-data(lc)
+data("clearwater_lake_density")
+clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'wildcam'))
+
+# Sample points
+pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
+
+# Make grid with queen's case
+queen <- grid_ct(pts, case = 'queen', distance = 100)
 
 # Evaluate each point with the land cover layer
-#   type is categorical, and the direction is neutral
-points$lc <- eval_pt(x = points, layer = lc, type = 'categorical', direction = 'neutral')
+queen$lc <- eval_pt(x = points, layer = clearwater_lake_land_cover, type = 'categorical', direction = 'neutral')
 
-plot(points["lc"])
+plot(queen["lc"])
 }
 \seealso{
 Other eval: 

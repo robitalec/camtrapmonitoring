@@ -7,7 +7,7 @@
 binary_layer(layer, value, fun = "equals")
 }
 \arguments{
-\item{layer}{raster layer.}
+\item{layer}{default 1, see terra::extract}
 
 \item{value}{numeric value in 'layer'. see Details.}
 

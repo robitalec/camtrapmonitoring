@@ -7,7 +7,7 @@
 scale_layer(layer = NULL, roi = NULL)
 }
 \arguments{
-\item{layer}{raster layer.}
+\item{layer}{default 1, see terra::extract}
 
 \item{roi}{any object which can be passed to extent including \code{sf}, \code{Spatial}, \code{Raster} objects and 2x2 matrices.}
 }
