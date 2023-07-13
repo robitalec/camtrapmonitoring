@@ -36,22 +36,35 @@ library(terra)
 ```
 
 
-# Workflow
 
-`sample_ct` and/or `grid_ct` -> `eval_pt`/`eval_buffer` -> `select_ct`
+## Sampling candidate camera trap locations
 
-OR
+The `sample_ct` function returns candidate camera trap locations using 
+`sf::st_sample` across the user's region of interest. Options include 
+"regular", "random" or "hexagonal" sampling across the entire region of interest
+or stratified by a column in the provided features. 
 
-`eval_buffer` -> `select_ct` -> `grid_ct` and `pair_ct` 
+The example data "clearwater_lake_density" is a simulated species density 
+grid near Clearwater Lake, Manitoba. It is a simple feature collection of 
+polygons with a column named "density" (High, Medium, Low). 
 
+We will randomly sample candidate camera trap locations, stratified by the 
+simulated species density. 
 
+```{r}
+data("clearwater_lake_density")
 
-# What you'll need
+plot(clearwater_lake_density)
 
-* study area polygon
-* layers of relevant variables (e.g. roads, animal density, waterways, etc.)
-* camera trap protocol (how many cameras, placement strategy)
+pts <- sample_ct(
+	clearwater_lake_density, 
+	n = 25, 
+	type = 'random', 
+	col = 'density'
+)
 
+plot(pts)
+```
 
 # Selecting potential camera trap locations
 ## Randomly sampling points in different regions (stratified sampling)
