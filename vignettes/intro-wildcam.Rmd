@@ -128,13 +128,35 @@ plot(pts)
 
 
 
+### Characteristics of candidate locations
+
+Next, we will evaluate the characteristics of candidate locations.  Note the 
+land cover example data is an external TIF file that can be loaded with the
+{terra} package. 
+
+```{r}
 # Load data
-data(wetland)
+clearwater_lake_land_cover_path <- system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'wildcam')
+clearwater_lake_land_cover <- rast(clearwater_lake_land_cover_path)
 
-# Evaluate each point with the wetland layer
-points$wetland <- eval_buffer(x = points, layer = wetland, buffersize = 150, type = 'binary', direction = 'positive')
+data("clearwater_lake_hydro")
+data("clearwater_lake_wetlands")
 
-plot(points["wetland"])
+
+
+# Evaluate land cover using point sample
+pts$lc_pt <- eval_pt(clearwater_lake_land_cover, pts)
+
+# Evaluate distance to hydrology
+pts$hydro_dist <- eval_dist(clearwater_lake_hydro, pts)
+
+# Evaluate distance to wetland
+pts$wetland_dist <- eval_dist(clearwater_lake_wetlands, pts)
+
+
+
+# Plot results
+plot(pts)
 ```
 
 
