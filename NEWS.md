@@ -1,3 +1,10 @@
+# wildcam 0.10.0.9000 (2023-07-13)
+
+* removed data.table methods from `sample_ct`, `grid_ct` and `eval_*` functions [#7](https://github.com/robitalec/wildcam/pull/7)
+	- adds dependency on `distanceto`
+* replaced `raster` with `terra` [#7](https://github.com/robitalec/wildcam/pull/7)
+
+
 # wildcam 0.9.1.9000 (2023-07-06)
 
 * add new data for area near Clearwater Lake, Manitoba [#3](https://github.com/robitalec/wildcam/pull/3)
