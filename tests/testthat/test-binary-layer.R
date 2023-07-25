@@ -1,10 +1,15 @@
-context("test-binary")
+context('test-binary')
 
-lc212 <- binary_layer(lc, 212, fun = 'equals')
+# Packages
+library(terra)
+library(sf)
 
-test_that("binary_layer works", {
+# Data
+clearwater_lc_path <- system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring')
+lc <- rast(clearwater_lc_path)
 
-	expect_true(inherits(lc212, 'Raster'))
+# Binary layer
+bin <- binary_layer(lc, 18, fun = 'equals')
 
 	expect_true(length(raster::unique(lc212)) <= 2)
 
