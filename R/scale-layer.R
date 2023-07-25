@@ -30,9 +30,6 @@
 #'
 #' # Scale elevation in extent of density grid
 #' elev_scaled <- scale_layer(clearwater_lake_elevation, roi)
-#'
-#' # Plot
-#' plot(elev_scaled)
 scale_layer <- function(x, roi, center = TRUE, scale = TRUE) {
 	if (missing(x) | is.null(x) | !inherits(x, 'SpatRaster')) {
 		stop('x must be provided and expected type is SpatRaster.')
