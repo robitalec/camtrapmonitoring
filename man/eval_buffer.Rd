@@ -29,7 +29,7 @@ eval_buffer(
 \item{buffersize}{radius of buffer around each point.}
 }
 \description{
-Using the buffered points locations generated manually or with \code{wildcam} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
+Using the buffered points locations generated manually or with \code{camtrapmonitoring} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 }
 \details{
 Type is used to define the data type of the sampled raster layer:
@@ -47,7 +47,7 @@ Direction is used to define the user's priority or preference for this layer. Fo
 \examples{
 library(terra)
 data("clearwater_lake_density")
-clearwater_lake_elevation <- rast(system.file('extdata', 'clearwater_lake_elevation.tif', package = 'wildcam'))
+clearwater_lake_elevation <- rast(system.file('extdata', 'clearwater_lake_elevation.tif', package = 'camtrapmonitoring'))
 
 # Sample points
 pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
