@@ -1,5 +1,5 @@
 ---
-title: "Introduction to `wildcam`"
+title: "Introduction to `camtrapmonitoring`"
 author: "Alec L. Robitaille"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 <!-- ggplot2 figs with geom_sf -->
 
-The {wildcam} package provides functions for planning and evaluating camera
+The {camtrapmonitoring} package provides functions for planning and evaluating camera
 trap surveys. The recommended approach is to first sample a set of candidate 
 camera trap locations larger than the intended number of locations. Next, 
 these candidate locations are evaluated using spatial layers to measure their
@@ -28,10 +28,10 @@ deployment feasibility (such as distance to road) and to quantify their bias
 and coverage of project-specific characteristics (such as distribution across 
 specific land cover classes). 
 
-{wildcam} is designed to work with modern spatial R packages: {sf} and {terra}.
+{camtrapmonitoring} is designed to work with modern spatial R packages: {sf} and {terra}.
 
 ```{r}
-library(wildcam)
+library(camtrapmonitoring)
 library(sf)
 library(terra)
 ```
@@ -105,7 +105,7 @@ using the common `df$name <- value` syntax.
 
 ```{r}
 # Load data
-clearwater_lake_elevation_path <- system.file('extdata', 'clearwater_lake_elevation.tif', package = 'wildcam')
+clearwater_lake_elevation_path <- system.file('extdata', 'clearwater_lake_elevation.tif', package = 'camtrapmonitoring')
 clearwater_lake_elevation <- rast(clearwater_lake_elevation_path)
 
 data("clearwater_lake_roads")
@@ -137,7 +137,7 @@ example land cover data is an external TIF file that can be loaded with the
 
 ```{r}
 # Load data
-clearwater_lake_land_cover_path <- system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'wildcam')
+clearwater_lake_land_cover_path <- system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring')
 clearwater_lake_land_cover <- rast(clearwater_lake_land_cover_path)
 
 data("clearwater_lake_hydro")
@@ -201,7 +201,7 @@ print(order_select_pts)
 
 ## Example data sources
 
-Example data used in the {wildcam} package come from open data sources we 
+Example data used in the {camtrapmonitoring} package come from open data sources we 
 gratefully acknowledge in the help page for each data set. Also see the "data-raw"
 directory in the package source for full data preprocessing steps. 
 
