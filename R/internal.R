@@ -1,16 +1,16 @@
 ###
 # reused data.table::setattr wrapper
-set_eval_attr <- function(x, layer, type, direction) {
-	# buffer size?
-	# how to flex params + names added
-	data.table::setattr(x,
-											'camtrapmonitoring',
-											list(
-												layer = layer,
-												type = type,
-												direction = direction
-											))
-}
+# set_eval_attr <- function(x, layer, type, direction) {
+# 	# buffer size?
+# 	# how to flex params + names added
+# 	data.table::setattr(x,
+# 											'camtrapmonitoring',
+# 											list(
+# 												layer = layer,
+# 												type = type,
+# 												direction = direction
+# 											))
+# }
 
 ###
 check_type <- function(type) {
