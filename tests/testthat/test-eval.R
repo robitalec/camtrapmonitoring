@@ -1,14 +1,13 @@
 context("test-eval")
 
-evalDT <- eval_pt(DT, layer = lc, type = 'categorical',
-									direction = 'neutral', coords = c('X', 'Y'))
+# Packages
+library(terra)
+library(sf)
 
-test_that("eval_pt, general", {
-	expect_error(
-		eval_pt(x = NULL, layer = lc,
-						type = 'categorical', direction = 'neutral'),
-		'x must be provided. either data.table or sf point object.'
-	)
+# Data
+data("clearwater_lake_density")
+data("clearwater_lake_hydro")
+clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))
 
 	expect_error(
 		eval_pt(x = points, layer = NULL,
