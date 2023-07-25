@@ -4,34 +4,39 @@
 \alias{scale_layer}
 \title{Scale in region of interest}
 \usage{
-scale_layer(layer = NULL, roi = NULL)
+scale_layer(x, roi, center = TRUE, scale = TRUE)
 }
 \arguments{
-\item{layer}{default 1, see terra::extract}
+\item{x}{SpatRaster layer (terra package)}
 
 \item{roi}{any object which can be passed to extent including \code{sf}, \code{Spatial}, \code{Raster} objects and 2x2 matrices.}
+
+\item{scale}{see terra::scale}
 }
 \value{
-\code{Raster} layer, cropped to extent of provided 'roi', and center scaled.
+\code{SpatRaster} layer, cropped to extent of provided 'roi', and scaled.
 }
 \description{
 Scale a layer in a region of interest to optionally compare locations with \code{\link[=eval_pt]{eval_pt()}} and \code{\link[=eval_buffer]{eval_buffer()}}, and select locations with \code{\link[=select_ct]{select_ct()}} based off of relative values instead of absolute values.
 }
 \examples{
 # Load packages
-library(raster)
+library(terra)
 
 # Load data
-data(densitygrid)
-data(dem)
+clearwater_elev_path <- system.file("extdata", "clearwater_lake_elevation.tif", package = "camtrapmonitoring")
+clearwater_lake_elevation <- rast(clearwater_elev_path)
 
-# Scale elevation layer in extent of density grid
-demScaled <- scale_layer(layer = dem, roi = densitygrid)
+# Region of interest: Clearwater lake area
+roi <- ext(clearwater_lake_elevation)
+
+# Scale elevation in extent of density grid
+elev_scaled <- scale_layer(clearwater_lake_elevation, roi)
 
 # Plot
-plot(dem)
-plot(demScaled)
+plot(clearwater_lake_elevation)
+plot(elev_scaled)
 }
 \seealso{
-\code{\link[raster:scale]{raster::scale()}}
+\code{\link[terra:scale]{terra::scale()}}
 }

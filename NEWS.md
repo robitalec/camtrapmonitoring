@@ -1,16 +1,15 @@
 # camtrapmonitoring 0.11.0.9000 (2023-07-25)
 
-* changed name from {wildcam} to {camtrapmonitoring}
-	- to reflect broadened scope of package from planning camera trap surveys to
-	  community based monitoring of wildlife
-  - to avoid confusion with other projects using camera traps named wildcam or
-    similar
+* changed name from {wildcam} to {camtrapmonitoring} [#11](https://github.com/robitalec/camtrapmonitoring/pull/11)
+	- to reflect broadened scope of package from planning camera trap surveys to community based monitoring of wildlife
+  - to avoid confusion with other projects using camera traps named wildcam or similar
 
 
 
 # camtrapmonitoring 0.10.1.9000 (2023-07-13)
 
 * edits to introductory vignette [#9](https://github.com/robitalec/camtrapmonitoring/pull/9)
+* replaced leftover `raster` with `terra` [#10](https://github.com/robitalec/camtrapmonitoring/pull/10)
 
 
 

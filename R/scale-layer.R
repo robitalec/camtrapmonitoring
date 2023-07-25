@@ -4,39 +4,44 @@
 #'
 #' @inheritParams eval_pt
 #' @param roi any object which can be passed to extent including `sf`, `Spatial`, `Raster` objects and 2x2 matrices.
+#' @param scale see terra::scale
+#' @param scale see terra::scale
 #'
-#' @return `Raster` layer, cropped to extent of provided 'roi', and center scaled.
+#' @return `SpatRaster` layer, cropped to extent of provided 'roi', and scaled.
 #'
-#' @seealso [raster::scale()]
+#' @seealso [terra::scale()]
 #'
 #' @export
 #'
 #' @examples
 #' # Load packages
-#' library(raster)
+#' library(terra)
 #'
 #' # Load data
-#' data(densitygrid)
-#' data(dem)
+#' clearwater_elev_path <- system.file("extdata", "clearwater_lake_elevation.tif", package = "camtrapmonitoring")
+#' clearwater_lake_elevation <- rast(clearwater_elev_path)
 #'
-#' # Scale elevation layer in extent of density grid
-#' demScaled <- scale_layer(layer = dem, roi = densitygrid)
+#' # Region of interest: Clearwater lake area
+#' roi <- ext(clearwater_lake_elevation)
+#'
+#' # Scale elevation in extent of density grid
+#' elev_scaled <- scale_layer(clearwater_lake_elevation, roi)
 #'
 #' # Plot
-#' plot(dem)
-#' plot(demScaled)
-scale_layer <- function(layer = NULL, roi = NULL) {
-	if (is.null(layer) | !inherits(layer, 'Raster')) {
-		stop('layer must be provided and expected type is raster.')
+#' plot(clearwater_lake_elevation)
+#' plot(elev_scaled)
+scale_layer <- function(x, roi, center = TRUE, scale = TRUE) {
+	if (missing(x) | !inherits(x, 'SpatRaster')) {
+		stop('x must be provided and expected type is SpatRaster.')
 	}
 
-	if (is.null(roi)) {
+	if (missing(roi)) {
 		stop('roi must be provided.')
 	}
 
 	# add check for compatible with extent
 
 	return(
-		raster::scale(raster::crop(layer, roi))
+		terra::scale(terra::crop(x, roi), center, scale)
 	)
 }
