@@ -4,7 +4,7 @@
 \alias{eval_dist}
 \title{Evaluate distance-to}
 \usage{
-eval_dist(x, y, measure = NULL, direction = NULL)
+eval_dist(x, y, measure = NULL)
 }
 \arguments{
 \item{x}{SpatRaster layer (terra package)}
