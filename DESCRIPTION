@@ -1,6 +1,6 @@
 Package: camtrapmonitoring
 Title: Camera Trap Monitoring For Estimating Wildlife Density
-Version: 0.11.1.9000
+Version: 0.11.2.9000
 Authors@R: 
     person(given = "Alec L.",
            family = "Robitaille",
