@@ -9,7 +9,8 @@ sample_ct(x, n, type, col = NULL)
 \arguments{
 \item{x}{spatial feature object}
 
-\item{n}{number of random points, if a column name is provided to \code{col} n represents the number of random points per strata}
+\item{n}{number of random points, if a column name is provided to \code{col}
+n represents the number of random points per strata}
 
 \item{type}{type of sampling, see \link[sf]{st_sample}}
 
@@ -28,14 +29,17 @@ directly to sample points across all features.
 data(clearwater_lake_density)
 
 # Stratified random points for each density level
-pts_random <- sample_ct(x = clearwater_lake_density, n = 20, type = 'random', col = 'density')
+pts_random <- sample_ct(
+  x = clearwater_lake_density, n = 20,
+  type = 'random', col = 'density')
 
 # Plot density grid and sampled points
 plot(clearwater_lake_density, reset = FALSE)
 plot(pts_random, add = TRUE, pch = 1)
 
 # Regular sampled points across all features
-pts_regular <- sample_ct(x = clearwater_lake_density, n = 20, type = 'regular')
+pts_regular <- sample_ct(
+  x = clearwater_lake_density, n = 20, type = 'regular')
 
 # Plot density grid and sampled points
 plot(clearwater_lake_density, reset = FALSE)

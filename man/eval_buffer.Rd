@@ -11,17 +11,27 @@ eval_buffer(x, y, buffer_size, buffer_fun = mean, layer = 1)
 
 \item{y}{spatial feature object}
 
-\item{layer}{default 1, see terra::extract}
+\item{buffer_size}{radius of buffer around each point}
 
-\item{buffersize}{radius of buffer around each point.}
+\item{buffer_fun}{function for summarizing buffer region, default mean}
+
+\item{layer}{default 1, see terra::extract}
+}
+\value{
+vector of values from x matching buffered locations in y
 }
 \description{
-Using the buffered points locations generated manually or with \code{camtrapmonitoring} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
+Using the buffered points locations generated manually or with
+\code{camtrapmonitoring} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample
+raster layers to characterize and select camera trap locations,
+and quantify potential sampling bias.
 }
 \examples{
 library(terra)
+
 data("clearwater_lake_density")
-clearwater_lake_elevation <- rast(system.file('extdata', 'clearwater_lake_elevation.tif', package = 'camtrapmonitoring'))
+clearwater_lake_elevation <- rast(system.file('extdata',
+  'clearwater_lake_elevation.tif', package = 'camtrapmonitoring'))
 
 # Sample points
 pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
@@ -30,7 +40,8 @@ pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
 queen <- grid_ct(pts, case = 'queen', distance = 100)
 
 # Evaluate each point with the land cover layer
-queen$elev <- eval_buffer(x = clearwater_lake_elevation, y = queen, buffer_size = 150)
+queen$elev <- eval_buffer(
+  x = clearwater_lake_elevation, y = queen, buffer_size = 150)
 
 plot(queen["elev"])
 }

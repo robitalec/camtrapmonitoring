@@ -5,7 +5,7 @@
   "description": "Evaluating potential camera trap locations. Potential locations are evaluated using relevant spatial layers producing a dataset of selected locations with covariates that can be used to quantify sampling bias. Soon - density estimation methods. ",
   "name": "camtrapmonitoring: Camera Trap Monitoring For Estimating Wildlife Density",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.11.1.9000",
+  "version": "0.11.2.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -132,18 +132,6 @@
     },
     "2": {
       "@type": "SoftwareApplication",
-      "identifier": "units",
-      "name": "units",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=units"
-    },
-    "3": {
-      "@type": "SoftwareApplication",
       "identifier": "terra",
       "name": "terra",
       "provider": {
@@ -154,7 +142,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=terra"
     },
-    "4": {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "distanceto",
       "name": "distanceto",
@@ -166,7 +154,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=distanceto"
     },
-    "5": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
@@ -174,7 +162,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "5325.769KB",
+  "fileSize": "5322.687KB",
   "codeRepository": "https://github.com/robitalec/camtrapmonitoring",
   "releaseNotes": "https://github.com/robitalec/camtrapmonitoring/blob/master/NEWS.md",
   "readme": "https://github.com/robitalec/camtrapmonitoring/blob/main/README.md",

@@ -11,16 +11,21 @@ grid_ct(x, case, distance, id = "id_sample_ct", n)
 
 \item{case}{"queen", "rook" or "bishop". Ignored if \code{n} is provided.}
 
-\item{distance}{distance between adjacent camera traps. Don't worry about the hypotenuse.}
+\item{distance}{distance between adjacent camera traps. Don't worry about
+the hypotenuse.}
 
 \item{id}{default: "id_sample_ct" generated automatically from \code{sample_ct}}
 
-\item{n}{number of points around each focal point. \code{n} overrides the \code{case} argument, do not provide both - see Details.}
+\item{n}{number of points around each focal point. \code{n} overrides the \code{case}
+argument, do not provide both - see Details.}
 }
 \value{
-Extended sf object either nine times the length of input x for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case. Otherwise n * number the length of input x. See examples.
+Extended sf object either nine times the length of input x for 'queen' case
+or 5 times the length of input DT for 'rook' or 'bishop' case. Otherwise
+n * number the length of input x. See examples.
 
-The logical 'focal' column indicates which point is the focal or center camera trap.
+The logical 'focal' column indicates which point is the focal or center
+camera trap.
 }
 \description{
 Set up grids around focal points. For example, sample points in your study

@@ -8,7 +8,7 @@ message: 'To cite package "camtrapmonitoring" in publications use:'
 type: software
 license: GPL-3.0-only
 title: 'camtrapmonitoring: Camera Trap Monitoring For Estimating Wildlife Density'
-version: 0.11.1.9000
+version: 0.11.2.9000
 abstract: Evaluating potential camera trap locations. Potential locations are evaluated
   using relevant spatial layers producing a dataset of selected locations with covariates
   that can be used to quantify sampling bias. Soon - density estimation methods.
@@ -194,27 +194,6 @@ references:
     orcid: https://orcid.org/0000-0001-8049-7069
   year: '2023'
   version: '>= 0.7-3'
-- type: software
-  title: units
-  abstract: 'units: Measurement Units for R Vectors'
-  notes: Imports
-  url: https://r-quantities.github.io/units/
-  repository: https://CRAN.R-project.org/package=units
-  authors:
-  - family-names: Pebesma
-    given-names: Edzer
-    email: edzer.pebesma@uni-muenster.de
-    orcid: https://orcid.org/0000-0001-8049-7069
-  - family-names: Mailund
-    given-names: Thomas
-    email: mailund@birc.au.dk
-  - family-names: Kalinowski
-    given-names: Tomasz
-  - family-names: Ucar
-    given-names: Iñaki
-    email: iucar@fedoraproject.org
-    orcid: https://orcid.org/0000-0001-6403-5550
-  year: '2023'
 - type: software
   title: terra
   abstract: 'terra: Spatial Data Analysis'

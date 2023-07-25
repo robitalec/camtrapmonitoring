@@ -4,7 +4,8 @@
 \alias{clearwater_lake_land_cover}
 \title{Example land cover}
 \format{
-An external tif file to be read in with {terra} as a \code{SpatRaster} object. See the source below for details.
+An external tif file to be read in with {terra} as a \code{SpatRaster}
+object. See the source below for details.
 }
 \source{
 \url{https://open.canada.ca/data/en/dataset/ee1580ab-a23d-4f86-a09b-79763677eb47}
@@ -16,15 +17,20 @@ A dataset containing land cover classes near Clearwater Lake, Manitoba.
 Land cover data are from 2020 Land Cover of Canada. Class index defined here
 \url{https://drive.google.com/file/d/1TvOZdLO_N86HfsiJQtnE3BdfAFL1s0ux/view?usp=sharing}
 \itemize{
-\item 1 Temperate or sub-polar needleleaf forest/Forêt de conifères sempervirente tempérée ou subpolaire
+\item 1 Temperate or sub-polar needleleaf forest/Forêt de conifères
+sempervirente tempérée ou subpolaire
 \item 2 Sub-polar taiga needleleaf forest/ Forêt de conifères (taïga) subpolaire
-\item 5 Temperate or sub-polar broadleaf deciduous forest/ Forêt feuillue tempérée ou subpolaire
+\item 5 Temperate or sub-polar broadleaf deciduous forest/ Forêt feuillue
+tempérée ou subpolaire
 \item 6 Mixed forest/ Forêt mixte
 \item 8 Temperate or sub-polar shrubland/Arbustaie tempérée ou subpolaire
 \item 10 Temperate or sub-polar grassland/Prairie tempérée ou subpolaire
-\item 11 Sub-polar or polar shrubland-lichen-moss/Arbustaie à lichens et à mousses polaire ou subpolaire
-\item 12 Sub-polar or polar grassland-lichen-moss/Prairie à lichens et à mousses polaire ou subpolaire
-\item 13 Sub-polar or polar barren-lichen-moss/Lande à lichens et à mousses polaire ou subpolaire
+\item 11 Sub-polar or polar shrubland-lichen-moss/Arbustaie à lichens et à
+mousses polaire ou subpolaire
+\item 12 Sub-polar or polar grassland-lichen-moss/Prairie à lichens et à
+mousses polaire ou subpolaire
+\item 13 Sub-polar or polar barren-lichen-moss/Lande à lichens et à mousses
+polaire ou subpolaire
 \item 14 Wetland/Milieu humide
 \item 15 Cropland/Terre cultivée
 \item 16 Barren Lands/Lande
@@ -35,7 +41,8 @@ Land cover data are from 2020 Land Cover of Canada. Class index defined here
 }
 \examples{
 library(terra)
-clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "camtrapmonitoring")
+clearwater_lc_path <- system.file("extdata",
+  "clearwater_lake_land_cover.tif", package = "camtrapmonitoring")
 clearwater_lake_land_cover <- rast(clearwater_lc_path)
 plot(clearwater_lake_land_cover)
 }

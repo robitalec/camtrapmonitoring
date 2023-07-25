@@ -6,15 +6,20 @@
 #'
 #' @inheritParams sample_ct
 #' @param case "queen", "rook" or "bishop". Ignored if `n` is provided.
-#' @param distance distance between adjacent camera traps. Don't worry about the hypotenuse.
+#' @param distance distance between adjacent camera traps. Don't worry about
+#' the hypotenuse.
 #' @param id default: "id_sample_ct" generated automatically from `sample_ct`
-#' @param n number of points around each focal point. `n` overrides the `case` argument, do not provide both - see Details.
+#' @param n number of points around each focal point. `n` overrides the `case`
+#'  argument, do not provide both - see Details.
 
 #' @return
 #'
-#' Extended sf object either nine times the length of input x for 'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case. Otherwise n * number the length of input x. See examples.
+#' Extended sf object either nine times the length of input x for 'queen' case
+#'  or 5 times the length of input DT for 'rook' or 'bishop' case. Otherwise
+#'  n * number the length of input x. See examples.
 #'
-#' The logical 'focal' column indicates which point is the focal or center camera trap.
+#' The logical 'focal' column indicates which point is the focal or center
+#' camera trap.
 #'
 #' @export
 #'
@@ -49,21 +54,24 @@ grid_ct <- function(x,
 	move <- grid_move(case = case, n = n, distance = distance)
 
 	x_rep <- x[rep(seq.int(nrow(x)), each = nrow(move)), ]
-	x_rep_coords <- st_coordinates(x_rep)
+	x_rep_coords <- sf::st_coordinates(x_rep)
 
 	move_rep <- move[rep(seq.int(nrow(move)), nrow(x)), ]
 
 	coords_moved <- x_rep_coords + as.matrix(move_rep)
-	coords_moved_sf <- st_as_sf(data.frame(coords_moved), coords = c('X', 'Y'))
+	coords_moved_sf <- sf::st_as_sf(data.frame(coords_moved),
+																	coords = c('X', 'Y'))
 
-	x_moved <- st_set_geometry(x_rep, st_geometry(coords_moved_sf))
+	x_moved <- sf::st_set_geometry(x_rep, sf::st_geometry(coords_moved_sf))
 
 	x_moved$id_grid_ct <- seq.int(nrow(x_moved))
 
-	focals <- by(x_moved, x_moved[[id]], function(chunk) min(chunk[['id_grid_ct']]))
+	focals <- by(x_moved, x_moved[[id]], function(chunk) {
+		min(chunk[['id_grid_ct']])
+	})
 	x_moved$focal <- ifelse(x_moved[['id_grid_ct']] %in% focals, TRUE, FALSE)
 
-	st_crs(x_moved) <- st_crs(x)
+	sf::st_crs(x_moved) <- sf::st_crs(x)
 	return(x_moved)
 }
 

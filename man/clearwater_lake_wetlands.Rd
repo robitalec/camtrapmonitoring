@@ -5,10 +5,14 @@
 \alias{clearwater_lake_wetlands}
 \title{Example wetland features}
 \format{
-An \code{sf} object with 5 features and 8 fields. See the source below for details.
+An \code{sf} object with 5 features and 8 fields. See the source
+below for details.
 }
 \source{
-Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017). “osmdata.” \emph{Journal of Open Source Software}, \emph{2}(14), 305. doi:10.21105/joss.00305 \url{https://doi.org/10.21105/joss.00305}, \url{https://joss.theoj.org/papers/10.21105/joss.00305}.
+Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017).
+“osmdata.” \emph{Journal of Open Source Software}, \emph{2}(14), 305.
+doi:10.21105/joss.00305 \url{https://doi.org/10.21105/joss.00305},
+\url{https://joss.theoj.org/papers/10.21105/joss.00305}.
 }
 \usage{
 clearwater_lake_wetlands
@@ -21,6 +25,7 @@ Hydrology features are from Open Street Map, downloaded using the {osmdata}
 package.
 }
 \examples{
+library(sf)
 data(clearwater_lake_wetlands)
 plot(clearwater_lake_wetlands)
 }

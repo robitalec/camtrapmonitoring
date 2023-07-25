@@ -1,3 +1,8 @@
+# camtrapmonitoring 0.11.2.9000 (2023-07-25)
+
+* fixed R CMD checks [#14](https://github.com/robitalec/camtrapmonitoring/pull/14)
+
+
 # camtrapmonitoring 0.11.1.9000 (2023-07-25)
 
 * removed `select_ct` until a more useful alternative structure is developed, see PR [#12](https://github.com/robitalec/camtrapmonitoring/pull/12)
