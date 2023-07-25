@@ -223,8 +223,7 @@ eval_buffer <-
 eval_dist <-
 	function(x,
 					 y,
-					 measure = NULL,
-					 direction = NULL) {
+					 measure = NULL) {
 		if (missing(x) || missing(y) || is.null(x) || is.null(y)) {
 			stop('please provide both x and y')
 		}
