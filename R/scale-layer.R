@@ -30,6 +30,7 @@
 #' # Plot
 #' plot(clearwater_lake_elevation)
 #' plot(elev_scaled)
+scale_layer <- function(x, roi, center = TRUE, scale = TRUE) {
 	}
 
 	if (is.null(roi)) {
@@ -39,6 +40,6 @@
 	# add check for compatible with extent
 
 	return(
-		raster::scale(raster::crop(layer, roi))
+		terra::scale(terra::crop(x, roi), center, scale)
 	)
 }
