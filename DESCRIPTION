@@ -27,7 +27,6 @@ Suggests:
 VignetteBuilder: knitr
 Imports:
     sf (>= 0.7-3),
-    units,
     terra,
     distanceto
 Depends: R (>= 4.0)
