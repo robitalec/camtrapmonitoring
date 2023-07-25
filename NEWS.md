@@ -6,6 +6,8 @@
   - to avoid confusion with other projects using camera traps named wildcam or
     similar
 
+
+
 # camtrapmonitoring 0.10.1.9000 (2023-07-13)
 
 * edits to introductory vignette [#9](https://github.com/robitalec/camtrapmonitoring/pull/9)
