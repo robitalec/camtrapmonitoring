@@ -24,12 +24,12 @@
 #'
 #' bin <- binary_layer(clearwater_lake_land_cover, 18, fun = 'equals')
 #'
-#' image(bin)
+#' plot(bin)
 #'
 #' # fun = 'in'
 #' bin <- binary_layer(clearwater_lake_land_cover, c(1, 2), fun = 'in')
 #'
-#' image(bin)
+#' plot(bin)
 binary_layer <- function(x, value, fun = 'equals', layer = 1) {
 	if (missing(x)) {
 		stop('x must be provided.')
