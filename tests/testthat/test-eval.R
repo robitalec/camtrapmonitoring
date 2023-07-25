@@ -82,5 +82,5 @@ test_that('eval_dist works from point to polygon', {
 
 
 test_that('eval_dist doesnt return negative values', {
-	expect_true(all(result >= 0))
+	expect_true(all(eval_dist(clearwater_lake_hydro, points) >= 0))
 })
