@@ -48,8 +48,8 @@ binary_layer <- function(layer, value, fun = 'equals') {
 		}
 	}
 
-	if (!inherits(layer, 'Raster')) {
-		stop('layer must be a raster.')
+	if (!inherits(layer, 'SpatRaster')) {
+		stop('layer must be a SpatRaster.')
 	}
 
 	if (!inherits(value, 'numeric')) {
