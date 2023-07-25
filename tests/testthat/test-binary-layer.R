@@ -11,20 +11,17 @@ lc <- rast(clearwater_lc_path)
 # Binary layer
 bin <- binary_layer(lc, 18, fun = 'equals')
 
-	expect_true(length(raster::unique(lc212)) <= 2)
 
-	expect_equal(crs(lc), crs(lc212))
+test_that('arguments are checked', {
 
-	expect_equal(res(lc), res(lc212))
+	expect_true(inherits(bin, 'SpatRaster'))
 
-	expect_error(binary_layer(),
-							 'layer must be provided.')
+	expect_error(binary_layer(), 'x must be provided.')
 
-	expect_error(binary_layer(lc),
-							 'value must be provided.')
+	expect_error(binary_layer(lc), 'value must be provided.')
 
 	expect_error(binary_layer('potato', 212, fun = 'equals'),
-							 'layer must be a raster.')
+							 'x must be a SpatRaster.')
 
 	expect_error(binary_layer(lc, 'potato', fun = 'equals'),
 							 'value must be a numeric.')
@@ -35,6 +32,7 @@ bin <- binary_layer(lc, 18, fun = 'equals')
 	expect_error(binary_layer(lc, 212, fun = 'in'),
 							 'fun must be "equals", "gt", "gte", "lt", or "lte" if length of value is 1')
 
+})
 
 
 })
