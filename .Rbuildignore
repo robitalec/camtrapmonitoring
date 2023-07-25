@@ -5,3 +5,4 @@
 ^\.gitlab-ci\.yml$
 
 ^data-raw$
+^codemeta\.json$
