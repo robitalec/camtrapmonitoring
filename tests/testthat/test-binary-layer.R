@@ -41,10 +41,10 @@ test_that('outputs match inputs', {
 })
 
 
-	buf <- st_buffer(points[1,], 1e2)
-	mlc <- mask(crop(lc, buf), buf, inverse = TRUE)
+test_that('handles NaN', {
+	lc[seq.int(5e5)] <- NaN
+	bin <- binary_layer(lc, 18, fun = 'equals')
 
-	expect_true(NA %in% raster::unique(mlc, na.last = TRUE))
-
-	expect_true(NA %in% raster::unique(binary_layer(mlc, 212, fun = 'equals'), na.last = TRUE))
+	expect_true(NaN %in% terra::unique(lc, na.rm = FALSE)[[1]])
+	expect_true(NaN %in% terra::unique(bin, na.rm = FALSE)[[1]])
 })
