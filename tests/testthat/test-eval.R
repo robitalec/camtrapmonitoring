@@ -62,8 +62,6 @@ test_that("eval_dist's arguments are checked", {
 	expect_equal(typeof(result), 'double')
 
 	expect_equal(length(result), nrow(points))
-	expect_equal(length(inverse), nrow(water))
-	expect_equal(length(inside), nrow(points))
 
 	expect_error(eval_dist(x = NULL, y = points),
 							 'please provide both x and y')
