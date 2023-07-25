@@ -1,19 +1,19 @@
 context("test-grid-ct")
 
+# Data
+data("clearwater_lake_density")
+
+# Sample points
+points <- sample_ct(clearwater_lake_density, 15, type = 'random')
+
+
 # make expected results
 queen <- grid_ct(points, case = 'queen', distance = 100)
 rook <- grid_ct(points, case = 'rook', distance = 100)
 bishop <- grid_ct(points, case = 'bishop', distance = 100)
 
-gridQ <- grid_ct(DT, case = 'queen', distance = 100,
-									 id = 'ID', coords = c('X', 'Y'))
-gridR <- grid_ct(DT, case = 'rook', distance = 100,
-									 id = 'ID', coords = c('X', 'Y'))
-gridB <- grid_ct(DT, case = 'bishop', distance = 100,
-									 id = 'ID', coords = c('X', 'Y'))
-
 # tests
-test_that("grid_ct works", {
+test_that("grid_ct's arguments are checked", {
 	expect_error(
 		grid_ct(points, case = 'potato', distance = 100),
 		'case provided must be one of "queen", "rook" or "bishop"'
@@ -26,19 +26,28 @@ test_that("grid_ct works", {
 
 	expect_error(
 		grid_ct(1, case = 'queen', distance = 100),
-		'no applicable method for ', fixed = FALSE
+		'x is not of class sf'
 	)
 
 	expect_error(
 		grid_ct(points, n = 100, case = 'queen'),
-		'provide one of n and case and not both.'
+		"argument \"distance\" is missing, with no default"
 	)
 
 	expect_error(
 		grid_ct(points),
-		'provide one of n and case and not both.'
+		"argument \"distance\" is missing, with no default"
 	)
 
+	multipoints <- st_cast(points, 'MULTIPOINT')
+
+	expect_error(
+		grid_ct(multipoints, case = 'queen', distance = 100),
+		'x is not of geometry type POINT'
+	)
+})
+
+test_that("grid_ct returns expected lengths", {
 	expect_equal(
 		nrow(grid_ct(points, n = 100, distance = 100)),
 		nrow(points) * 100
@@ -58,148 +67,49 @@ test_that("grid_ct works", {
 		nrow(grid_ct(points, case = 'bishop', distance = 100)),
 		nrow(points) * 5
 	)
-
-
 })
 
 
-test_that("... for data.table input", {
-	expect_equal(
-		ncol(DT) + 2, ncol(gridQ)
+test_that("grid_ct returns expected columns... for sf input", {
+	expect_in(
+		'id_grid_ct',
+		colnames(queen)
 	)
-
-	expect_true(
-		'camID' %in% colnames(gridQ)
+	expect_in(
+		'id_grid_ct',
+		colnames(rook)
 	)
-	expect_true(
-		'camID' %in% colnames(gridR)
+	expect_in(
+		'id_grid_ct',
+		colnames(bishop)
 	)
-	expect_true(
-		'camID' %in% colnames(gridB)
+	expect_in(
+		'focal',
+		colnames(queen)
 	)
-
-	expect_true(
-		'focal' %in% colnames(gridQ)
+	expect_in(
+		'focal',
+		colnames(rook)
 	)
-	expect_true(
-		'focal' %in% colnames(gridR)
-	)
-	expect_true(
-		'focal' %in% colnames(gridB)
-	)
-
-	expect_error(
-		grid_ct(DT, case = 'queen', distance = 100, id = 'ID',
-							coords = NULL),
-		'id and coords must be provided with x is a data.table'
-	)
-
-	expect_error(
-		grid_ct(DT, case = 'queen', distance = 100, id = NULL,
-							coords = c('X', 'Y')),
-		'id and coords must be provided with x is a data.table'
-	)
-
-	expect_error(
-		grid_ct(DT, case = 'queen', distance = 100, id = 'potato',
-							coords = c('X', 'Y')),
-		'id provided not found in colnames', fixed = FALSE
+	expect_in(
+		'focal',
+		colnames(bishop)
 	)
 
 
-	expect_error(
-		grid_ct(DT, case = 'queen', distance = 100, id = 'ID',
-							coords = c('potatoX', 'Y')),
-		'coords provided not found in colnames', fixed = FALSE
-	)
 
-	# Output rows match expected length
-	expect_equal(
-		nrow(gridQ), nrow(DT) * 9
-	)
-
-	expect_equal(
-		nrow(gridR), nrow(DT) * 5
-	)
-
-	expect_equal(
-		nrow(gridB), nrow(DT) * 5
-	)
 
 	# camID match output length
 	expect_equal(
-		max(gridQ$camID), nrow(DT) * 9
+		max(queen$id_grid_ct), nrow(points) * 9
 	)
 
 	expect_equal(
-		max(gridR$camID), nrow(DT) * 5
+		max(rook$id_grid_ct), nrow(points) * 5
 	)
 
 	expect_equal(
-		max(gridB$camID), nrow(DT) * 5
-	)
-
-})
-
-
-test_that("... for sf input", {
-	# nogeo <- data.frame(points$ID)
-	# expect_error(
-	# 	grid_ct(nogeo, 'queen', 100),
-	# 	'geometry column not found in x'
-	# )
-
-	expect_true(
-		'camID' %in% colnames(queen)
-	)
-	expect_true(
-		'camID' %in% colnames(rook)
-	)
-	expect_true(
-		'camID' %in% colnames(bishop)
-	)
-
-	expect_true(
-		'focal' %in% colnames(queen)
-	)
-	expect_true(
-		'focal' %in% colnames(rook)
-	)
-	expect_true(
-		'focal' %in% colnames(bishop)
-	)
-
-
-	multipoints <- st_cast(points, 'MULTIPOINT')
-
-	expect_error(
-		grid_ct(multipoints, case = 'queen', distance = 100),
-		'class of geometry column must be sfc_POINT'
-	)
-
-	expect_equal(
-		nrow(queen), nrow(points) * 9
-	)
-
-	expect_equal(
-		nrow(rook), nrow(points) * 5
-	)
-
-	expect_equal(
-		nrow(bishop), nrow(points) * 5
-	)
-
-	# camID match output length
-	expect_equal(
-		max(queen$camID), nrow(points) * 9
-	)
-
-	expect_equal(
-		max(rook$camID), nrow(points) * 5
-	)
-
-	expect_equal(
-		max(bishop$camID), nrow(points) * 5
+		max(bishop$id_grid_ct), nrow(points) * 5
 	)
 })
 
