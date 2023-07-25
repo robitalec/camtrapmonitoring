@@ -61,3 +61,16 @@
 #' data(clearwater_lake_density)
 #' plot(clearwater_lake_density)
 "clearwater_lake_density"
+
+
+#' Example extent
+#'
+#' A dataset containing the extent near Clearwater Lake, Manitoba.
+#'
+#'
+#' @format An `sf` object with 2 points.
+#'
+#' @examples
+#' data(clearwater_lake_extent)
+#' plot(clearwater_lake_extent)
+"clearwater_lake_extent"
