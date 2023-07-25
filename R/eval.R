@@ -16,6 +16,8 @@
 #' @family eval
 #'
 #' @examples
+#' library(terra)
+#'
 #' data("clearwater_lake_density")
 #' clearwater_lake_land_cover <- rast(system.file('extdata',
 #'   'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))
@@ -97,6 +99,7 @@ eval_pt <-
 #'
 #' @examples
 #' library(terra)
+#'
 #' data("clearwater_lake_density")
 #' clearwater_lake_elevation <- rast(system.file('extdata',
 #'   'clearwater_lake_elevation.tif', package = 'camtrapmonitoring'))
@@ -205,7 +208,6 @@ eval_buffer <-
 #' @export
 #'
 #' @examples
-#' library(terra)
 #' data("clearwater_lake_density")
 #' data("clearwater_lake_wetlands")
 #'
