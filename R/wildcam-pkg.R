@@ -1,5 +1,5 @@
-#' wildcam
+#' camtrapmonitoring
 #'
 #' @docType package
-#' @name wildcam
+#' @name camtrapmonitoring
 "_PACKAGE"

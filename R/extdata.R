@@ -27,7 +27,7 @@
 #' @source  <https://open.canada.ca/data/en/dataset/ee1580ab-a23d-4f86-a09b-79763677eb47>
 #' @examples
 #' library(terra)
-#' clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "wildcam")
+#' clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "camtrapmonitoring")
 #' clearwater_lake_land_cover <- rast(clearwater_lc_path)
 #' plot(clearwater_lake_land_cover)
 NULL
@@ -48,7 +48,7 @@ NULL
 #' @source  Hollister, J.W. (2022). elevatr: Access Elevation Data from Various APIs. R package version 0.4.2. <https://CRAN.R-project.org/package=elevatr/>
 #' @examples
 #' library(terra)
-#' clearwater_elev_path <- system.file("extdata", "clearwater_lake_elevation.tif", package = "wildcam")
+#' clearwater_elev_path <- system.file("extdata", "clearwater_lake_elevation.tif", package = "camtrapmonitoring")
 #' clearwater_lake_elevation <- rast(clearwater_elev_path)
 #' plot(clearwater_lake_elevation)
 NULL

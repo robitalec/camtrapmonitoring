@@ -127,7 +127,7 @@ select_ct <- function(x, n, rank = NULL, sub = NULL, by = NULL) {
 
 ###
 parse_directions <- function(x, col) {
-	d <- attr(x[[col]], 'wildcam')[['direction']]
+	d <- attr(x[[col]], 'camtrapmonitoring')[['direction']]
 
 	if (is.null(d)) {
 		stop('columns in rank do not have direction attribute, did you use eval_*?')

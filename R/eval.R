@@ -1,6 +1,6 @@
 #' Evaluate camera trap locations by point sampling layers
 #'
-#' Using the point locations generated manually or with `wildcam` functions [sample_ct()] and [grid_ct()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
+#' Using the point locations generated manually or with `camtrapmonitoring` functions [sample_ct()] and [grid_ct()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 #'
 #' Type is used to define the data type of the sampled raster layer:
 #'
@@ -25,7 +25,7 @@
 #'
 #' @examples
 #' data("clearwater_lake_density")
-#' clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'wildcam'))
+#' clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))
 #'
 #' # Sample points
 #' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
@@ -89,7 +89,7 @@ eval_pt <-
 
 #' Evaluate camera trap locations by buffered sampling of layers
 #'
-#' Using the buffered points locations generated manually or with `wildcam` functions [sample_ct()] and [grid_ct()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
+#' Using the buffered points locations generated manually or with `camtrapmonitoring` functions [sample_ct()] and [grid_ct()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 #'
 #' Type is used to define the data type of the sampled raster layer:
 #'
@@ -113,7 +113,7 @@ eval_pt <-
 #' @examples
 #' library(terra)
 #' data("clearwater_lake_density")
-#' clearwater_lake_elevation <- rast(system.file('extdata', 'clearwater_lake_elevation.tif', package = 'wildcam'))
+#' clearwater_lake_elevation <- rast(system.file('extdata', 'clearwater_lake_elevation.tif', package = 'camtrapmonitoring'))
 #'
 #' # Sample points
 #' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
