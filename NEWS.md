@@ -1,3 +1,9 @@
+# camtrapmonitoring 0.11.1.9000 (2023-07-25)
+
+* removed `select_ct` until a more useful alternative structure is developed, see PR [#12](https://github.com/robitalec/camtrapmonitoring/pull/12)
+* fixed tests to match large refactoring since v0.9.0.9000 [#13](https://github.com/robitalec/camtrapmonitoring/pull/13)
+
+
 # camtrapmonitoring 0.11.0.9000 (2023-07-25)
 
 * changed name from {wildcam} to {camtrapmonitoring} [#11](https://github.com/robitalec/camtrapmonitoring/pull/11)
