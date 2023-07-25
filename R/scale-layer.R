@@ -1,10 +1,13 @@
 #' Scale in region of interest
 #'
-#' Scale a layer in a region of interest to optionally compare locations with [eval_pt()] and [eval_buffer()], and select locations based off of relative values instead of absolute values.
+#' Scale a layer in a region of interest to optionally compare locations
+#' with [eval_pt()] and [eval_buffer()], and select locations based off of
+#' relative values instead of absolute values.
 #'
 #' @inheritParams eval_pt
-#' @param roi any object which can be passed to extent including `sf`, `Spatial`, `Raster` objects and 2x2 matrices.
-#' @param scale see terra::scale
+#' @param roi any object which can be passed to extent including `sf`,
+#' `Spatial`, `Raster` objects and 2x2 matrices.
+#' @param center see terra::scale
 #' @param scale see terra::scale
 #'
 #' @return `SpatRaster` layer, cropped to extent of provided 'roi', and scaled.
@@ -18,7 +21,8 @@
 #' library(terra)
 #'
 #' # Load data
-#' clearwater_elev_path <- system.file("extdata", "clearwater_lake_elevation.tif", package = "camtrapmonitoring")
+#' clearwater_elev_path <- system.file(
+#'   "extdata", "clearwater_lake_elevation.tif", package = "camtrapmonitoring")
 #' clearwater_lake_elevation <- rast(clearwater_elev_path)
 #'
 #' # Region of interest: Clearwater lake area

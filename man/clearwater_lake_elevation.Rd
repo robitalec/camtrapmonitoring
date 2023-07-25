@@ -4,10 +4,13 @@
 \alias{clearwater_lake_elevation}
 \title{Example elevation}
 \format{
-An external tif file to be read in with {terra} as a \code{SpatRaster} object.
+An external tif file to be read in with {terra} as a
+\code{SpatRaster} object.
 }
 \source{
-Hollister, J.W. (2022). elevatr: Access Elevation Data from Various APIs. R package version 0.4.2. \url{https://CRAN.R-project.org/package=elevatr/}
+Hollister, J.W. (2022). elevatr: Access Elevation Data from
+Various APIs. R package version 0.4.2.
+\url{https://CRAN.R-project.org/package=elevatr/}
 }
 \description{
 A dataset containing elevation near Clearwater Lake, Manitoba.
@@ -19,7 +22,8 @@ The units are meters.
 }
 \examples{
 library(terra)
-clearwater_elev_path <- system.file("extdata", "clearwater_lake_elevation.tif", package = "camtrapmonitoring")
+clearwater_elev_path <- system.file("extdata",
+  "clearwater_lake_elevation.tif", package = "camtrapmonitoring")
 clearwater_lake_elevation <- rast(clearwater_elev_path)
 plot(clearwater_lake_elevation)
 }

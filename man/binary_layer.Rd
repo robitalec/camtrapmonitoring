@@ -11,14 +11,17 @@ binary_layer(x, value, fun = "equals", layer = 1)
 
 \item{value}{numeric value in x. see Details.}
 
-\item{fun}{character indicating which function to use to compare layer to value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'. Default: 'equals'.}
+\item{fun}{character indicating which function to use to compare layer to
+value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'. Default: 'equals'.}
 
 \item{layer}{default 1, see terra::extract}
 }
 \value{
-A binary raster with two values: \code{TRUE} if pixel matches 'value' provided and \code{FALSE} if pixel does not match 'value' provided.
+A binary raster with two values: \code{TRUE} if pixel matches 'value' provided
+and \code{FALSE} if pixel does not match 'value' provided.
 
-'value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte', 'lt', 'lte'.
+'value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte',
+'lt', 'lte'.
 
 'value' may be greater than length 1 if 'fun' is: 'in'.
 }
@@ -26,11 +29,13 @@ A binary raster with two values: \code{TRUE} if pixel matches 'value' provided a
 Make a binary raster layer from input x.
 }
 \details{
-Find all pixels matching the 'value' provided given the 'fun' and return a binary raster.
+Find all pixels matching the 'value' provided given the 'fun' and return a
+binary raster.
 }
 \examples{
 library(terra)
-clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "camtrapmonitoring")
+clearwater_lc_path <- system.file("extdata",
+  "clearwater_lake_land_cover.tif", package = "camtrapmonitoring")
 clearwater_lake_land_cover <- rast(clearwater_lc_path)
 
 bin <- binary_layer(clearwater_lake_land_cover, 18, fun = 'equals')

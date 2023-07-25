@@ -1,13 +1,14 @@
 #' Evaluate camera trap locations by point sampling layers
 #'
-#' Using the point locations generated manually or with `camtrapmonitoring` functions [sample_ct()] and [grid_ct()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
+#' Using the point locations generated manually or with `camtrapmonitoring`
+#' functions [sample_ct()] and [grid_ct()], sample raster layers to
+#' characterize and select camera trap locations, and quantify potential
+#' sampling bias.
 #'
 #'
 #' @param x SpatRaster layer (terra package)
 #' @param y spatial feature object
 #' @param layer default 1, see terra::extract
-#' @param type one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.
-#' @param direction one of 'positive', 'neutral', 'negative'. See Details.
 #'
 #' @return vector of values from x matching locations in y
 #' @export
@@ -16,7 +17,8 @@
 #'
 #' @examples
 #' data("clearwater_lake_density")
-#' clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))
+#' clearwater_lake_land_cover <- rast(system.file('extdata',
+#'   'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))
 #'
 #' # Sample points
 #' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
@@ -41,7 +43,8 @@ eval_pt <-
 
 		# if (is.null(type) || is.null(direction)) {
 		# 	warning(
-		# 		'missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.'
+		# 		'missing type and/or direction. it is recommended to provide
+		#these for subsequent selection of camera trap locations.'
 		# 	)
 		# }
 
@@ -77,7 +80,10 @@ eval_pt <-
 
 #' Evaluate camera trap locations by buffered sampling of layers
 #'
-#' Using the buffered points locations generated manually or with `camtrapmonitoring` functions [sample_ct()] and [grid_ct()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
+#' Using the buffered points locations generated manually or with
+#' `camtrapmonitoring` functions [sample_ct()] and [grid_ct()], sample
+#'  raster layers to characterize and select camera trap locations,
+#'  and quantify potential sampling bias.
 #'
 #'
 #' @inheritParams eval_pt
@@ -92,7 +98,8 @@ eval_pt <-
 #' @examples
 #' library(terra)
 #' data("clearwater_lake_density")
-#' clearwater_lake_elevation <- rast(system.file('extdata', 'clearwater_lake_elevation.tif', package = 'camtrapmonitoring'))
+#' clearwater_lake_elevation <- rast(system.file('extdata',
+#'   'clearwater_lake_elevation.tif', package = 'camtrapmonitoring'))
 #'
 #' # Sample points
 #' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
@@ -101,7 +108,8 @@ eval_pt <-
 #' queen <- grid_ct(pts, case = 'queen', distance = 100)
 #'
 #' # Evaluate each point with the land cover layer
-#' queen$elev <- eval_buffer(x = clearwater_lake_elevation, y = queen, buffer_size = 150)
+#' queen$elev <- eval_buffer(
+#'   x = clearwater_lake_elevation, y = queen, buffer_size = 150)
 #'
 #' plot(queen["elev"])
 eval_buffer <-
@@ -119,7 +127,8 @@ eval_buffer <-
 		}
 
 		# if (is.null(type) || is.null(direction)) {
-		# 	warning('missing type and/or direction. it is recommended to provide these for subsequent selection of camera trap locations.')
+		# 	warning('missing type and/or direction. it is recommended to
+		# provide these for subsequent selection of camera trap locations.')
 		# }
 		#
 		# checkls <- list(type, direction)
@@ -151,7 +160,8 @@ eval_buffer <-
 		# 		bufferfun <- mean
 		# 	} else if (type %in% c('categorical', 'ordinal')) {
 		# 		bufferfun <- NULL
-		# 		warning('type provided is either categorical or ordinal, cannot summarize in buffer, returning frequency table')
+		# 		warning('type provided is either categorical or ordinal, cannot
+		#summarize in buffer, returning frequency table')
 		# 	} else {
 		# 		stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
 		# 	}
@@ -174,16 +184,22 @@ eval_buffer <-
 
 #' Evaluate distance-to
 #'
-#' Evaluates locations in x by measuring the distance to the nearest feature in layer.
+#' Evaluates locations in x by measuring the distance to the nearest feature
+#' in layer.
 #'
-#' To avoid the large overhead of creating distance to rasters for small/medium number of sample points, this vector-based distance to determines the nearest feature (layer) to each x then calculates the distance between each pair.
+#' To avoid the large overhead of creating distance to rasters for small/medium
+#'  number of sample points, this vector-based distance to determines the
+#'  nearest feature (layer) to each x then calculates the distance between
+#'  each pair.
 #'
 #' @inheritParams eval_pt
 #' @param measure measure type see geodist::geodist for details
 #'
 #' @return vector of distances between x and y
 #'
-#' Note attributes are returned like by `eval_pt` and `eval_buffer`. The `type` attribute for distance to a feature (layer) is "real" and the `direction` is left for the user to provide.
+#' Note attributes are returned like by `eval_pt` and `eval_buffer`. The
+#' `type` attribute for distance to a feature (layer) is "real" and the
+#' `direction` is left for the user to provide.
 #'
 #' @family eval
 #' @export
@@ -215,7 +231,8 @@ eval_dist <-
 
 		# if (is.null(direction)) {
 		# 	warning(
-		# 		'missing direction. it is recommended to provide these for subsequent selection of camera trap locations.'
+		# 		'missing direction. it is recommended to provide these for
+		#subsequent selection of camera trap locations.'
 		# 	)
 		# }
 		#

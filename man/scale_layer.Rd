@@ -9,7 +9,10 @@ scale_layer(x, roi, center = TRUE, scale = TRUE)
 \arguments{
 \item{x}{SpatRaster layer (terra package)}
 
-\item{roi}{any object which can be passed to extent including \code{sf}, \code{Spatial}, \code{Raster} objects and 2x2 matrices.}
+\item{roi}{any object which can be passed to extent including \code{sf},
+\code{Spatial}, \code{Raster} objects and 2x2 matrices.}
+
+\item{center}{see terra::scale}
 
 \item{scale}{see terra::scale}
 }
@@ -17,14 +20,17 @@ scale_layer(x, roi, center = TRUE, scale = TRUE)
 \code{SpatRaster} layer, cropped to extent of provided 'roi', and scaled.
 }
 \description{
-Scale a layer in a region of interest to optionally compare locations with \code{\link[=eval_pt]{eval_pt()}} and \code{\link[=eval_buffer]{eval_buffer()}}, and select locations based off of relative values instead of absolute values.
+Scale a layer in a region of interest to optionally compare locations
+with \code{\link[=eval_pt]{eval_pt()}} and \code{\link[=eval_buffer]{eval_buffer()}}, and select locations based off of
+relative values instead of absolute values.
 }
 \examples{
 # Load packages
 library(terra)
 
 # Load data
-clearwater_elev_path <- system.file("extdata", "clearwater_lake_elevation.tif", package = "camtrapmonitoring")
+clearwater_elev_path <- system.file(
+  "extdata", "clearwater_lake_elevation.tif", package = "camtrapmonitoring")
 clearwater_lake_elevation <- rast(clearwater_elev_path)
 
 # Region of interest: Clearwater lake area

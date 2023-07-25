@@ -5,7 +5,8 @@
 \alias{clearwater_lake_roads}
 \title{Example roads}
 \format{
-An \code{sf} object with 172 roads and 48 variables. See the source below for details.
+An \code{sf} object with 172 roads and 48 variables. See the source below
+for details.
 }
 \source{
 \url{https://open.canada.ca/data/en/dataset/3d282116-e556-400c-9306-ca1a3cada77f}
@@ -17,7 +18,8 @@ clearwater_lake_roads
 A dataset containing roads near Clearwater Lake, Manitoba.
 }
 \details{
-Roads are from the Canadian National Road Network (NRN) with all corresponding fields.
+Roads are from the Canadian National Road Network (NRN) with all
+corresponding fields.
 }
 \examples{
 data(clearwater_lake_roads)
