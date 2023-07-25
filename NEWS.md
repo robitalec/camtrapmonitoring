@@ -1,6 +1,7 @@
 # wildcam 0.10.1.9000 (2023-07-13)
 
 * edits to introductory vignette [#9](https://github.com/robitalec/wildcam/pull/9)
+* replaced leftover `raster` with `terra` [#10](https://github.com/robitalec/wildcam/pull/10)
 
 
 
