@@ -1,4 +1,4 @@
 library(testthat)
-library(wildcam)
+library(camtrapmonitoring)
 
-test_check("wildcam")
+test_check("camtrapmonitoring")
