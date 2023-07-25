@@ -1,15 +1,15 @@
 #' Binary layer
 #'
-#' Make a binary raster layer from input 'layer'.
+#' Make a binary raster layer from input x.
 #'
 #' Find all pixels matching the 'value' provided given the 'fun' and return a binary raster.
 #'
 #' @inheritParams eval_pt
-#' @param value numeric value in 'layer'. see Details.
+#' @param value numeric value in x. see Details.
 #' @param fun character indicating which function to use to compare layer to value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'. Default: 'equals'.
 #'
 #' @return
-#' A binary raster layer with two values: `TRUE` if pixel matches 'value' provided and `FALSE` if pixel does not match 'value' provided.
+#' A binary raster with two values: `TRUE` if pixel matches 'value' provided and `FALSE` if pixel does not match 'value' provided.
 #'
 #' 'value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte', 'lt', 'lte'.
 #'
