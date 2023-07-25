@@ -35,10 +35,10 @@ clearwater_lake_land_cover <- rast(clearwater_lc_path)
 
 bin <- binary_layer(clearwater_lake_land_cover, 18, fun = 'equals')
 
-image(bin)
+plot(bin)
 
 # fun = 'in'
 bin <- binary_layer(clearwater_lake_land_cover, c(1, 2), fun = 'in')
 
-image(bin)
+plot(bin)
 }

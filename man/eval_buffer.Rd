@@ -4,16 +4,7 @@
 \alias{eval_buffer}
 \title{Evaluate camera trap locations by buffered sampling of layers}
 \usage{
-eval_buffer(
-  x,
-  y,
-  buffer_size,
-  buffer_fun = mean,
-  layer = 1,
-  type,
-  direction,
-  coords = NULL
-)
+eval_buffer(x, y, buffer_size, buffer_fun = mean, layer = 1)
 }
 \arguments{
 \item{x}{SpatRaster layer (terra package)}
@@ -21,10 +12,6 @@ eval_buffer(
 \item{y}{spatial feature object}
 
 \item{layer}{default 1, see terra::extract}
-
-\item{type}{one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.}
-
-\item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
 
 \item{buffersize}{radius of buffer around each point.}
 }

@@ -4,7 +4,7 @@
 \alias{eval_pt}
 \title{Evaluate camera trap locations by point sampling layers}
 \usage{
-eval_pt(x, y, layer = 1, type = NULL, direction = NULL, coords = NULL)
+eval_pt(x, y, layer = 1)
 }
 \arguments{
 \item{x}{SpatRaster layer (terra package)}
@@ -42,7 +42,7 @@ pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
 queen <- grid_ct(pts, case = 'queen', distance = 100)
 
 # Evaluate each point with the land cover layer
-queen$lc <- eval_pt(x = points, layer = clearwater_lake_land_cover, type = 'categorical', direction = 'neutral')
+queen$lc <- eval_pt(x = clearwater_lake_land_cover, y = queen)
 
 plot(queen["lc"])
 }
