@@ -4,40 +4,41 @@
 \alias{binary_layer}
 \title{Binary layer}
 \usage{
-binary_layer(layer, value, fun = "equals")
+binary_layer(x, value, fun = "equals", layer = 1)
 }
 \arguments{
-\item{layer}{default 1, see terra::extract}
+\item{x}{SpatRaster layer (terra package)}
 
-\item{value}{numeric value in 'layer'. see Details.}
+\item{value}{numeric value in x. see Details.}
 
 \item{fun}{character indicating which function to use to compare layer to value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'. Default: 'equals'.}
+
+\item{layer}{default 1, see terra::extract}
 }
 \value{
-A binary raster layer with two values: \code{TRUE} if pixel matches 'value' provided and \code{FALSE} if pixel does not match 'value' provided.
+A binary raster with two values: \code{TRUE} if pixel matches 'value' provided and \code{FALSE} if pixel does not match 'value' provided.
 
 'value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte', 'lt', 'lte'.
 
 'value' may be greater than length 1 if 'fun' is: 'in'.
 }
 \description{
-Make a binary raster layer from input 'layer'.
+Make a binary raster layer from input x.
 }
 \details{
 Find all pixels matching the 'value' provided given the 'fun' and return a binary raster.
 }
 \examples{
-# fun = 'equals'
-data(lc)
+library(terra)
+clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "wildcam")
+clearwater_lake_land_cover <- rast(clearwater_lc_path)
 
-bin <- binary_layer(lc, 212, fun = 'equals')
+bin <- binary_layer(clearwater_lake_land_cover, 18, fun = 'equals')
 
 image(bin)
 
 # fun = 'in'
-data(lc)
-
-bin <- binary_layer(lc, c(210, 212), fun = 'in')
+bin <- binary_layer(clearwater_lake_land_cover, c(1, 2), fun = 'in')
 
 image(bin)
 }
