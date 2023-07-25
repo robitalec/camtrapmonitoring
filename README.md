@@ -22,3 +22,11 @@ GDAL, GEOS and PROJ4 ([see here for
 installation](https://github.com/r-spatial/sf/#installing)). Windows
 users, make sure to use
 [RTools](https://cran.r-project.org/bin/windows/Rtools/).
+
+## Name
+
+This package was previously named {wildcam} but renamed to
+{camtrapmonitoring} to reflect broadened scope of package from planning
+camera trap surveys to community based monitoring of wildlife and
+density estimation, and to avoid confusion with other projects using
+camera traps named wildcam or similar.
