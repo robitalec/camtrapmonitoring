@@ -11,9 +11,14 @@ eval_buffer(x, y, buffer_size, buffer_fun = mean, layer = 1)
 
 \item{y}{spatial feature object}
 
-\item{layer}{default 1, see terra::extract}
+\item{buffer_size}{radius of buffer around each point}
 
-\item{buffersize}{radius of buffer around each point.}
+\item{buffer_fun}{function for summarizing buffer region, default mean}
+
+\item{layer}{default 1, see terra::extract}
+}
+\value{
+vector of values from x matching buffered locations in y
 }
 \description{
 Using the buffered points locations generated manually or with \code{camtrapmonitoring} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.

@@ -16,7 +16,7 @@ eval_dist(x, y, measure = NULL, direction = NULL)
 \item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
 }
 \value{
-Vector of distances between x and the nearest feature in layer.
+vector of distances between x and y
 
 Note attributes are returned like by \code{eval_pt} and \code{eval_buffer}. The \code{type} attribute for distance to a feature (layer) is "real" and the \code{direction} is left for the user to provide.
 }

@@ -9,7 +9,7 @@
 #' @param type one of 'categorical', 'binary', 'ordinal', or 'real'. See Details.
 #' @param direction one of 'positive', 'neutral', 'negative'. See Details.
 #'
-#' @return
+#' @return vector of values from x matching locations in y
 #' @export
 #'
 #' @family eval
@@ -81,9 +81,10 @@ eval_pt <-
 #'
 #'
 #' @inheritParams eval_pt
-#' @param buffersize radius of buffer around each point.
+#' @param buffer_size radius of buffer around each point
+#' @param buffer_fun function for summarizing buffer region, default mean
 #'
-#' @return
+#' @return vector of values from x matching buffered locations in y
 #' @export
 #'
 #' @family eval
@@ -180,7 +181,7 @@ eval_buffer <-
 #' @inheritParams eval_pt
 #' @param measure measure type see geodist::geodist for details
 #'
-#' @return Vector of distances between x and the nearest feature in layer.
+#' @return vector of distances between x and y
 #'
 #' Note attributes are returned like by `eval_pt` and `eval_buffer`. The `type` attribute for distance to a feature (layer) is "real" and the `direction` is left for the user to provide.
 #'

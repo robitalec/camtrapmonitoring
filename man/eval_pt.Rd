@@ -17,6 +17,9 @@ eval_pt(x, y, layer = 1)
 
 \item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
 }
+\value{
+vector of values from x matching locations in y
+}
 \description{
 Using the point locations generated manually or with \code{camtrapmonitoring} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 }
