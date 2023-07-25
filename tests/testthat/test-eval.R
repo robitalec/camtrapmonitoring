@@ -13,7 +13,7 @@ clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_
 points <- sample_ct(clearwater_lake_density, 15, type = 'random')
 
 # Evaluate each point with the land cover layer
-queen$lc <- eval_pt(x = points, y = clearwater_lake_land_cover)
+points$lc <- eval_pt(x = clearwater_lake_land_cover, y = points)
 
 test_that("eval_pt's arguments are checked", {
 	expect_error(
