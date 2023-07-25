@@ -2,15 +2,6 @@
 #'
 #' Using the point locations generated manually or with `camtrapmonitoring` functions [sample_ct()] and [grid_ct()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 #'
-#' Type is used to define the data type of the sampled raster layer:
-#'
-#' * 'categorical' - one of a limited and usually fixed number of possible values (e.g.: landcover. 1, 2, 3 indicating 'wetland', 'forest', 'agriculture').
-#' * 'binary' - also boolean. TRUE/FALSE, presence/absence. (e.g.: raster of wetlands).
-#' * 'ordinal' - ranked or ordered data. (e.g.: animal density high/medium/low).
-#' * 'real' - real number variable either interval or ratio scale. (e.g.: digital elevation model).
-#'
-#' Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by [select_ct()] for ranking and selecting camera trap locations.
-#'
 #'
 #' @param x SpatRaster layer (terra package)
 #' @param y spatial feature object
@@ -91,16 +82,6 @@ eval_pt <-
 #'
 #' Using the buffered points locations generated manually or with `camtrapmonitoring` functions [sample_ct()] and [grid_ct()], sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 #'
-#' Type is used to define the data type of the sampled raster layer:
-#'
-#' * 'categorical' - one of a limited and usually fixed number of possible values (e.g.: landcover. 1, 2, 3 indicating 'wetland', 'forest', 'agriculture').
-#' * 'binary' - also boolean. TRUE/FALSE, presence/absence. (e.g.: raster of wetlands).
-#' * 'ordinal' - ranked or ordered data. (e.g.: animal density high/medium/low).
-#' * 'real' - real number variable either interval or ratio scale. (e.g.: digital elevation model).
-#'
-#' The function used to summarize the buffer regions around each point in `x` depends on the data `type` defined. 'categorical' data should likely be transformed into individual binary layers with [binary_layer()] so `mean` can be used to determine proportions in a buffer region.
-#'
-#' Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by [select_ct()] for ranking and selecting camera trap locations.
 #'
 #' @inheritParams eval_pt
 #' @param buffersize radius of buffer around each point.
