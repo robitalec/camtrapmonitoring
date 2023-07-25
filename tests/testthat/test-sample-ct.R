@@ -25,9 +25,8 @@ test_that("checks error as expected", {
 
 
 test_that("levels returned in output match input", {
-	pts <- sample_ct(clearwater_lake_density,
-									 10,
-									 type = 'random',
+	col <- 'density'
+	pts <- sample_ct(x = clearwater_lake_density, n = 20, type = 'regular',
 									 col = col)
 
 	expect_equivalent(unique(pts[[col]]),

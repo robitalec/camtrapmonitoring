@@ -28,14 +28,13 @@
 #' elev_scaled <- scale_layer(clearwater_lake_elevation, roi)
 #'
 #' # Plot
-#' plot(clearwater_lake_elevation)
 #' plot(elev_scaled)
 scale_layer <- function(x, roi, center = TRUE, scale = TRUE) {
-	if (missing(x) | !inherits(x, 'SpatRaster')) {
+	if (missing(x) | is.null(x) | !inherits(x, 'SpatRaster')) {
 		stop('x must be provided and expected type is SpatRaster.')
 	}
 
-	if (missing(roi)) {
+	if (missing(roi) | is.null(roi)) {
 		stop('roi must be provided.')
 	}
 

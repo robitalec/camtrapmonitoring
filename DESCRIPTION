@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "robit.alec@gmail.com",
            comment = c(ORCID = "0000-0002-4706-1762"))
-Description: Selects and evaluates potential camera trap locations. 
+Description: Evaluating potential camera trap locations. 
 		Potential locations are evaluated using relevant spatial layers
 		producing a dataset of selected locations with covariates that
 		can be used to quantify sampling bias. Soon - density estimation methods. 
@@ -30,4 +30,4 @@ Imports:
     units,
     terra,
     distanceto
-Depends: R (>= 2.10)
+Depends: R (>= 4.0)

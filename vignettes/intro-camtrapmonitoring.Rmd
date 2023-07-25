@@ -1,5 +1,5 @@
 ---
-title: "Introduction to `camtrapmonitoring`"
+title: "Introduction to camtrapmonitoring"
 author: "Alec L. Robitaille"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette

@@ -34,16 +34,13 @@
 #' queen <- grid_ct(pts, case = 'queen', distance = 100)
 #'
 #' # Evaluate each point with the land cover layer
-#' queen$lc <- eval_pt(x = points, layer = clearwater_lake_land_cover, type = 'categorical', direction = 'neutral')
+#' queen$lc <- eval_pt(x = clearwater_lake_land_cover, y = queen)
 #'
 #' plot(queen["lc"])
 eval_pt <-
 	function(x,
 					 y,
-					 layer = 1,
-					 type = NULL,
-					 direction = NULL,
-					 coords = NULL) {
+					 layer = 1) {
 		if (missing(x) || is.null(x) || !inherits(x, 'SpatRaster')) {
 			stop('x must be provided. expected type is SpatRaster.')
 		}
@@ -130,10 +127,7 @@ eval_buffer <-
 					 y,
 					 buffer_size,
 					 buffer_fun = mean,
-					 layer = 1,
-					 type,
-					 direction,
-					 coords = NULL) {
+					 layer = 1) {
 
 		if (missing(x) || is.null(x) || !inherits(x, 'SpatRaster')) {
 			stop('x must be provided. expected type is SpatRaster.')

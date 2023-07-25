@@ -34,7 +34,6 @@ roi <- ext(clearwater_lake_elevation)
 elev_scaled <- scale_layer(clearwater_lake_elevation, roi)
 
 # Plot
-plot(clearwater_lake_elevation)
 plot(elev_scaled)
 }
 \seealso{
