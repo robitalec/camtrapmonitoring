@@ -1,6 +1,6 @@
 #' Scale in region of interest
 #'
-#' Scale a layer in a region of interest to optionally compare locations with [eval_pt()] and [eval_buffer()], and select locations with [select_ct()] based off of relative values instead of absolute values.
+#' Scale a layer in a region of interest to optionally compare locations with [eval_pt()] and [eval_buffer()], and select locations based off of relative values instead of absolute values.
 #'
 #' @inheritParams eval_pt
 #' @param roi any object which can be passed to extent including `sf`, `Spatial`, `Raster` objects and 2x2 matrices.
