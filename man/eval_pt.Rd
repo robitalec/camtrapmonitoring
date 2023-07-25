@@ -20,17 +20,6 @@ eval_pt(x, y, layer = 1)
 \description{
 Using the point locations generated manually or with \code{camtrapmonitoring} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 }
-\details{
-Type is used to define the data type of the sampled raster layer:
-\itemize{
-\item 'categorical' - one of a limited and usually fixed number of possible values (e.g.: landcover. 1, 2, 3 indicating 'wetland', 'forest', 'agriculture').
-\item 'binary' - also boolean. TRUE/FALSE, presence/absence. (e.g.: raster of wetlands).
-\item 'ordinal' - ranked or ordered data. (e.g.: animal density high/medium/low).
-\item 'real' - real number variable either interval or ratio scale. (e.g.: digital elevation model).
-}
-
-Direction is used to define the user's priority or preference for this layer. For example, 'positive' direction when evaluating an elevation layer would indicate that the sampled camera trap locations are preferably in areas of high elevation. This attribute is later used by \code{\link[=select_ct]{select_ct()}} for ranking and selecting camera trap locations.
-}
 \examples{
 data("clearwater_lake_density")
 clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))
