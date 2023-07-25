@@ -72,7 +72,7 @@ binary_layer <- function(layer, value, fun = 'equals') {
 		}
 	} else if (length(value) > 1) {
 		if (fun == 'in' | fun == 'equals') {
-			return(raster::`%in%`(layer, value))
+			return(terra::`%in%`(layer, value))
 		} else {
 			stop('fun must be "in" if length of value is > 1')
 		}
