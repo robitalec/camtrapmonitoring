@@ -5,14 +5,14 @@
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 
-# wildcam
+# camtrapmonitoring
 
 ## Installation
 
-You can install the development version of wildcam with:
+You can install the development version of camtrapmonitoring with:
 
 ``` r
-remotes::install_github("robitalec/wildcam")
+remotes::install_github("robitalec/camtrapmonitoring")
 ```
 
 This package depends on `sf`, `terra`, `distanceto` and `units`. System
