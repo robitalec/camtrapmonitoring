@@ -18,18 +18,18 @@
 #' library(terra)
 #'
 #' # Load data
-#' data(densitygrid)
-#' data(dem)
+#' clearwater_elev_path <- system.file("extdata", "clearwater_lake_elevation.tif", package = "camtrapmonitoring")
+#' clearwater_lake_elevation <- rast(clearwater_elev_path)
 #'
-#' # Scale elevation layer in extent of density grid
-#' demScaled <- scale_layer(layer = dem, roi = densitygrid)
+#' # Region of interest: Clearwater lake area
+#' roi <- ext(clearwater_lake_elevation)
+#'
+#' # Scale elevation in extent of density grid
+#' elev_scaled <- scale_layer(clearwater_lake_elevation, roi)
 #'
 #' # Plot
-#' plot(dem)
-#' plot(demScaled)
-scale_layer <- function(layer = NULL, roi = NULL) {
-	if (is.null(layer) | !inherits(layer, 'Raster')) {
-		stop('layer must be provided and expected type is raster.')
+#' plot(clearwater_lake_elevation)
+#' plot(elev_scaled)
 	}
 
 	if (is.null(roi)) {
