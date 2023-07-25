@@ -34,11 +34,13 @@ test_that('arguments are checked', {
 
 })
 
+test_that('outputs match inputs', {
+	expect_equal(crs(lc), crs(bin))
 
+	expect_equal(res(lc), res(bin))
 })
 
 
-test_that('binary_layer handles NA', {
 	buf <- st_buffer(points[1,], 1e2)
 	mlc <- mask(crop(lc, buf), buf, inverse = TRUE)
 
