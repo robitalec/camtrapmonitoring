@@ -30,9 +30,9 @@
 #' bin <- binary_layer(clearwater_lake_land_cover, c(1, 2), fun = 'in')
 #'
 #' image(bin)
-binary_layer <- function(layer, value, fun = 'equals') {
-	if (missing(layer)) {
-		stop('layer must be provided.')
+binary_layer <- function(x, value, fun = 'equals', layer = 1) {
+	if (missing(x)) {
+		stop('x must be provided.')
 	}
 
 	if (missing(value)) {
@@ -47,8 +47,8 @@ binary_layer <- function(layer, value, fun = 'equals') {
 		}
 	}
 
-	if (!inherits(layer, 'SpatRaster')) {
-		stop('layer must be a SpatRaster.')
+	if (!inherits(x, 'SpatRaster')) {
+		stop('x must be a SpatRaster.')
 	}
 
 	if (!inherits(value, 'numeric')) {
@@ -57,21 +57,21 @@ binary_layer <- function(layer, value, fun = 'equals') {
 
 	if (length(value) == 1) {
 		if (fun == 'equals') {
-			return(layer == value)
+			return(x == value)
 		} else if (fun == 'gt') {
-			return(layer > value)
+			return(x > value)
 		} else if (fun == 'gte') {
-			return(layer >= value)
+			return(x >= value)
 		} else if (fun == 'lt') {
-			return(layer < value)
+			return(x < value)
 		} else if (fun == 'lte') {
-			return(layer <= value)
+			return(x <= value)
 		} else {
 			stop('fun must be "equals", "gt", "gte", "lt", or "lte" if length of value is 1')
 		}
 	} else if (length(value) > 1) {
 		if (fun == 'in' | fun == 'equals') {
-			return(terra::`%in%`(layer, value))
+			return(terra::`%in%`(x, value))
 		} else {
 			stop('fun must be "in" if length of value is > 1')
 		}
