@@ -10,6 +10,7 @@
 #'
 #' @source <https://open.canada.ca/data/en/dataset/3d282116-e556-400c-9306-ca1a3cada77f>
 #' @examples
+#' library(sf)
 #' data(clearwater_lake_roads)
 #' plot(clearwater_lake_roads)
 "clearwater_lake_roads"
@@ -31,6 +32,7 @@
 #' doi:10.21105/joss.00305 <https://doi.org/10.21105/joss.00305>,
 #' <https://joss.theoj.org/papers/10.21105/joss.00305>.
 #' @examples
+#' library(sf)
 #' data(clearwater_lake_hydro)
 #' plot(clearwater_lake_hydro)
 "clearwater_lake_hydro"
@@ -52,6 +54,7 @@
 #' doi:10.21105/joss.00305 <https://doi.org/10.21105/joss.00305>,
 #' <https://joss.theoj.org/papers/10.21105/joss.00305>.
 #' @examples
+#' library(sf)
 #' data(clearwater_lake_wetlands)
 #' plot(clearwater_lake_wetlands)
 "clearwater_lake_wetlands"
@@ -68,6 +71,7 @@
 #' @format An `sf` object with 272 features and 1 variable "density".
 #'
 #' @examples
+#' library(sf)
 #' data(clearwater_lake_density)
 #' plot(clearwater_lake_density)
 "clearwater_lake_density"
@@ -81,6 +85,7 @@
 #' @format An `sf` object with 2 points.
 #'
 #' @examples
+#' library(sf)
 #' data(clearwater_lake_extent)
 #' plot(clearwater_lake_extent)
 "clearwater_lake_extent"
