@@ -19,7 +19,7 @@
 #'
 #' @examples
 #' library(terra)
-#' clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "wildcam")
+#' clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "camtrapmonitoring")
 #' clearwater_lake_land_cover <- rast(clearwater_lc_path)
 #'
 #' bin <- binary_layer(clearwater_lake_land_cover, 18, fun = 'equals')
