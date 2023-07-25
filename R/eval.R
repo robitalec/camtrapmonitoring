@@ -172,7 +172,7 @@ eval_buffer <-
 
 		terra::extract(
 			x = x,
-			y = st_buffer(y, dist = buffer_size),
+			y = sf::st_buffer(y, dist = buffer_size),
 			layer = layer,
 			na.rm = FALSE,
 			fun = buffer_fun,
