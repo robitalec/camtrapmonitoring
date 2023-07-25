@@ -18,17 +18,16 @@
 #' @export
 #'
 #' @examples
-#' # fun = 'equals'
-#' data(lc)
+#' library(terra)
+#' clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "wildcam")
+#' clearwater_lake_land_cover <- rast(clearwater_lc_path)
 #'
-#' bin <- binary_layer(lc, 212, fun = 'equals')
+#' bin <- binary_layer(clearwater_lake_land_cover, 18, fun = 'equals')
 #'
 #' image(bin)
 #'
 #' # fun = 'in'
-#' data(lc)
-#'
-#' bin <- binary_layer(lc, c(210, 212), fun = 'in')
+#' bin <- binary_layer(clearwater_lake_land_cover, c(1, 2), fun = 'in')
 #'
 #' image(bin)
 binary_layer <- function(layer, value, fun = 'equals') {
