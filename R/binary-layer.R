@@ -1,15 +1,15 @@
 #' Binary layer
 #'
-#' Make a binary raster layer from input 'layer'.
+#' Make a binary raster layer from input x.
 #'
 #' Find all pixels matching the 'value' provided given the 'fun' and return a binary raster.
 #'
 #' @inheritParams eval_pt
-#' @param value numeric value in 'layer'. see Details.
+#' @param value numeric value in x. see Details.
 #' @param fun character indicating which function to use to compare layer to value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'. Default: 'equals'.
 #'
 #' @return
-#' A binary raster layer with two values: `TRUE` if pixel matches 'value' provided and `FALSE` if pixel does not match 'value' provided.
+#' A binary raster with two values: `TRUE` if pixel matches 'value' provided and `FALSE` if pixel does not match 'value' provided.
 #'
 #' 'value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte', 'lt', 'lte'.
 #'
@@ -18,22 +18,21 @@
 #' @export
 #'
 #' @examples
-#' # fun = 'equals'
-#' data(lc)
+#' library(terra)
+#' clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "wildcam")
+#' clearwater_lake_land_cover <- rast(clearwater_lc_path)
 #'
-#' bin <- binary_layer(lc, 212, fun = 'equals')
+#' bin <- binary_layer(clearwater_lake_land_cover, 18, fun = 'equals')
 #'
 #' image(bin)
 #'
 #' # fun = 'in'
-#' data(lc)
-#'
-#' bin <- binary_layer(lc, c(210, 212), fun = 'in')
+#' bin <- binary_layer(clearwater_lake_land_cover, c(1, 2), fun = 'in')
 #'
 #' image(bin)
-binary_layer <- function(layer, value, fun = 'equals') {
-	if (missing(layer)) {
-		stop('layer must be provided.')
+binary_layer <- function(x, value, fun = 'equals', layer = 1) {
+	if (missing(x)) {
+		stop('x must be provided.')
 	}
 
 	if (missing(value)) {
@@ -48,8 +47,8 @@ binary_layer <- function(layer, value, fun = 'equals') {
 		}
 	}
 
-	if (!inherits(layer, 'Raster')) {
-		stop('layer must be a raster.')
+	if (!inherits(x, 'SpatRaster')) {
+		stop('x must be a SpatRaster.')
 	}
 
 	if (!inherits(value, 'numeric')) {
@@ -58,21 +57,21 @@ binary_layer <- function(layer, value, fun = 'equals') {
 
 	if (length(value) == 1) {
 		if (fun == 'equals') {
-			return(layer == value)
+			return(x == value)
 		} else if (fun == 'gt') {
-			return(layer > value)
+			return(x > value)
 		} else if (fun == 'gte') {
-			return(layer >= value)
+			return(x >= value)
 		} else if (fun == 'lt') {
-			return(layer < value)
+			return(x < value)
 		} else if (fun == 'lte') {
-			return(layer <= value)
+			return(x <= value)
 		} else {
 			stop('fun must be "equals", "gt", "gte", "lt", or "lte" if length of value is 1')
 		}
 	} else if (length(value) > 1) {
 		if (fun == 'in' | fun == 'equals') {
-			return(raster::`%in%`(layer, value))
+			return(terra::`%in%`(x, value))
 		} else {
 			stop('fun must be "in" if length of value is > 1')
 		}
