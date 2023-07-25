@@ -28,7 +28,6 @@
 #' elev_scaled <- scale_layer(clearwater_lake_elevation, roi)
 #'
 #' # Plot
-#' plot(clearwater_lake_elevation)
 #' plot(elev_scaled)
 scale_layer <- function(x, roi, center = TRUE, scale = TRUE) {
 	if (missing(x) | !inherits(x, 'SpatRaster')) {
