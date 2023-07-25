@@ -1,6 +1,6 @@
-Package: wildcam
-Title: Select and Evaluate Camera Trap Locations
-Version: 0.10.1.9000
+Package: camtrapmonitoring
+Title: Camera Trap Monitoring For Estimating Wildlife Density
+Version: 0.11.0.9000
 Authors@R: 
     person(given = "Alec L.",
            family = "Robitaille",
@@ -10,7 +10,7 @@ Authors@R:
 Description: Selects and evaluates potential camera trap locations. 
 		Potential locations are evaluated using relevant spatial layers
 		producing a dataset of selected locations with covariates that
-		can be used to quantify sampling bias. 
+		can be used to quantify sampling bias. Soon - density estimation methods. 
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true

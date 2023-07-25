@@ -35,7 +35,7 @@ Land cover data are from 2020 Land Cover of Canada. Class index defined here
 }
 \examples{
 library(terra)
-clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "wildcam")
+clearwater_lc_path <- system.file("extdata", "clearwater_lake_land_cover.tif", package = "camtrapmonitoring")
 clearwater_lake_land_cover <- rast(clearwater_lc_path)
 plot(clearwater_lake_land_cover)
 }

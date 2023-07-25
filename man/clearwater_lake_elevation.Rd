@@ -19,7 +19,7 @@ The units are meters.
 }
 \examples{
 library(terra)
-clearwater_elev_path <- system.file("extdata", "clearwater_lake_elevation.tif", package = "wildcam")
+clearwater_elev_path <- system.file("extdata", "clearwater_lake_elevation.tif", package = "camtrapmonitoring")
 clearwater_lake_elevation <- rast(clearwater_elev_path)
 plot(clearwater_lake_elevation)
 }

@@ -4,7 +4,7 @@ set_eval_attr <- function(x, layer, type, direction) {
 	# buffer size?
 	# how to flex params + names added
 	data.table::setattr(x,
-											'wildcam',
+											'camtrapmonitoring',
 											list(
 												layer = layer,
 												type = type,

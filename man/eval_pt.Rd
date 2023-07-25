@@ -18,7 +18,7 @@ eval_pt(x, y, layer = 1, type = NULL, direction = NULL, coords = NULL)
 \item{direction}{one of 'positive', 'neutral', 'negative'. See Details.}
 }
 \description{
-Using the point locations generated manually or with \code{wildcam} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
+Using the point locations generated manually or with \code{camtrapmonitoring} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to characterize and select camera trap locations, and quantify potential sampling bias.
 }
 \details{
 Type is used to define the data type of the sampled raster layer:
@@ -33,7 +33,7 @@ Direction is used to define the user's priority or preference for this layer. Fo
 }
 \examples{
 data("clearwater_lake_density")
-clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'wildcam'))
+clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))
 
 # Sample points
 pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
