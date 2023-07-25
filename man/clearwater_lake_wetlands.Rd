@@ -25,6 +25,7 @@ Hydrology features are from Open Street Map, downloaded using the {osmdata}
 package.
 }
 \examples{
+library(sf)
 data(clearwater_lake_wetlands)
 plot(clearwater_lake_wetlands)
 }

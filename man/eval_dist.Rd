@@ -31,7 +31,6 @@ nearest feature (layer) to each x then calculates the distance between
 each pair.
 }
 \examples{
-library(terra)
 data("clearwater_lake_density")
 data("clearwater_lake_wetlands")
 

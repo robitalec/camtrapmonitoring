@@ -23,6 +23,8 @@ characterize and select camera trap locations, and quantify potential
 sampling bias.
 }
 \examples{
+library(terra)
+
 data("clearwater_lake_density")
 clearwater_lake_land_cover <- rast(system.file('extdata',
   'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))

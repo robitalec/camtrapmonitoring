@@ -22,6 +22,7 @@ Roads are from the Canadian National Road Network (NRN) with all
 corresponding fields.
 }
 \examples{
+library(sf)
 data(clearwater_lake_roads)
 plot(clearwater_lake_roads)
 }

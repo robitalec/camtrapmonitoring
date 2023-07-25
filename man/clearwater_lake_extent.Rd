@@ -14,6 +14,7 @@ clearwater_lake_extent
 A dataset containing the extent near Clearwater Lake, Manitoba.
 }
 \examples{
+library(sf)
 data(clearwater_lake_extent)
 plot(clearwater_lake_extent)
 }

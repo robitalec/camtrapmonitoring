@@ -18,6 +18,7 @@ Simulated species density with three levels "High", "Medium", Low" with
 probabilities 0.1, 0.3, 0.6. Grid size is 2 km x 2 km.
 }
 \examples{
+library(sf)
 data(clearwater_lake_density)
 plot(clearwater_lake_density)
 }

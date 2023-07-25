@@ -38,9 +38,6 @@ roi <- ext(clearwater_lake_elevation)
 
 # Scale elevation in extent of density grid
 elev_scaled <- scale_layer(clearwater_lake_elevation, roi)
-
-# Plot
-plot(elev_scaled)
 }
 \seealso{
 \code{\link[terra:scale]{terra::scale()}}
