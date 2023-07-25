@@ -4,16 +4,18 @@
 #'
 #' @inheritParams eval_pt
 #' @param roi any object which can be passed to extent including `sf`, `Spatial`, `Raster` objects and 2x2 matrices.
+#' @param scale see terra::scale
+#' @param scale see terra::scale
 #'
-#' @return `Raster` layer, cropped to extent of provided 'roi', and center scaled.
+#' @return `SpatRaster` layer, cropped to extent of provided 'roi', and scaled.
 #'
-#' @seealso [raster::scale()]
+#' @seealso [terra::scale()]
 #'
 #' @export
 #'
 #' @examples
 #' # Load packages
-#' library(raster)
+#' library(terra)
 #'
 #' # Load data
 #' data(densitygrid)
