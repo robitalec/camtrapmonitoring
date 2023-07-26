@@ -24,7 +24,7 @@
 #'
 #' # Plot density grid and sampled points
 #' plot(clearwater_lake_density, reset = FALSE)
-#' plot(pts_random, add = TRUE, pch = 1)
+#' plot(pts_random, add = TRUE, pch = 1, col = 1)
 #'
 #' # Regular sampled points across all features
 #' pts_regular <- sample_ct(
@@ -32,7 +32,7 @@
 #'
 #' # Plot density grid and sampled points
 #' plot(clearwater_lake_density, reset = FALSE)
-#' plot(pts_regular, add = TRUE, pch = 2)
+#' plot(pts_regular, add = TRUE, pch = 2, col = 1)
 sample_ct <- function(x, n, type, col = NULL) {
 	stopifnot('x is missing' = !missing(type))
 	stopifnot('n is missing' = !missing(type))
