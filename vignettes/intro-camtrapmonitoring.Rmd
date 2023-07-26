@@ -189,8 +189,9 @@ select_pts <- pts[pts$road_dist < max_road_dist_m &
 										pts$lc_pt %in% ls_lc_classes,]
 
 plot(select_pts)
+```
 
-
+```{r}
 # Sorting criteria
 ordered <- order(select_pts$wetland_dist, -select_pts$hydro_dist)
 

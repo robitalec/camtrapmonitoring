@@ -7,9 +7,9 @@ output: github_document
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  comment = '#>',
+  fig.path = 'man/figures/README-',
+  out.width = '100%'
 )
 ```
 
@@ -23,11 +23,15 @@ knitr::opts_chunk$set(
 You can install the development version of camtrapmonitoring with:
 
 ```{r, eval = FALSE}
-remotes::install_github("robitalec/camtrapmonitoring")
+# r-universe
+install.packages('camtrapmonitoring', repos = c('https://robitalec.r-universe.dev', 'https://cloud.r-project.org'))
+
+# Or {remotes}
+remotes::install_github('robitalec/camtrapmonitoring')
 ```
 
 
-This package depends on `sf`, `terra`, and `distanceto`. 
+This package depends on {sf}, {terra}, and {distanceto}. 
 
 More details on installation here:
 
