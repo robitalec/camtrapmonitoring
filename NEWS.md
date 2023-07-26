@@ -1,6 +1,13 @@
+# camtrapmonitoring 0.11.3.9000 (2023-07-25)
+
+* initial pkgdown site [#15](https://github.com/robitalec/camtrapmonitoring/pull/15)
+
+
+
 # camtrapmonitoring 0.11.2.9000 (2023-07-25)
 
 * fixed R CMD checks [#14](https://github.com/robitalec/camtrapmonitoring/pull/14)
+
 
 
 # camtrapmonitoring 0.11.1.9000 (2023-07-25)
