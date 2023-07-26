@@ -43,27 +43,6 @@ eval_pt <-
 			stop('y must be provided.')
 		}
 
-		# if (is.null(type) || is.null(direction)) {
-		# 	warning(
-		# 		'missing type and/or direction. it is recommended to provide
-		#these for subsequent selection of camera trap locations.'
-		# 	)
-		# }
-
-		# checkls <- list(type, direction)
-		# if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
-		# 	stop('type and direction must be of class character')
-		# }
-
-		# check_type(type)
-		# check_direction(direction)
-
-		# type = NULL,
-		# direction = NULL,
-		# coords = NULL) {
-		stopifnot('y is not of class sf' = inherits(y, 'sf'))
-		stopifnot('y is not of geometry type POINT' =
-								sf::st_geometry_type(y, FALSE) == 'POINT')
 
 		terra::extract(
 			x = x,
@@ -73,10 +52,6 @@ eval_pt <-
 			simple = TRUE,
 			ID = FALSE
 		)[[layer]]
-		# layer = deparse(substitute(layer)),
-		# type = type,
-		# direction = direction
-		# )
 	}
 
 
@@ -129,49 +104,17 @@ eval_buffer <-
 			stop('y must be provided.')
 		}
 
-		# if (is.null(type) || is.null(direction)) {
-		# 	warning('missing type and/or direction. it is recommended to
-		# provide these for subsequent selection of camera trap locations.')
-		# }
-		#
-		# checkls <- list(type, direction)
-		# if (sum(lengths(checkls)) != length(Filter(is.character, checkls))) {
-		# 	stop('type and direction must be of class character')
-		# }
-		#
-		# check_type(type)
-		# check_direction(direction)
-
 		if (any(buffer_size < terra::res(x))) {
 			warning("buffer_size is less than the x's resolution")
 		}
 
 		# TODO: add crs = crs(layer)
 
-		# coords = NULL) {
 		stopifnot('y is not of class sf' = inherits(y, 'sf'))
 		stopifnot('y is not of geometry type POINT' =
 								sf::st_geometry_type(y, FALSE) == 'POINT')
 
 
-		# if (!is.null(coords)) {
-		# 	warning('coords provided are ignored because x is an sf object')
-		# }
-
-		# if (!is.null(type)) {
-		# 	if (type %in% c('binary', 'real')) {
-		# 		bufferfun <- mean
-		# 	} else if (type %in% c('categorical', 'ordinal')) {
-		# 		bufferfun <- NULL
-		# 		warning('type provided is either categorical or ordinal, cannot
-		#summarize in buffer, returning frequency table')
-		# 	} else {
-		# 		stop("type must be one of 'categorical', 'binary', 'ordinal', 'real'")
-		# 	}
-		# } else {
-		# 	bufferfun <- NULL
-		# }
-		# how to summarize buffers with ordinal/categorical
 
 		terra::extract(
 			x = x,
@@ -200,9 +143,6 @@ eval_buffer <-
 #'
 #' @return vector of distances between x and y
 #'
-#' Note attributes are returned like by `eval_pt` and `eval_buffer`. The
-#' `type` attribute for distance to a feature (layer) is "real" and the
-#' `direction` is left for the user to provide.
 #'
 #' @family eval
 #' @export
@@ -229,28 +169,5 @@ eval_dist <-
 		if (missing(x) || missing(y) || is.null(x) || is.null(y)) {
 			stop('please provide both x and y')
 		}
-
-		# if (is.null(direction)) {
-		# 	warning(
-		# 		'missing direction. it is recommended to provide these for
-		#subsequent selection of camera trap locations.'
-		# 	)
-		# }
-		#
-		# check_direction(direction)
-
-		# direction = NULL,
-		# coords = NULL,
-		# crs = NULL) {
-		# if (!(is.null(coords))) {
-		# 	warning('coords ignored since x is an sf object')
-		# }
-
-		# set_eval_attr(
-		distanceto::distance_to(y, x, measure = measure)
-		# 	layer = deparse(substitute(layer)),
-		# 	type = 'real',
-		# 	direction = direction
-		# )[]
 
 	}
