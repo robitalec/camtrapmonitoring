@@ -30,3 +30,4 @@ Imports:
     terra,
     distanceto
 Depends: R (>= 4.0)
+URL: https://robitalec.github.io/camtrapmonitoring/
