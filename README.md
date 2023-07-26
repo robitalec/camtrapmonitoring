@@ -12,10 +12,14 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 You can install the development version of camtrapmonitoring with:
 
 ``` r
-remotes::install_github("robitalec/camtrapmonitoring")
+# r-universe
+install.packages('camtrapmonitoring', repos = c('https://robitalec.r-universe.dev', 'https://cloud.r-project.org'))
+
+# Or {remotes}
+remotes::install_github('robitalec/camtrapmonitoring')
 ```
 
-This package depends on `sf`, `terra`, and `distanceto`.
+This package depends on {sf}, {terra}, and {distanceto}.
 
 More details on installation here:
 
