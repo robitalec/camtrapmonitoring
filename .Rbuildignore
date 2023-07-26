@@ -7,3 +7,7 @@
 ^data-raw$
 ^codemeta\.json$
 ^CITATION\.cff$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
