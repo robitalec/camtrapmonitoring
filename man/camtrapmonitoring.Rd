@@ -8,6 +8,13 @@
 \description{
 Evaluating potential camera trap locations. Potential locations are evaluated using relevant spatial layers producing a dataset of selected locations with covariates that can be used to quantify sampling bias. Soon - density estimation methods.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://robitalec.github.io/camtrapmonitoring/}
+}
+
+}
 \author{
 \strong{Maintainer}: Alec L. Robitaille \email{robit.alec@gmail.com} (\href{https://orcid.org/0000-0002-4706-1762}{ORCID})
 

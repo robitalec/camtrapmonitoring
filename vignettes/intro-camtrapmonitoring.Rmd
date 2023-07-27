@@ -58,10 +58,10 @@ data("clearwater_lake_density")
 plot(clearwater_lake_density, key.width = lcm(5))
 
 pts <- sample_ct(
-	clearwater_lake_density, 
+	region = clearwater_lake_density, 
 	n = 25, 
 	type = 'random', 
-	col = 'density'
+	strata = 'density'
 )
 
 plot(pts)
@@ -99,9 +99,13 @@ First, we will evaluate the deployment feasibility layers. Note the example
 elevation data is an external TIF file that can be loaded with the
 {terra} package. 
 
-The `eval_*` family of functions return the vector of values for each candidate
+The `eval_*` family of functions return a vector of values for each candidate
 camera trap location. These vectors can be added to the simple features objects
-using the common `df$name <- value` syntax. 
+using the base R `df$name <- value` syntax (shown here) or with `dplyr::mutate`. 
+`eval_*` functions take 'features' (candidate camera trap locations) and a 
+'target' covariate to evaluate each candidate location with. For `eval_pt`
+and `eval_buffer`, 'target' covariates are expected to be raster layers while 
+`eval_dist` expects a 'target' vector object. 
 
 ```{r}
 # Load data
@@ -113,13 +117,17 @@ data("clearwater_lake_roads")
 
 
 # Evaluate elevation using point sample
-pts$elev_pt <- eval_pt(clearwater_lake_elevation, pts)
+pts$elev_pt <- eval_pt(features = pts, target = clearwater_lake_elevation)
 
 # Evaluate elevation using buffered point sample
-pts$elev_buffer_1e3 <- eval_buffer(clearwater_lake_elevation, pts, buffer_size = 1e3)
+pts$elev_buffer_1e3 <- eval_buffer(
+	features = pts, 
+	target = clearwater_lake_elevation,
+	buffer_size = 1e3
+)
 
 # Evaluate distance to roads
-pts$road_dist <- eval_dist(clearwater_lake_roads, pts)
+pts$road_dist <- eval_dist(features = pts, target = clearwater_lake_roads)
 
 
 
@@ -146,13 +154,13 @@ data("clearwater_lake_wetlands")
 
 
 # Evaluate land cover using point sample
-pts$lc_pt <- eval_pt(clearwater_lake_land_cover, pts)
+pts$lc_pt <- eval_pt(features = pts, target = clearwater_lake_land_cover)
 
 # Evaluate distance to hydrology
-pts$hydro_dist <- eval_dist(clearwater_lake_hydro, pts)
+pts$hydro_dist <- eval_dist(features = pts, target = clearwater_lake_hydro)
 
 # Evaluate distance to wetland
-pts$wetland_dist <- eval_dist(clearwater_lake_wetlands, pts)
+pts$wetland_dist <- eval_dist(features = pts, target = clearwater_lake_wetlands)
 
 
 
@@ -212,6 +220,21 @@ plot(grid_design(distance = 100, case = 'queen'))
 
 plot(grid_design(distance = 250, n = 13))
 ```
+
+After the grid design is selected, the `grid_ct` function can be used with the
+selected camera trap locations. 
+
+```{r}
+ct_grids <- grid_ct(
+	features = order_select_pts,
+	distance = 500,
+	case = 'queen'
+)
+
+plot(ct_grids['id_grid_ct'][1])
+```
+
+
 ## Example data sources
 
 Example data used in the {camtrapmonitoring} package come from open data sources we 

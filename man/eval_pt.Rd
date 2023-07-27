@@ -4,20 +4,20 @@
 \alias{eval_pt}
 \title{Evaluate camera trap locations by point sampling layers}
 \usage{
-eval_pt(x, y, layer = 1)
+eval_pt(features, target, layer = 1)
 }
 \arguments{
-\item{x}{SpatRaster layer (terra package)}
+\item{features}{sf features}
 
-\item{y}{spatial feature object}
+\item{target}{SpatRaster target}
 
 \item{layer}{default 1, see terra::extract}
 }
 \value{
-vector of values from x matching locations in y
+vector of values from target matching locations in features
 }
 \description{
-Using the point locations generated manually or with \code{camtrapmonitoring}
+Using camera trap locations generated with \code{camtrapmonitoring}
 functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to
 characterize and select camera trap locations, and quantify potential
 sampling bias.
@@ -30,13 +30,13 @@ clearwater_lake_land_cover <- rast(system.file('extdata',
   'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))
 
 # Sample points
-pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
+pts <- sample_ct(region = clearwater_lake_density, n = 1, type = 'random')
 
 # Make grid with queen's case
-queen <- grid_ct(pts, case = 'queen', distance = 100)
+queen <- grid_ct(features = pts, case = 'queen', distance = 100)
 
 # Evaluate each point with the land cover layer
-queen$lc <- eval_pt(x = clearwater_lake_land_cover, y = queen)
+queen$lc <- eval_pt(features = queen, target = clearwater_lake_land_cover)
 
 plot(queen["lc"])
 }

@@ -9,27 +9,27 @@ clearwater_lc_path <- system.file('extdata', 'clearwater_lake_land_cover.tif', p
 lc <- rast(clearwater_lc_path)
 
 # Binary layer
-bin <- binary_layer(lc, 18, fun = 'equals')
+bin <- binary_layer(lc, fun = 'equals', value = 18)
 
 
 test_that('arguments are checked', {
 
 	expect_true(inherits(bin, 'SpatRaster'))
 
-	expect_error(binary_layer(), 'x must be provided.')
+	expect_error(binary_layer(), 'target must be provided.')
 
 	expect_error(binary_layer(lc), 'value must be provided.')
 
-	expect_error(binary_layer('potato', 212, fun = 'equals'),
-							 'x must be a SpatRaster.')
+	expect_error(binary_layer('potato', fun = 'equals', 212),
+							 'target must be a SpatRaster.')
 
-	expect_error(binary_layer(lc, 'potato', fun = 'equals'),
+	expect_error(binary_layer(lc, fun = 'equals', value = 'potato'),
 							 'value must be a numeric.')
 
-	expect_error(binary_layer(lc, c(212, 210), fun = 'gte'),
+	expect_error(binary_layer(lc, fun = 'gte', value = c(212, 210)),
 							 'fun must be "in" if length of value is > 1')
 
-	expect_error(binary_layer(lc, 212, fun = 'in'),
+	expect_error(binary_layer(lc, fun = 'in', value = 212),
 							 'fun must be "equals", "gt", "gte", "lt", or "lte" if length of value is 1')
 
 })
@@ -43,7 +43,7 @@ test_that('outputs match inputs', {
 
 test_that('handles NaN', {
 	lc[seq.int(5e5)] <- NaN
-	bin <- binary_layer(lc, 18, fun = 'equals')
+	bin <- binary_layer(lc, fun = 'equals', value = 18)
 
 	expect_true(NaN %in% terra::unique(lc, na.rm = FALSE)[[1]])
 	expect_true(NaN %in% terra::unique(bin, na.rm = FALSE)[[1]])

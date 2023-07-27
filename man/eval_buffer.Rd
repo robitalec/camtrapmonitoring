@@ -4,12 +4,12 @@
 \alias{eval_buffer}
 \title{Evaluate camera trap locations by buffered sampling of layers}
 \usage{
-eval_buffer(x, y, buffer_size, buffer_fun = mean, layer = 1)
+eval_buffer(features, target, buffer_size, buffer_fun = mean, layer = 1)
 }
 \arguments{
-\item{x}{SpatRaster layer (terra package)}
+\item{features}{sf features}
 
-\item{y}{spatial feature object}
+\item{target}{SpatRaster target}
 
 \item{buffer_size}{radius of buffer around each point}
 
@@ -18,13 +18,13 @@ eval_buffer(x, y, buffer_size, buffer_fun = mean, layer = 1)
 \item{layer}{default 1, see terra::extract}
 }
 \value{
-vector of values from x matching buffered locations in y
+vector of values from target matching buffered locations in features
 }
 \description{
-Using the buffered points locations generated manually or with
-\code{camtrapmonitoring} functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample
-raster layers to characterize and select camera trap locations,
-and quantify potential sampling bias.
+Using buffered camera trap locations generated with \code{camtrapmonitoring}
+functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, sample raster layers to
+characterize and select camera trap locations, and quantify potential
+sampling bias.
 }
 \examples{
 library(terra)
@@ -34,14 +34,14 @@ clearwater_lake_elevation <- rast(system.file('extdata',
   'clearwater_lake_elevation.tif', package = 'camtrapmonitoring'))
 
 # Sample points
-pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
+pts <- sample_ct(region = clearwater_lake_density, 1, type = 'random')
 
 # Make grid with queen's case
-queen <- grid_ct(pts, case = 'queen', distance = 100)
+queen <- grid_ct(features = pts, case = 'queen', distance = 100)
 
 # Evaluate each point with the land cover layer
 queen$elev <- eval_buffer(
-  x = clearwater_lake_elevation, y = queen, buffer_size = 150)
+  features = queen, target = clearwater_lake_elevation, buffer_size = 150)
 
 plot(queen["elev"])
 }

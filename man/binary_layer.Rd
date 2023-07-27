@@ -4,33 +4,36 @@
 \alias{binary_layer}
 \title{Binary layer}
 \usage{
-binary_layer(x, value, fun = "equals", layer = 1)
+binary_layer(target, fun = "equals", value, layer = 1)
 }
 \arguments{
-\item{x}{SpatRaster layer (terra package)}
-
-\item{value}{numeric value in x. see Details.}
+\item{target}{SpatRaster target}
 
 \item{fun}{character indicating which function to use to compare layer to
 value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'. Default: 'equals'.}
 
+\item{value}{numeric value in target. see Details.}
+
 \item{layer}{default 1, see terra::extract}
 }
 \value{
-A binary raster with two values: \code{TRUE} if pixel matches 'value' provided
-and \code{FALSE} if pixel does not match 'value' provided.
+A binary raster (\code{SpatRaster}) with two values:
+\itemize{
+\item \code{TRUE} if pixel matches 'value' provided given the provided function
+\item \code{FALSE} if pixel does not match 'value' provided given the provided function
+}
 
 'value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte',
 'lt', 'lte'.
 
-'value' may be greater than length 1 if 'fun' is: 'in'.
+'value' may be greater than length 1 only if 'fun' is: 'in'.
 }
 \description{
-Make a binary raster layer from input x.
+Helper function to make a binary raster layer from input target.
 }
 \details{
-Find all pixels matching the 'value' provided given the 'fun' and return a
-binary raster.
+Find all pixels given the function ('fun') matching the value ('value')
+and return a binary raster.
 }
 \examples{
 library(terra)
@@ -38,12 +41,14 @@ clearwater_lc_path <- system.file("extdata",
   "clearwater_lake_land_cover.tif", package = "camtrapmonitoring")
 clearwater_lake_land_cover <- rast(clearwater_lc_path)
 
-bin <- binary_layer(clearwater_lake_land_cover, 18, fun = 'equals')
+bin <- binary_layer(target = clearwater_lake_land_cover,
+  fun = 'equals', value = 18)
 
 plot(bin)
 
 # fun = 'in'
-bin <- binary_layer(clearwater_lake_land_cover, c(1, 2), fun = 'in')
+bin <- binary_layer(target = clearwater_lake_land_cover,
+  fun = 'in', value = c(1, 2))
 
 plot(bin)
 }
