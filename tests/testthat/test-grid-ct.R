@@ -15,56 +15,56 @@ bishop <- grid_ct(points, case = 'bishop', distance = 100)
 # tests
 test_that("grid_ct's arguments are checked", {
 	expect_error(
-		grid_ct(points, case = 'potato', distance = 100),
+		grid_ct(features = points, distance = 100, case = 'potato'),
 		'case provided must be one of "queen", "rook" or "bishop"'
 	)
 
 	expect_error(
-		grid_ct(points, case = 'queen', distance = -100),
+		grid_ct(features = points, distance = -100, case = 'queen'),
 		'distance must be a numeric, greater than 0'
 	)
 
 	expect_error(
-		grid_ct(1, case = 'queen', distance = 100),
-		'x is not of class sf'
+		grid_ct(features = 1, distance = 100, case = 'queen'),
+		'features are not class sf'
 	)
 
 	expect_error(
-		grid_ct(points, n = 100, case = 'queen'),
+		grid_ct(features = points, n = 100, case = 'queen'),
 		"argument \"distance\" is missing, with no default"
 	)
 
 	expect_error(
-		grid_ct(points),
+		grid_ct(features = points),
 		"argument \"distance\" is missing, with no default"
 	)
 
 	multipoints <- st_cast(points, 'MULTIPOINT')
 
 	expect_error(
-		grid_ct(multipoints, case = 'queen', distance = 100),
-		'x is not of geometry type POINT'
+		grid_ct(features = multipoints, distance = 100, case = 'queen'),
+		'features are not geometry type POINT'
 	)
 })
 
 test_that("grid_ct returns expected lengths", {
 	expect_equal(
-		nrow(grid_ct(points, n = 100, distance = 100)),
+		nrow(grid_ct(features = points, distance = 100, n = 100)),
 		nrow(points) * 100
 	)
 
 	expect_equal(
-		nrow(grid_ct(points, case = 'queen', distance = 100)),
+		nrow(grid_ct(features = points, distance = 100, case = 'queen')),
 		nrow(points) * 9
 	)
 
 	expect_equal(
-		nrow(grid_ct(points, case = 'rook', distance = 100)),
+		nrow(grid_ct(features = points, distance = 100, case = 'rook')),
 		nrow(points) * 5
 	)
 
 	expect_equal(
-		nrow(grid_ct(points, case = 'bishop', distance = 100)),
+		nrow(grid_ct(features = points, distance = 100, case = 'bishop')),
 		nrow(points) * 5
 	)
 })
