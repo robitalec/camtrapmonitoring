@@ -1,16 +1,16 @@
 #' Scale in region of interest
 #'
-#' Scale a layer in a region of interest to optionally compare locations
-#' with [eval_pt()] and [eval_buffer()], and select locations based off of
-#' relative values instead of absolute values.
+#' Helper function to scale a target layer in a region of interest.
+#' Can be used to compare locations with [eval_pt()] and [eval_buffer()],
+#' and select locations based off of relative values instead of absolute values.
 #'
 #' @inheritParams eval_pt
-#' @param roi any object which can be passed to extent including `sf`,
+#' @param region object which can be passed to [terra::ext()] including `sf`,
 #' `Spatial`, `Raster` objects and 2x2 matrices.
-#' @param center see terra::scale
-#' @param scale see terra::scale
+#' @param center see [terra::scale()]
+#' @param scale see [terra::scale()]
 #'
-#' @return `SpatRaster` layer, cropped to extent of provided 'roi', and scaled.
+#' @return `SpatRaster` layer, cropped to extent of provided region, and scaled.
 #'
 #' @seealso [terra::scale()]
 #'
@@ -21,27 +21,32 @@
 #' library(terra)
 #'
 #' # Load data
+#' data("clearwater_lake_hydro")
 #' clearwater_elev_path <- system.file(
 #'   "extdata", "clearwater_lake_elevation.tif", package = "camtrapmonitoring")
 #' clearwater_lake_elevation <- rast(clearwater_elev_path)
 #'
-#' # Region of interest: Clearwater lake area
-#' roi <- ext(clearwater_lake_elevation)
+#' # Region of interest around Clearwater lake
+#' roi <- clearwater_lake_hydro[4,]
 #'
 #' # Scale elevation in extent of density grid
-#' elev_scaled <- scale_layer(clearwater_lake_elevation, roi)
-scale_layer <- function(x, roi, center = TRUE, scale = TRUE) {
-	if (missing(x) | is.null(x) | !inherits(x, 'SpatRaster')) {
-		stop('x must be provided and expected type is SpatRaster.')
+#' elev_scaled <- scale_layer(target = clearwater_lake_elevation, region = roi)
+#' plot(elev_scaled)
+scale_layer <- function(target, region, center = TRUE, scale = TRUE) {
+	if (missing(target) | is.null(target)) {
+		stop('target must be provided')
+	}
+	if (!inherits(target, 'SpatRaster')) {
+		stop('target must be a SpatRaster')
 	}
 
-	if (missing(roi) | is.null(roi)) {
-		stop('roi must be provided.')
+	if (missing(region) | is.null(region)) {
+		stop('region must be provided.')
 	}
 
 	# add check for compatible with extent
 
 	return(
-		terra::scale(terra::crop(x, roi), center, scale)
+		terra::scale(terra::crop(target, region), center, scale)
 	)
 }
