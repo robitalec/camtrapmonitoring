@@ -8,6 +8,7 @@ has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![camtrapmonitoring status
 badge](https://robitalec.r-universe.dev/badges/camtrapmonitoring)](https://robitalec.r-universe.dev/camtrapmonitoring)
+[![CRAN](https://www.r-pkg.org/badges/version/camtrapmonitoring)](https://cran.r-project.org/package=camtrapmonitoring)
 
 ## Installation
 
