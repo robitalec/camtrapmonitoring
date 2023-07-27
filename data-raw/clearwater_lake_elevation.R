@@ -20,7 +20,7 @@ clearwater_extent_trans <- st_transform(clearwater_lake_extent, crs)
 
 
 # Elevation --------------------------------------------------------------
-clearwater_lake_elevation <- get_elev_raster(clearwater_extent_trans, z = 12)
+clearwater_lake_elevation <- get_elev_raster(clearwater_extent_trans, z = 11)
 
 
 
