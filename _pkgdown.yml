@@ -2,3 +2,21 @@ url: https://robitalec.github.io/camtrapmonitoring/
 template:
   bootstrap: 5
 
+
+reference:
+- subtitle: Sample locations
+  contents:
+  - sample_ct
+- subtitle: Evaluate locations
+  contents:
+  - eval_pt
+  - eval_buffer
+  - eval_dist
+- subtitle: Establish grids
+  contents:
+  - grid_ct
+  - grid_design
+- subtitle: Helper functions
+  contents:
+  - scale_layer
+  - binary_layer
