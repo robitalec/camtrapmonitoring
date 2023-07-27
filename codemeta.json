@@ -5,8 +5,9 @@
   "description": "Evaluating potential camera trap locations. Potential locations are evaluated using relevant spatial layers producing a dataset of selected locations with covariates that can be used to quantify sampling bias. Soon - density estimation methods. ",
   "name": "camtrapmonitoring: Camera Trap Monitoring For Estimating Wildlife Density",
   "codeRepository": "https://github.com/robitalec/camtrapmonitoring",
+  "issueTracker": "https://github.com/robitalec/camtrapmonitoring/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.11.3.9000",
+  "version": "0.12.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -163,10 +164,10 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "5320.066KB",
+  "fileSize": "2956.652KB",
   "relatedLink": "https://robitalec.github.io/camtrapmonitoring/",
   "releaseNotes": "https://github.com/robitalec/camtrapmonitoring/blob/master/NEWS.md",
   "readme": "https://github.com/robitalec/camtrapmonitoring/blob/main/README.md",
-  "developmentStatus": "https://www.repostatus.org/#wip",
+  "developmentStatus": "https://www.repostatus.org/#active",
   "keywords": ["r", "wildlife", "camera-trap", "camera-traps", "spatial"]
 }

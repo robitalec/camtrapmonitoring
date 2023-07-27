@@ -1,6 +1,6 @@
 Package: camtrapmonitoring
 Title: Camera Trap Monitoring For Estimating Wildlife Density
-Version: 0.11.3.9000
+Version: 0.12.0
 Authors@R: 
     person(given = "Alec L.",
            family = "Robitaille",
@@ -31,3 +31,4 @@ Imports:
     distanceto
 Depends: R (>= 4.0)
 URL: https://robitalec.github.io/camtrapmonitoring/
+BugReports: https://github.com/robitalec/camtrapmonitoring/issues
