@@ -279,29 +279,34 @@ and sorting candidate locations.</p>
 <span></span>
 <span><span class="va">order_select_pts</span> <span class="op">&lt;-</span> <span class="va">select_pts</span><span class="op">[</span><span class="va">ordered</span>,<span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">order_select_pts</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Simple feature collection with 8 features and 8 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 12 features and 8 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 344161.1 ymin: 5978494 xmax: 375709.9 ymax: 6002831</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 346837.9 ymin: 5977444 xmax: 376807.1 ymax: 6001289</span></span>
 <span><span class="co">#&gt; Projected CRS: WGS 84 / UTM zone 14N</span></span>
+<span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;    density                 geometry id_sample_ct elev_pt elev_buffer_1e3</span></span>
-<span><span class="co">#&gt; 48  Medium POINT (375709.9 5991185)           48     260        265.0519</span></span>
-<span><span class="co">#&gt; 11    High   POINT (354146 5985830)           11     271        271.2710</span></span>
-<span><span class="co">#&gt; 53     Low POINT (375049.4 5990988)           53     269        267.5258</span></span>
-<span><span class="co">#&gt; 58     Low POINT (373904.2 5990653)           58     272        269.7727</span></span>
-<span><span class="co">#&gt; 31  Medium POINT (353069.5 5983572)           31     264        267.0183</span></span>
-<span><span class="co">#&gt; 9     High POINT (344161.1 5998116)            9     271        274.2572</span></span>
-<span><span class="co">#&gt; 4     High POINT (347285.9 6002831)            4     286        285.3144</span></span>
-<span><span class="co">#&gt; 57     Low POINT (375407.5 5978494)           57     258        260.3505</span></span>
+<span><span class="co">#&gt; 35  Medium POINT (376807.1 5990368)           35     260        260.7173</span></span>
+<span><span class="co">#&gt; 72     Low POINT (349329.3 5995276)           72     288        288.3093</span></span>
+<span><span class="co">#&gt; 69     Low POINT (347666.5 5996120)           69     292        283.2827</span></span>
+<span><span class="co">#&gt; 11    High POINT (351414.3 6001289)           11     297        303.1196</span></span>
+<span><span class="co">#&gt; 39  Medium POINT (351993.1 5982614)           39     274        272.5348</span></span>
+<span><span class="co">#&gt; 2     High POINT (346837.9 5998188)            2     275        276.0684</span></span>
+<span><span class="co">#&gt; 17    High   POINT (375245 5984924)           17     270        267.7367</span></span>
+<span><span class="co">#&gt; 48  Medium POINT (357655.2 5980482)           48     268        267.9049</span></span>
+<span><span class="co">#&gt; 74     Low POINT (372677.8 5982957)           74     272        268.7977</span></span>
+<span><span class="co">#&gt; 22    High POINT (351876.1 5977444)           22     291        290.3736</span></span>
 <span><span class="co">#&gt;    road_dist lc_pt hydro_dist wetland_dist</span></span>
-<span><span class="co">#&gt; 48 1316.2688     1   136.1339     2364.379</span></span>
-<span><span class="co">#&gt; 11 2810.2586     1  2875.3218     2758.166</span></span>
-<span><span class="co">#&gt; 53 1750.4060     1   478.9977     2805.995</span></span>
-<span><span class="co">#&gt; 58 2762.4756     1   778.8294     3737.104</span></span>
-<span><span class="co">#&gt; 31  802.2248     1  3174.3653     4933.558</span></span>
-<span><span class="co">#&gt; 9  2915.3703     1  1099.0363     8931.376</span></span>
-<span><span class="co">#&gt; 4  1286.9766     1  6556.9556     9744.168</span></span>
-<span><span class="co">#&gt; 57 1897.7219     1  6730.7946    14972.631</span></span></code></pre></div>
+<span><span class="co">#&gt; 35  126.5757     1   207.7812     3062.973</span></span>
+<span><span class="co">#&gt; 72 2288.1865     1  4907.0943     3087.799</span></span>
+<span><span class="co">#&gt; 69  844.2008     1  3092.9211     4930.134</span></span>
+<span><span class="co">#&gt; 11 2032.9371     1  6248.3180     5547.652</span></span>
+<span><span class="co">#&gt; 39  399.1855     1  4311.9726     6026.147</span></span>
+<span><span class="co">#&gt; 2  1218.0364     6  2682.0503     6624.579</span></span>
+<span><span class="co">#&gt; 17  171.8740     5  1126.9013     8592.667</span></span>
+<span><span class="co">#&gt; 48 1874.8160     1  2419.8335     9046.035</span></span>
+<span><span class="co">#&gt; 74 1070.3851     1  1977.7505    11131.500</span></span>
+<span><span class="co">#&gt; 22 1254.2629     1  7134.5292    11151.315</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="establishing-camera-trap-grids">Establishing camera trap grids<a class="anchor" aria-label="anchor" href="#establishing-camera-trap-grids"></a>
