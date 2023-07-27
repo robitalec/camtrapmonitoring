@@ -68,7 +68,7 @@
                         <h4 data-toc-skip class="author">Alec L.
 Robitaille</h4>
             
-            <h4 data-toc-skip class="date">2023-07-26</h4>
+            <h4 data-toc-skip class="date">2023-07-27</h4>
       
       
       <div class="d-none name"><code>intro-camtrapmonitoring.Rmd</code></div>
@@ -115,10 +115,10 @@ by the simulated species density.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">pts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_ct.html">sample_ct</a></span><span class="op">(</span></span>
-<span>    <span class="va">clearwater_lake_density</span>, </span>
+<span>    region <span class="op">=</span> <span class="va">clearwater_lake_density</span>, </span>
 <span>    n <span class="op">=</span> <span class="fl">25</span>, </span>
 <span>    type <span class="op">=</span> <span class="st">'random'</span>, </span>
-<span>    col <span class="op">=</span> <span class="st">'density'</span></span>
+<span>    strata <span class="op">=</span> <span class="st">'density'</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pts</span><span class="op">)</span></span></code></pre></div>
@@ -167,10 +167,16 @@ layer required and the criteria associated with it. For example:</p>
 <p>First, we will evaluate the deployment feasibility layers. Note the
 example elevation data is an external TIF file that can be loaded with
 the {terra} package.</p>
-<p>The <code>eval_*</code> family of functions return the vector of
-values for each candidate camera trap location. These vectors can be
-added to the simple features objects using the common
-<code>df$name &lt;- value</code> syntax.</p>
+<p>The <code>eval_*</code> family of functions return a vector of values
+for each candidate camera trap location. These vectors can be added to
+the simple features objects using the base R
+<code>df$name &lt;- value</code> syntax (shown here) or with
+<code>dplyr::mutate</code>. <code>eval_*</code> functions take
+‘features’ (candidate camera trap locations) and a ‘target’ covariate to
+evaluate each candidate location with. For <code>eval_pt</code> and
+<code>eval_buffer</code>, ‘target’ covariates are expected to be raster
+layers while <code>eval_dist</code> expects a ‘target’ vector
+object.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load data</span></span>
 <span><span class="va">clearwater_lake_elevation_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'extdata'</span>, <span class="st">'clearwater_lake_elevation.tif'</span>, package <span class="op">=</span> <span class="st">'camtrapmonitoring'</span><span class="op">)</span></span>
@@ -181,13 +187,17 @@ added to the simple features objects using the common
 <span></span>
 <span></span>
 <span><span class="co"># Evaluate elevation using point sample</span></span>
-<span><span class="va">pts</span><span class="op">$</span><span class="va">elev_pt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eval_pt.html">eval_pt</a></span><span class="op">(</span><span class="va">clearwater_lake_elevation</span>, <span class="va">pts</span><span class="op">)</span></span>
+<span><span class="va">pts</span><span class="op">$</span><span class="va">elev_pt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eval_pt.html">eval_pt</a></span><span class="op">(</span>features <span class="op">=</span> <span class="va">pts</span>, target <span class="op">=</span> <span class="va">clearwater_lake_elevation</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Evaluate elevation using buffered point sample</span></span>
-<span><span class="va">pts</span><span class="op">$</span><span class="va">elev_buffer_1e3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eval_buffer.html">eval_buffer</a></span><span class="op">(</span><span class="va">clearwater_lake_elevation</span>, <span class="va">pts</span>, buffer_size <span class="op">=</span> <span class="fl">1e3</span><span class="op">)</span></span>
+<span><span class="va">pts</span><span class="op">$</span><span class="va">elev_buffer_1e3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eval_buffer.html">eval_buffer</a></span><span class="op">(</span></span>
+<span>    features <span class="op">=</span> <span class="va">pts</span>, </span>
+<span>    target <span class="op">=</span> <span class="va">clearwater_lake_elevation</span>,</span>
+<span>    buffer_size <span class="op">=</span> <span class="fl">1e3</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Evaluate distance to roads</span></span>
-<span><span class="va">pts</span><span class="op">$</span><span class="va">road_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eval_dist.html">eval_dist</a></span><span class="op">(</span><span class="va">clearwater_lake_roads</span>, <span class="va">pts</span><span class="op">)</span></span>
+<span><span class="va">pts</span><span class="op">$</span><span class="va">road_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eval_dist.html">eval_dist</a></span><span class="op">(</span>features <span class="op">=</span> <span class="va">pts</span>, target <span class="op">=</span> <span class="va">clearwater_lake_roads</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span></span>
@@ -212,13 +222,13 @@ loaded with the {terra} package.</p>
 <span></span>
 <span></span>
 <span><span class="co"># Evaluate land cover using point sample</span></span>
-<span><span class="va">pts</span><span class="op">$</span><span class="va">lc_pt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eval_pt.html">eval_pt</a></span><span class="op">(</span><span class="va">clearwater_lake_land_cover</span>, <span class="va">pts</span><span class="op">)</span></span>
+<span><span class="va">pts</span><span class="op">$</span><span class="va">lc_pt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eval_pt.html">eval_pt</a></span><span class="op">(</span>features <span class="op">=</span> <span class="va">pts</span>, target <span class="op">=</span> <span class="va">clearwater_lake_land_cover</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Evaluate distance to hydrology</span></span>
-<span><span class="va">pts</span><span class="op">$</span><span class="va">hydro_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eval_dist.html">eval_dist</a></span><span class="op">(</span><span class="va">clearwater_lake_hydro</span>, <span class="va">pts</span><span class="op">)</span></span>
+<span><span class="va">pts</span><span class="op">$</span><span class="va">hydro_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eval_dist.html">eval_dist</a></span><span class="op">(</span>features <span class="op">=</span> <span class="va">pts</span>, target <span class="op">=</span> <span class="va">clearwater_lake_hydro</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Evaluate distance to wetland</span></span>
-<span><span class="va">pts</span><span class="op">$</span><span class="va">wetland_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eval_dist.html">eval_dist</a></span><span class="op">(</span><span class="va">clearwater_lake_wetlands</span>, <span class="va">pts</span><span class="op">)</span></span>
+<span><span class="va">pts</span><span class="op">$</span><span class="va">wetland_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eval_dist.html">eval_dist</a></span><span class="op">(</span>features <span class="op">=</span> <span class="va">pts</span>, target <span class="op">=</span> <span class="va">clearwater_lake_wetlands</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span></span>
@@ -262,34 +272,61 @@ and sorting candidate locations.</p>
 <span></span>
 <span><span class="va">order_select_pts</span> <span class="op">&lt;-</span> <span class="va">select_pts</span><span class="op">[</span><span class="va">ordered</span>,<span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">order_select_pts</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Simple feature collection with 18 features and 8 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 13 features and 8 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 344164.2 ymin: 5977271 xmax: 375931.4 ymax: 6001177</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 348753.9 ymin: 5976171 xmax: 373940 ymax: 6003547</span></span>
 <span><span class="co">#&gt; Projected CRS: WGS 84 / UTM zone 14N</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;    density                 geometry id_sample_ct elev_pt elev_buffer_1e3</span></span>
-<span><span class="co">#&gt; 38  Medium POINT (351549.6 5989580)           38     283        281.6793</span></span>
-<span><span class="co">#&gt; 27  Medium POINT (349180.9 5994886)           27     289        287.8712</span></span>
-<span><span class="co">#&gt; 49  Medium POINT (349060.6 5994451)           49     289        285.3699</span></span>
-<span><span class="co">#&gt; 41  Medium   POINT (353051 5982331)           41     275        273.0931</span></span>
-<span><span class="co">#&gt; 10    High POINT (348657.5 5999785)           10     281        282.2534</span></span>
-<span><span class="co">#&gt; 46  Medium POINT (375931.4 5986609)           46     264        265.2414</span></span>
-<span><span class="co">#&gt; 48  Medium POINT (353434.8 5981535)           48     277        276.4979</span></span>
-<span><span class="co">#&gt; 34  Medium   POINT (352086 5981197)           34     272        272.9966</span></span>
-<span><span class="co">#&gt; 18    High POINT (347469.2 5982743)           18     265        269.6488</span></span>
-<span><span class="co">#&gt; 3     High POINT (344775.9 5998107)            3     277        275.8878</span></span>
+<span><span class="co">#&gt; 5     High POINT (354717.5 5985540)            5     269        269.5343</span></span>
+<span><span class="co">#&gt; 8     High POINT (351498.8 5983514)            8     268        271.7721</span></span>
+<span><span class="co">#&gt; 11    High POINT (354625.1 5979959)           11     275        275.3254</span></span>
+<span><span class="co">#&gt; 2     High POINT (348753.9 6003547)            2     282        281.8610</span></span>
+<span><span class="co">#&gt; 42  Medium POINT (358820.3 5980669)           42     267        265.9832</span></span>
+<span><span class="co">#&gt; 44  Medium POINT (361376.3 5983129)           44     260        261.4750</span></span>
+<span><span class="co">#&gt; 14    High   POINT (353884 5978380)           14     278        278.6967</span></span>
+<span><span class="co">#&gt; 18    High POINT (352891.6 5977248)           18     285        284.7702</span></span>
+<span><span class="co">#&gt; 72     Low POINT (372515.6 5982226)           72     266        268.3518</span></span>
+<span><span class="co">#&gt; 49  Medium POINT (364829.2 5983276)           49     271        269.8838</span></span>
 <span><span class="co">#&gt;    road_dist lc_pt hydro_dist wetland_dist</span></span>
-<span><span class="co">#&gt; 38 2930.2234     1  5057.0262     1408.656</span></span>
-<span><span class="co">#&gt; 27 2502.1065     1  4892.0482     3152.767</span></span>
-<span><span class="co">#&gt; 49 2258.5182     1  4957.2825     3236.490</span></span>
-<span><span class="co">#&gt; 41  559.8959     1  3341.5015     6172.706</span></span>
-<span><span class="co">#&gt; 10 1396.6100     1  5081.7056     6442.902</span></span>
-<span><span class="co">#&gt; 46  940.9548     1   333.3418     6840.810</span></span>
-<span><span class="co">#&gt; 48  659.2994     1  3268.9249     6958.935</span></span>
-<span><span class="co">#&gt; 34  247.7629     1  4631.2345     7404.467</span></span>
-<span><span class="co">#&gt; 18  454.8611     5  4101.5144     7896.747</span></span>
-<span><span class="co">#&gt; 3  2502.4160     1  1231.7892     8371.186</span></span></code></pre></div>
+<span><span class="co">#&gt; 5  2194.1787     1  2258.0258     3214.875</span></span>
+<span><span class="co">#&gt; 8   665.8719     1  4742.9562     5273.502</span></span>
+<span><span class="co">#&gt; 11 2211.2435     1  3472.6203     8622.409</span></span>
+<span><span class="co">#&gt; 2  2912.4271     1  7902.1060     8966.136</span></span>
+<span><span class="co">#&gt; 42 1756.1313     1  2110.1676     9480.703</span></span>
+<span><span class="co">#&gt; 44   55.7302     1   130.5067     9536.244</span></span>
+<span><span class="co">#&gt; 14 1832.7872     1  5207.9455    10125.558</span></span>
+<span><span class="co">#&gt; 18 1649.8594     1  6690.7769    11258.102</span></span>
+<span><span class="co">#&gt; 72 1507.0668     5  2200.3337    11874.956</span></span>
+<span><span class="co">#&gt; 49  370.6776     1  1005.3348    12467.073</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="establishing-camera-trap-grids">Establishing camera trap grids<a class="anchor" aria-label="anchor" href="#establishing-camera-trap-grids"></a>
+</h2>
+<p>The function <code>grid_ct</code> allows the user to establish
+sampling grids around focal locations selected above. The
+<code>grid_design</code> function is provided to the user to help
+explore grid layout options, using either the ‘case’ argument or the ‘n’
+argument.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/grid_design.html">grid_design</a></span><span class="op">(</span>distance <span class="op">=</span> <span class="fl">100</span>, case <span class="op">=</span> <span class="st">'queen'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="intro-camtrapmonitoring_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/grid_design.html">grid_design</a></span><span class="op">(</span>distance <span class="op">=</span> <span class="fl">250</span>, n <span class="op">=</span> <span class="fl">13</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="intro-camtrapmonitoring_files/figure-html/unnamed-chunk-7-2.png" width="672"></p>
+<p>After the grid design is selected, the <code>grid_ct</code> function
+can be used with the selected camera trap locations.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ct_grids</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/grid_ct.html">grid_ct</a></span><span class="op">(</span></span>
+<span>    features <span class="op">=</span> <span class="va">order_select_pts</span>,</span>
+<span>    distance <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>    case <span class="op">=</span> <span class="st">'queen'</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ct_grids</span><span class="op">[</span><span class="st">'id_grid_ct'</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p><img src="intro-camtrapmonitoring_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="example-data-sources">Example data sources<a class="anchor" aria-label="anchor" href="#example-data-sources"></a>
