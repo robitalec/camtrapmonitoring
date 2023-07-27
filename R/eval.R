@@ -6,9 +6,9 @@
 #' sampling bias.
 #'
 #'
-#' @param features sf features
-#' @param target SpatRaster target
-#' @param layer default 1, see terra::extract
+#' @param features sf features (see [sf::st_sf()])
+#' @param target SpatRaster target (see [terra::rast()])
+#' @param layer default 1, see [terra::extract()]
 #'
 #' @return vector of values from target matching locations in features
 #' @export
@@ -136,13 +136,14 @@ eval_buffer <-
 #' and quantify potential sampling bias.
 #'
 #' To avoid the large overhead of creating distance to rasters for small/medium
-#'  number of sample points, this vector-based distance to determines the
-#'  nearest feature (layer) to each target then calculates the distance between
+#'  number of sample points, this function uses the vector-based distance
+#'  approach from [distanceto::distance_to()]. It determines the
+#'  nearest feature to each target then calculates the distance between
 #'  each pair.
 #'
 #' @inheritParams eval_pt
-#' @param target sf target
-#' @param measure measure type see geodist::geodist for details
+#' @param target sf feature target (see [sf::st_sf()])
+#' @param measure measure type see [geodist::geodist()] for details
 #'
 #' @return vector of distances between target and features
 #'

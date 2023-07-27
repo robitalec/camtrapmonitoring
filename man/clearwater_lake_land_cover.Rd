@@ -5,7 +5,7 @@
 \title{Example land cover}
 \format{
 An external tif file to be read in with {terra} as a \code{SpatRaster}
-object. See the source below for details.
+object (see \code{\link[terra:rast]{terra::rast()}}). See the source below for details.
 }
 \source{
 \url{https://open.canada.ca/data/en/dataset/ee1580ab-a23d-4f86-a09b-79763677eb47}

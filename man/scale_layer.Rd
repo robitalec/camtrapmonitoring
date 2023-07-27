@@ -7,10 +7,10 @@
 scale_layer(target, region, center = TRUE, scale = TRUE)
 }
 \arguments{
-\item{target}{SpatRaster target}
+\item{target}{SpatRaster target (see \code{\link[terra:rast]{terra::rast()}})}
 
 \item{region}{object which can be passed to \code{\link[terra:ext]{terra::ext()}} including \code{sf},
-\code{Spatial}, \code{Raster} objects and 2x2 matrices.}
+\code{SpatRaster}, and 2x2 matrices.}
 
 \item{center}{see \code{\link[terra:scale]{terra::scale()}}}
 

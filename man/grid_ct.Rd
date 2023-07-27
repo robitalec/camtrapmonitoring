@@ -7,7 +7,7 @@
 grid_ct(features, distance, case, n, id = "id_sample_ct")
 }
 \arguments{
-\item{features}{sf features}
+\item{features}{sf features (see \code{\link[sf:sf]{sf::st_sf()}})}
 
 \item{distance}{distance between adjacent camera traps. Don't worry about
 the hypotenuse.}
@@ -17,7 +17,7 @@ the hypotenuse.}
 \item{n}{number of points around each focal point. \code{n} overrides the \code{case}
 argument, do not provide both - see Details.}
 
-\item{id}{default: "id_sample_ct" generated automatically from \code{sample_ct}}
+\item{id}{default: "id_sample_ct" generated automatically from \code{\link[=sample_ct]{sample_ct()}}}
 }
 \value{
 Extended sf object either nine times the length of input features for
@@ -29,8 +29,8 @@ each grid.
 }
 \description{
 Set up grids around focal points. For example, sample points in your study
-area with \code{sample_ct} then use \code{grid_ct} to establish a grid of camera traps
-around each.
+area with \code{\link[=sample_ct]{sample_ct()}} then use \code{\link[=grid_ct]{grid_ct()}} to establish a grid of camera
+traps around each.
 }
 \examples{
 data("clearwater_lake_density")
@@ -46,3 +46,8 @@ plot(queen['focal'])
 n_grid <- grid_ct(features = pts, distance = 100, n = 25)
 plot(n_grid['id_grid_ct'])
 }
+\seealso{
+Other grid: 
+\code{\link{grid_design}()}
+}
+\concept{grid}

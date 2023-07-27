@@ -19,7 +19,7 @@ argument, do not provide both - see Details.}
 grid design data.frame
 }
 \description{
-Helper function used internally by \code{grid_ct} to establish grids around
+Helper function used internally by \code{\link[=grid_ct]{grid_ct()}} to establish grids around
 focal locations. Provided to the user to explore grid design options before
 applying to their data.
 }
@@ -27,3 +27,8 @@ applying to their data.
 plot(grid_design(distance = 100, case = 'queen'))
 plot(grid_design(distance = 100, n = 13))
 }
+\seealso{
+Other grid: 
+\code{\link{grid_ct}()}
+}
+\concept{grid}

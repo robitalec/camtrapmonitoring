@@ -6,7 +6,7 @@
 #'
 #' @inheritParams eval_pt
 #' @param region object which can be passed to [terra::ext()] including `sf`,
-#' `Spatial`, `Raster` objects and 2x2 matrices.
+#' `SpatRaster`, and 2x2 matrices.
 #' @param center see [terra::scale()]
 #' @param scale see [terra::scale()]
 #'

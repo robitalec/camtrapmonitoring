@@ -7,11 +7,11 @@
 eval_pt(features, target, layer = 1)
 }
 \arguments{
-\item{features}{sf features}
+\item{features}{sf features (see \code{\link[sf:sf]{sf::st_sf()}})}
 
-\item{target}{SpatRaster target}
+\item{target}{SpatRaster target (see \code{\link[terra:rast]{terra::rast()}})}
 
-\item{layer}{default 1, see terra::extract}
+\item{layer}{default 1, see \code{\link[terra:extract]{terra::extract()}}}
 }
 \value{
 vector of values from target matching locations in features

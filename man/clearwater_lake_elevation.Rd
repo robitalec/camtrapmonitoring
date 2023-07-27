@@ -16,7 +16,8 @@ Various APIs. R package version 0.4.2.
 A dataset containing elevation near Clearwater Lake, Manitoba.
 }
 \details{
-Elevation data are from the AWS using the {elevatr} package.
+Elevation data are from the AWS using the {elevatr} package
+(\code{\link[elevatr:get_elev_raster]{elevatr::get_elev_raster()}}).
 
 The units are meters.
 }

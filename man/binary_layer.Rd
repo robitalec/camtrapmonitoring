@@ -7,26 +7,21 @@
 binary_layer(target, fun = "equals", value, layer = 1)
 }
 \arguments{
-\item{target}{SpatRaster target}
+\item{target}{SpatRaster target (see \code{\link[terra:rast]{terra::rast()}})}
 
 \item{fun}{character indicating which function to use to compare layer to
 value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'. Default: 'equals'.}
 
 \item{value}{numeric value in target. see Details.}
 
-\item{layer}{default 1, see terra::extract}
+\item{layer}{default 1, see \code{\link[terra:extract]{terra::extract()}}}
 }
 \value{
-A binary raster (\code{SpatRaster}) with two values:
+A binary raster \code{SpatRaster} (see \code{\link[terra:rast]{terra::rast()}}) with two values:
 \itemize{
 \item \code{TRUE} if pixel matches 'value' provided given the provided function
 \item \code{FALSE} if pixel does not match 'value' provided given the provided function
 }
-
-'value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte',
-'lt', 'lte'.
-
-'value' may be greater than length 1 only if 'fun' is: 'in'.
 }
 \description{
 Helper function to make a binary raster layer from input target.
@@ -34,6 +29,11 @@ Helper function to make a binary raster layer from input target.
 \details{
 Find all pixels given the function ('fun') matching the value ('value')
 and return a binary raster.
+
+value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte',
+'lt', 'lte'.
+
+'value' may be greater than length 1 only if 'fun' is: 'in'.
 }
 \examples{
 library(terra)

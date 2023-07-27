@@ -12,16 +12,16 @@ sample_ct(region, n, type, strata = NULL)
 \item{n}{number of random points. If \code{strata} is provided,
 n represents the number of random points per strata}
 
-\item{type}{type of sampling, see \link[sf]{st_sample}}
+\item{type}{type of sampling, see \code{\link[sf:st_sample]{sf::st_sample()}}}
 
 \item{strata}{column name in region indicating strata}
 }
 \value{
-\code{sf} object with POINT geometry
+\code{sf} (see \code{\link[sf:sf]{sf::st_sf()}}) object with POINT geometry
 }
 \description{
 Sample potential camera trap locations. For stratified sampling, provide a
-suitable column to stratify region by. Alternatively, \link[sf]{st_sample}
+suitable column to stratify region by. Alternatively, \code{\link[sf:st_sample]{sf::st_sample()}}
 is used directly to sample points across all features.
 }
 \examples{

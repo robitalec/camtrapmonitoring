@@ -6,7 +6,13 @@
 \alias{camtrapmonitoring-package}
 \title{camtrapmonitoring}
 \description{
-Evaluating potential camera trap locations. Potential locations are evaluated using relevant spatial layers producing a dataset of selected locations with covariates that can be used to quantify sampling bias. Soon - density estimation methods.
+Evaluating potential camera trap locations.
+Potential locations are evaluated using relevant spatial layers
+producing a dataset of selected locations with covariates that
+can be used to quantify sampling bias.
+}
+\details{
+Soon - density estimation methods.
 }
 \seealso{
 Useful links:

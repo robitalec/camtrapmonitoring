@@ -27,7 +27,7 @@
 #' - 19 Snow and Ice/Neige et glace
 #'
 #' @format An external tif file to be read in with {terra} as a `SpatRaster`
-#'  object. See the source below for details.
+#'   object (see [terra::rast()]). See the source below for details.
 #'
 #' @name clearwater_lake_land_cover
 #' @source  <https://open.canada.ca/data/en/dataset/ee1580ab-a23d-4f86-a09b-79763677eb47>
@@ -45,7 +45,8 @@ NULL
 #'
 #' A dataset containing elevation near Clearwater Lake, Manitoba.
 #'
-#' Elevation data are from the AWS using the {elevatr} package.
+#' Elevation data are from the AWS using the {elevatr} package
+#' ([elevatr::get_elev_raster()]).
 #'
 #' The units are meters.
 #'

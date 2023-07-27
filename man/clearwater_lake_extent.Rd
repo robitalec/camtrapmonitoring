@@ -5,7 +5,7 @@
 \alias{clearwater_lake_extent}
 \title{Example extent}
 \format{
-An \code{sf} object with 2 points.
+An \code{sf} (see \code{\link[sf:sf]{sf::st_sf()}}) object with 2 points.
 }
 \usage{
 clearwater_lake_extent

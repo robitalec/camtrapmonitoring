@@ -5,7 +5,8 @@
 \alias{clearwater_lake_density}
 \title{Example species density}
 \format{
-An \code{sf} object with 272 features and 1 variable "density".
+An \code{sf} (see \code{\link[sf:sf]{sf::st_sf()}}) object with 272 features and 1 variable
+"density".
 }
 \usage{
 clearwater_lake_density
