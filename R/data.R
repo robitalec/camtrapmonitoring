@@ -5,8 +5,8 @@
 #' Roads are from the Canadian National Road Network (NRN) with all
 #' corresponding fields.
 #'
-#' @format An `sf` object with 172 roads and 48 variables. See the source below
-#'  for details.
+#' @format An `sf` (see [sf::st_sf()]) object with 172 roads and 48 variables.
+#' See the source below for details.
 #'
 #' @source <https://open.canada.ca/data/en/dataset/3d282116-e556-400c-9306-ca1a3cada77f>
 #' @examples
@@ -24,8 +24,8 @@
 #' Hydrology features are from Open Street Map, downloaded using the {osmdata}
 #' package.
 #'
-#' @format An `sf` object with 5 features and 8 fields. See the source below
-#' for details.
+#' @format An `sf` (see [sf::st_sf()]) object with 5 features and 8 fields.
+#' See the source below for details.
 #'
 #' @source  Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017).
 #' “osmdata.” _Journal of Open Source Software_, *2*(14), 305.
@@ -46,8 +46,8 @@
 #' Hydrology features are from Open Street Map, downloaded using the {osmdata}
 #' package.
 #'
-#' @format An `sf` object with 5 features and 8 fields. See the source
-#' below for details.
+#' @format An `sf` (see [sf::st_sf()]) object with 5 features and 8 fields.
+#' See the source below for details.
 #'
 #' @source  Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017).
 #' “osmdata.” _Journal of Open Source Software_, *2*(14), 305.
@@ -68,7 +68,8 @@
 #' Simulated species density with three levels "High", "Medium", Low" with
 #' probabilities 0.1, 0.3, 0.6. Grid size is 2 km x 2 km.
 #'
-#' @format An `sf` object with 272 features and 1 variable "density".
+#' @format An `sf` (see [sf::st_sf()]) object with 272 features and 1 variable
+#'  "density".
 #'
 #' @examples
 #' library(sf)
@@ -82,7 +83,7 @@
 #' A dataset containing the extent near Clearwater Lake, Manitoba.
 #'
 #'
-#' @format An `sf` object with 2 points.
+#' @format An `sf` (see [sf::st_sf()]) object with 2 points.
 #'
 #' @examples
 #' library(sf)

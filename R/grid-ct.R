@@ -1,14 +1,14 @@
 #' Make camera trap grids
 #'
 #' Set up grids around focal points. For example, sample points in your study
-#' area with `sample_ct` then use `grid_ct` to establish a grid of camera traps
-#' around each.
+#' area with [sample_ct()] then use [grid_ct()] to establish a grid of camera
+#' traps around each.
 #'
 #' @inheritParams eval_pt
 #' @param case "queen", "rook" or "bishop". Ignored if `n` is provided.
 #' @param distance distance between adjacent camera traps. Don't worry about
 #' the hypotenuse.
-#' @param id default: "id_sample_ct" generated automatically from `sample_ct`
+#' @param id default: "id_sample_ct" generated automatically from [sample_ct()]
 #' @param n number of points around each focal point. `n` overrides the `case`
 #'  argument, do not provide both - see Details.
 
@@ -22,6 +22,7 @@
 #' each grid.
 #'
 #' @export
+#' @family grid
 #'
 #' @examples
 #' data("clearwater_lake_density")
@@ -79,7 +80,7 @@ grid_ct <- function(features,
 
 #' Grid design
 #'
-#' Helper function used internally by `grid_ct` to establish grids around
+#' Helper function used internally by [grid_ct()] to establish grids around
 #' focal locations. Provided to the user to explore grid design options before
 #' applying to their data.
 #'
@@ -87,6 +88,7 @@ grid_ct <- function(features,
 #'
 #' @return grid design data.frame
 #' @export
+#' @family grid
 #'
 #' @examples
 #' plot(grid_design(distance = 100, case = 'queen'))

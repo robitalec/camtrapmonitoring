@@ -1,16 +1,16 @@
 #' Camera trap sampling
 #'
 #' Sample potential camera trap locations. For stratified sampling, provide a
-#' suitable column to stratify region by. Alternatively, \link[sf]{st_sample}
+#' suitable column to stratify region by. Alternatively, [sf::st_sample()]
 #' is used directly to sample points across all features.
 #'
 #' @param region spatial feature object across which points will be sampled
 #' @param n number of random points. If `strata` is provided,
 #' n represents the number of random points per strata
-#' @param type type of sampling, see \link[sf]{st_sample}
+#' @param type type of sampling, see [sf::st_sample()]
 #' @param strata column name in region indicating strata
 #'
-#' @return `sf` object with POINT geometry
+#' @return `sf` (see [sf::st_sf()]) object with POINT geometry
 #' @export
 #'
 #' @examples

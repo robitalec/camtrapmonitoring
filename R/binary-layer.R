@@ -5,20 +5,21 @@
 #' Find all pixels given the function ('fun') matching the value ('value')
 #' and return a binary raster.
 #'
+#' value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte',
+#' 'lt', 'lte'.
+#'
+#' 'value' may be greater than length 1 only if 'fun' is: 'in'.
+#'
 #' @inheritParams eval_pt
 #' @param fun character indicating which function to use to compare layer to
 #' value. One of 'equals', 'gt', 'gte', 'lt', 'lte' or 'in'. Default: 'equals'.
 #' @param value numeric value in target. see Details.
 #'
 #' @return
-#' A binary raster (`SpatRaster`) with two values:
+#' A binary raster `SpatRaster` (see [terra::rast()]) with two values:
 #' - `TRUE` if pixel matches 'value' provided given the provided function
 #' - `FALSE` if pixel does not match 'value' provided given the provided function
 #'
-#' 'value' may only be length 1 if 'fun' is one of: 'equals', 'gt', 'gte',
-#' 'lt', 'lte'.
-#'
-#' 'value' may be greater than length 1 only if 'fun' is: 'in'.
 #'
 #' @export
 #'
