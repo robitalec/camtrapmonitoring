@@ -1,3 +1,15 @@
+# camtrapmonitoring 0.12.0 (2023-07-27)
+
+First release with repo status = active, non-development version numbers
+
+* **breaking change**: renamed arguments across all functions for clarity and 
+consistency [#17](https://github.com/robitalec/camtrapmonitoring/pull/17)
+ [#18](https://github.com/robitalec/camtrapmonitoring/pull/18)
+* added `grid_design` function [#16](https://github.com/robitalec/camtrapmonitoring/pull/16)
+* improved function linking in documentation [#19](https://github.com/robitalec/camtrapmonitoring/pull/19)
+
+
+
 # camtrapmonitoring 0.11.3.9000 (2023-07-25)
 
 * initial pkgdown site [#15](https://github.com/robitalec/camtrapmonitoring/pull/15)
