@@ -31,7 +31,6 @@
 #'
 #' # Scale elevation in extent of density grid
 #' elev_scaled <- scale_layer(target = clearwater_lake_elevation, region = roi)
-#' plot(elev_scaled)
 scale_layer <- function(target, region, center = TRUE, scale = TRUE) {
 	if (missing(target) | is.null(target)) {
 		stop('target must be provided')
