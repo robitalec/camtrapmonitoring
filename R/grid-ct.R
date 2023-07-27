@@ -14,12 +14,12 @@
 
 #' @return
 #'
-#' Extended sf object either nine times the length of input x for 'queen' case
-#'  or 5 times the length of input DT for 'rook' or 'bishop' case. Otherwise
-#'  n * number the length of input x. See examples.
+#' Extended sf object either nine times the length of input features for
+#'  'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case.
+#'  Otherwise n * number the length of input x. See examples.
 #'
-#' The logical 'focal' column indicates which point is the focal or center
-#' camera trap.
+#' The logical 'focal' column indicates which point is the focal camera trap for
+#' each grid.
 #'
 #' @export
 #'
@@ -28,35 +28,35 @@
 #' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
 #'
 #' # Make grid with case, eg. 'queen'
-#' queen <- grid_ct(pts, case = 'queen', distance = 100)
+#' queen <- grid_ct(features = pts, distance = 100, case = 'queen')
 #'
 #' # Plot
 #' plot(queen['focal'])
 #'
 #' # Make grid with n
-#' n_grid <- grid_ct(pts, n = 25, distance = 100)
+#' n_grid <- grid_ct(features = pts, distance = 100, n = 25)
 #' plot(n_grid['id_grid_ct'])
-grid_ct <- function(x,
-										case,
+grid_ct <- function(features,
 										distance,
-										id = 'id_sample_ct',
-										n) {
+										case,
+										n,
+										id = 'id_sample_ct') {
 
 	if (distance < 0 | !is.numeric(distance)) {
 		stop('distance must be a numeric, greater than 0')
 	}
 
-	stopifnot('x is not of class sf' = inherits(x, 'sf'))
-	stopifnot('x is not of geometry type POINT' =
-							sf::st_geometry_type(x, FALSE) == 'POINT')
-	stopifnot(id %in% colnames(x))
+	stopifnot('features are not class sf' = inherits(features, 'sf'))
+	stopifnot('features are not geometry type POINT' =
+							sf::st_geometry_type(features, FALSE) == 'POINT')
+	stopifnot(id %in% colnames(features))
 
-	move <- grid_move(case = case, n = n, distance = distance)
+	move <- grid_move(distance = distance, case = case, n = n)
 
-	x_rep <- x[rep(seq.int(nrow(x)), each = nrow(move)), ]
+	x_rep <- features[rep(seq.int(nrow(features)), each = nrow(move)), ]
 	x_rep_coords <- sf::st_coordinates(x_rep)
 
-	move_rep <- move[rep(seq.int(nrow(move)), nrow(x)), ]
+	move_rep <- move[rep(seq.int(nrow(move)), nrow(features)), ]
 
 	coords_moved <- x_rep_coords + as.matrix(move_rep)
 	coords_moved_sf <- sf::st_as_sf(data.frame(coords_moved),
@@ -71,13 +71,13 @@ grid_ct <- function(x,
 	})
 	x_moved$focal <- ifelse(x_moved[['id_grid_ct']] %in% focals, TRUE, FALSE)
 
-	sf::st_crs(x_moved) <- sf::st_crs(x)
+	sf::st_crs(x_moved) <- sf::st_crs(features)
 	return(x_moved)
 }
 
 
 
-grid_move <- function(case, n, distance) {
+grid_move <- function(distance, case, n) {
 	if ((missing(n) & missing(case)) |
 			!missing(n) & !missing(case)) {
 		stop('provide one of n and case and not both.')
