@@ -200,6 +200,18 @@ print(order_select_pts)
 ```
 
 
+## Establishing camera trap grids
+
+The function `grid_ct` allows the user to establish sampling grids around
+focal locations selected above. The `grid_design` function is provided to 
+the user to help explore grid layout options, using either the 'case' argument
+or the 'n' argument.
+
+```{r}
+plot(grid_design(distance = 100, case = 'queen'))
+
+plot(grid_design(distance = 250, n = 13))
+```
 ## Example data sources
 
 Example data used in the {camtrapmonitoring} package come from open data sources we 
