@@ -3,12 +3,22 @@
 
 # camtrapmonitoring
 
-[![Project Status: WIP – Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![camtrapmonitoring status
 badge](https://robitalec.r-universe.dev/badges/camtrapmonitoring)](https://robitalec.r-universe.dev/camtrapmonitoring)
 [![CRAN](https://www.r-pkg.org/badges/version/camtrapmonitoring)](https://cran.r-project.org/package=camtrapmonitoring)
+
+{camtrapmonitoring} is an R package for camera trap monitoring for
+estimating wildlife density.
+
+- Candidate camera trap locations are sampled in a region of interest
+- Spatial layers are used to evaluate characteristics and deployment
+  feasibility of locations
+- Candidate locations are ordered and selected by user criteria
+- Grids are optionally established around focal locations
+- (Soon) density estimation methods
 
 ## Installation
 
