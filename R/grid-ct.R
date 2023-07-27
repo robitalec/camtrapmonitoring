@@ -16,7 +16,7 @@
 #'
 #' Extended sf object either nine times the length of input features for
 #'  'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case.
-#'  Otherwise n * number the length of input x. See examples.
+#'  Otherwise n * number the length of input features. See examples.
 #'
 #' The logical 'focal' column indicates which point is the focal camera trap for
 #' each grid.
