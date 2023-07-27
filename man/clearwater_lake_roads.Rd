@@ -5,8 +5,8 @@
 \alias{clearwater_lake_roads}
 \title{Example roads}
 \format{
-An \code{sf} object with 172 roads and 48 variables. See the source below
-for details.
+An \code{sf} (see \code{\link[sf:sf]{sf::st_sf()}}) object with 172 roads and 48 variables.
+See the source below for details.
 }
 \source{
 \url{https://open.canada.ca/data/en/dataset/3d282116-e556-400c-9306-ca1a3cada77f}

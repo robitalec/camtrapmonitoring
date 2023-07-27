@@ -5,8 +5,8 @@
 \alias{clearwater_lake_wetlands}
 \title{Example wetland features}
 \format{
-An \code{sf} object with 5 features and 8 fields. See the source
-below for details.
+An \code{sf} (see \code{\link[sf:sf]{sf::st_sf()}}) object with 5 features and 8 fields.
+See the source below for details.
 }
 \source{
 Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017).

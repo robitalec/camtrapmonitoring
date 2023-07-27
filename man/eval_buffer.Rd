@@ -7,15 +7,15 @@
 eval_buffer(features, target, buffer_size, buffer_fun = mean, layer = 1)
 }
 \arguments{
-\item{features}{sf features}
+\item{features}{sf features (see \code{\link[sf:sf]{sf::st_sf()}})}
 
-\item{target}{SpatRaster target}
+\item{target}{SpatRaster target (see \code{\link[terra:rast]{terra::rast()}})}
 
 \item{buffer_size}{radius of buffer around each point}
 
 \item{buffer_fun}{function for summarizing buffer region, default mean}
 
-\item{layer}{default 1, see terra::extract}
+\item{layer}{default 1, see \code{\link[terra:extract]{terra::extract()}}}
 }
 \value{
 vector of values from target matching buffered locations in features

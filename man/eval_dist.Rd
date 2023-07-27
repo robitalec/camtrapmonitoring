@@ -7,11 +7,11 @@
 eval_dist(features, target, measure = NULL)
 }
 \arguments{
-\item{features}{sf features}
+\item{features}{sf features (see \code{\link[sf:sf]{sf::st_sf()}})}
 
-\item{target}{sf target}
+\item{target}{sf feature target (see \code{\link[sf:sf]{sf::st_sf()}})}
 
-\item{measure}{measure type see geodist::geodist for details}
+\item{measure}{measure type see \code{\link[geodist:geodist]{geodist::geodist()}} for details}
 }
 \value{
 vector of distances between target and features
@@ -24,8 +24,9 @@ and quantify potential sampling bias.
 }
 \details{
 To avoid the large overhead of creating distance to rasters for small/medium
-number of sample points, this vector-based distance to determines the
-nearest feature (layer) to each target then calculates the distance between
+number of sample points, this function uses the vector-based distance
+approach from \code{\link[distanceto:distance_to]{distanceto::distance_to()}}. It determines the
+nearest feature to each target then calculates the distance between
 each pair.
 }
 \examples{
