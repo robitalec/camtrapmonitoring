@@ -1,14 +1,14 @@
 #' Camera trap sampling
 #'
 #' Sample potential camera trap locations. For stratified sampling, provide a
-#' suitable column to stratify by. Alternatively, \link[sf]{st_sample} is used
-#' directly to sample points across all features.
+#' suitable column to stratify region by. Alternatively, \link[sf]{st_sample}
+#' is used directly to sample points across all features.
 #'
-#' @param x spatial feature object
-#' @param n number of random points, if a column name is provided to `col`
+#' @param region spatial feature object across which points will be sampled
+#' @param n number of random points. If `strata` is provided,
 #' n represents the number of random points per strata
 #' @param type type of sampling, see \link[sf]{st_sample}
-#' @param col column name in x indicating strata
+#' @param strata column name in region indicating strata
 #'
 #' @return `sf` object with POINT geometry
 #' @export
@@ -19,22 +19,22 @@
 #'
 #' # Stratified random points for each density level
 #' pts_random <- sample_ct(
-#'   x = clearwater_lake_density, n = 20,
-#'   type = 'random', col = 'density')
+#'   region = clearwater_lake_density, n = 20,
+#'   type = 'random', strata = 'density')
 #'
 #' # Plot density grid and sampled points
 #' plot(clearwater_lake_density, reset = FALSE)
-#' plot(pts_random, add = TRUE, pch = 1, col = 1)
+#' plot(pts_random, add = TRUE, pch = 1, strata = 1)
 #'
 #' # Regular sampled points across all features
 #' pts_regular <- sample_ct(
-#'   x = clearwater_lake_density, n = 20, type = 'regular')
+#'   region = clearwater_lake_density, n = 20, type = 'regular')
 #'
 #' # Plot density grid and sampled points
 #' plot(clearwater_lake_density, reset = FALSE)
-#' plot(pts_regular, add = TRUE, pch = 2, col = 1)
-sample_ct <- function(x, n, type, col = NULL) {
-	stopifnot('x is missing' = !missing(type))
+#' plot(pts_regular, add = TRUE, pch = 2, strata = 1)
+sample_ct <- function(region, n, type, strata = NULL) {
+	stopifnot('region is missing' = !missing(type))
 	stopifnot('n is missing' = !missing(type))
 	stopifnot('type is missing' = !missing(type))
 
@@ -42,18 +42,18 @@ sample_ct <- function(x, n, type, col = NULL) {
 							type %in% c('regular', 'random', 'hexagonal'))
 
 
-	if (is.null(col)) {
-		out <- sf::st_as_sf(sf::st_sample(x, n, type = type, exact = TRUE))
+	if (is.null(strata)) {
+		out <- sf::st_as_sf(sf::st_sample(region, n, type = type, exact = TRUE))
 	} else {
-		stopifnot('col not found in x' = col %in% colnames(x))
+		stopifnot('strata column not found in region' = strata %in% colnames(region))
 
-		strata <- unique(x[[col]])
+		lvls <- unique(region[[strata]])
 
-		stratified <- lapply(strata, function(y) {
+		stratified <- lapply(lvls, function(x) {
 			s <- sf::st_sf(
-				geometry = sf::st_sample(x[x[[col]] == y, ], n, type = type,
+				geometry = sf::st_sample(region[region[[strata]] == x, ], n, type = type,
 																 exact = TRUE))
-			s[[col]] <- y
+			s[[strata]] <- x
 			return(s)
 		})
 
