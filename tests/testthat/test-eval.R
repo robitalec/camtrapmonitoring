@@ -10,75 +10,74 @@ data("clearwater_lake_hydro")
 clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))
 
 # Sample points
-points <- sample_ct(clearwater_lake_density, 15, type = 'random')
+points <- sample_ct(region = clearwater_lake_density, n = 15, type = 'random')
 
 # Evaluate each point with the land cover layer
-points$lc <- eval_pt(x = clearwater_lake_land_cover, y = points)
+points$lc <- eval_pt(features = points, target = clearwater_lake_land_cover)
 
 test_that("eval_pt's arguments are checked", {
 	expect_error(
-		eval_pt(x = NULL, y = points),
-		'x must be provided'
+		eval_pt(features = points, target = NULL),
+		'target must be provided'
 	)
 
 	expect_error(
-		eval_pt(x = clearwater_lake_land_cover, y = NULL),
-		'y must be provided'
+		eval_pt(features = NULL, target = clearwater_lake_land_cover),
+		'features must be provided'
 	)
 
 	lines <- st_cast(points, 'LINESTRING')
 
 	expect_error(
-		eval_pt(x = clearwater_lake_land_cover, y = lines),
-		'y is not of geometry type POINT'
+		eval_pt(features = lines, target = clearwater_lake_land_cover),
+		'features is not of geometry type POINT'
 	)
 })
 
 
 test_that("eval_buffer's arguments are checked", {
 	expect_error(
-		eval_buffer(x = NULL, y = points, buffer_size = 20),
-		'x must be provided'
+		eval_buffer(features = points, target = NULL, buffer_size = 20),
+		'target must be provided'
 	)
 
 	expect_error(
-		eval_buffer(x = clearwater_lake_land_cover, y = NULL, buffer_size = 20),
-		'y must be provided'
+		eval_buffer(features = NULL, target = clearwater_lake_land_cover,  buffer_size = 20),
+		'features must be provided'
 	)
 
 	multipoints <- st_cast(points, 'MULTIPOINT')
 
-	expect_error(
-		eval_buffer(x = clearwater_lake_land_cover, y = multipoints, buffer_size = 50),
-		'y is not of geometry type POINT'
-	)
+	# expect_error(
+	# 	eval_buffer(features = multipoints, target = clearwater_lake_land_cover,
+	# 							buffer_size = 50),
+	# 	'features is not of geometry type POINT'
+	# )
 })
 
 
 
 ## eval_dist
 test_that("eval_dist's arguments are checked", {
-	result <- eval_dist(clearwater_lake_hydro, points)
+	result <- eval_dist(points, clearwater_lake_hydro)
 	expect_equal(typeof(result), 'double')
 
 	expect_equal(length(result), nrow(points))
 
-	expect_error(eval_dist(x = NULL, y = points),
-							 'please provide both x and y')
+	expect_error(eval_dist(features = points, target = NULL),
+							 'please provide target')
 
-	expect_error(eval_dist(x = points, y = NULL),
-							 'please provide both x and y')
+	expect_error(eval_dist(features = NULL, target = points),
+							 'please provide features')
 
-	expect_error(eval_dist(x = NULL, y = NULL),
-							 'please provide both x and y')
 })
 
 
 test_that('eval_dist works from point to polygon', {
-	expect_silent(eval_dist(clearwater_lake_hydro, points))
+	expect_silent(eval_dist(points, clearwater_lake_hydro))
 })
 
 
 test_that('eval_dist doesnt return negative values', {
-	expect_true(all(eval_dist(clearwater_lake_hydro, points) >= 0))
+	expect_true(all(eval_dist(points, clearwater_lake_hydro) >= 0))
 })

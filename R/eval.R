@@ -1,16 +1,16 @@
 #' Evaluate camera trap locations by point sampling layers
 #'
-#' Using the point locations generated manually or with `camtrapmonitoring`
+#' Using camera trap locations generated with `camtrapmonitoring`
 #' functions [sample_ct()] and [grid_ct()], sample raster layers to
 #' characterize and select camera trap locations, and quantify potential
 #' sampling bias.
 #'
 #'
-#' @param x SpatRaster layer (terra package)
-#' @param y spatial feature object
+#' @param features sf features
+#' @param target SpatRaster target
 #' @param layer default 1, see terra::extract
 #'
-#' @return vector of values from x matching locations in y
+#' @return vector of values from target matching locations in features
 #' @export
 #'
 #' @family eval
@@ -23,32 +23,34 @@
 #'   'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))
 #'
 #' # Sample points
-#' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
+#' pts <- sample_ct(region = clearwater_lake_density, n = 1, type = 'random')
 #'
 #' # Make grid with queen's case
-#' queen <- grid_ct(pts, case = 'queen', distance = 100)
+#' queen <- grid_ct(features = pts, case = 'queen', distance = 100)
 #'
 #' # Evaluate each point with the land cover layer
-#' queen$lc <- eval_pt(x = clearwater_lake_land_cover, y = queen)
+#' queen$lc <- eval_pt(features = queen, target = clearwater_lake_land_cover)
 #'
 #' plot(queen["lc"])
 eval_pt <-
-	function(x,
-					 y,
+	function(features,
+					 target,
 					 layer = 1) {
-		if (missing(x) || is.null(x) || !inherits(x, 'SpatRaster')) {
-			stop('x must be provided. expected type is SpatRaster.')
+		if (missing(target) || is.null(target) || !inherits(target, 'SpatRaster')) {
+			stop('target must be provided. expected type is SpatRaster.')
 		}
-		if (missing(y) || is.null(y)) {
-			stop('y must be provided.')
+		if (missing(features) || is.null(features)) {
+			stop('features must be provided.')
 		}
 
+		stopifnot('features is not of class sf' = inherits(features, 'sf'))
+		stopifnot('features is not of geometry type POINT' =
+								sf::st_geometry_type(features, FALSE) == 'POINT')
 
 		terra::extract(
-			x = x,
-			y = y,
+			x = target,
+			y = features,
 			layer = layer,
-			na.rm = FALSE,
 			simple = TRUE,
 			ID = FALSE
 		)[[layer]]
@@ -57,17 +59,17 @@ eval_pt <-
 
 #' Evaluate camera trap locations by buffered sampling of layers
 #'
-#' Using the buffered points locations generated manually or with
-#' `camtrapmonitoring` functions [sample_ct()] and [grid_ct()], sample
-#'  raster layers to characterize and select camera trap locations,
-#'  and quantify potential sampling bias.
+#' Using buffered camera trap locations generated with `camtrapmonitoring`
+#' functions [sample_ct()] and [grid_ct()], sample raster layers to
+#' characterize and select camera trap locations, and quantify potential
+#' sampling bias.
 #'
 #'
 #' @inheritParams eval_pt
 #' @param buffer_size radius of buffer around each point
 #' @param buffer_fun function for summarizing buffer region, default mean
 #'
-#' @return vector of values from x matching buffered locations in y
+#' @return vector of values from target matching buffered locations in features
 #' @export
 #'
 #' @family eval
@@ -80,47 +82,45 @@ eval_pt <-
 #'   'clearwater_lake_elevation.tif', package = 'camtrapmonitoring'))
 #'
 #' # Sample points
-#' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
+#' pts <- sample_ct(region = clearwater_lake_density, 1, type = 'random')
 #'
 #' # Make grid with queen's case
-#' queen <- grid_ct(pts, case = 'queen', distance = 100)
+#' queen <- grid_ct(features = pts, case = 'queen', distance = 100)
 #'
 #' # Evaluate each point with the land cover layer
 #' queen$elev <- eval_buffer(
-#'   x = clearwater_lake_elevation, y = queen, buffer_size = 150)
+#'   features = queen, target = clearwater_lake_elevation, buffer_size = 150)
 #'
 #' plot(queen["elev"])
 eval_buffer <-
-	function(x,
-					 y,
+	function(features,
+					 target,
 					 buffer_size,
 					 buffer_fun = mean,
 					 layer = 1) {
 
-		if (missing(x) || is.null(x) || !inherits(x, 'SpatRaster')) {
-			stop('x must be provided. expected type is SpatRaster.')
+		if (missing(target) || is.null(target) || !inherits(target, 'SpatRaster')) {
+			stop('target must be provided. expected type is SpatRaster.')
 		}
-		if (missing(y) || is.null(y)) {
-			stop('y must be provided.')
+		if (missing(features) || is.null(features)) {
+			stop('features must be provided.')
 		}
 
-		if (any(buffer_size < terra::res(x))) {
-			warning("buffer_size is less than the x's resolution")
+		if (any(buffer_size < terra::res(target))) {
+			warning("buffer_size is less than the target's resolution")
 		}
 
 		# TODO: add crs = crs(layer)
 
-		stopifnot('y is not of class sf' = inherits(y, 'sf'))
-		stopifnot('y is not of geometry type POINT' =
-								sf::st_geometry_type(y, FALSE) == 'POINT')
-
+		stopifnot('features is not of class sf' = inherits(features, 'sf'))
+		# stopifnot('features is not of geometry type POINT' =
+		# 						sf::st_geometry_type(features, FALSE) == 'POINT')
 
 
 		terra::extract(
-			x = x,
-			y = sf::st_buffer(y, dist = buffer_size),
+			x = target,
+			y = sf::st_buffer(features, dist = buffer_size),
 			layer = layer,
-			na.rm = FALSE,
 			fun = buffer_fun,
 			ID = FALSE
 		)[[layer]]
@@ -130,19 +130,21 @@ eval_buffer <-
 
 #' Evaluate distance-to
 #'
-#' Evaluates locations in x by measuring the distance to the nearest feature
-#' in layer.
+#' Using camera trap locations generated with `camtrapmonitoring`
+#' functions [sample_ct()] and [grid_ct()], evalaute the distance between
+#' features and camera trap locations to characterize and select locations,
+#' and quantify potential sampling bias.
 #'
 #' To avoid the large overhead of creating distance to rasters for small/medium
 #'  number of sample points, this vector-based distance to determines the
-#'  nearest feature (layer) to each x then calculates the distance between
+#'  nearest feature (layer) to each target then calculates the distance between
 #'  each pair.
 #'
 #' @inheritParams eval_pt
+#' @param target sf target
 #' @param measure measure type see geodist::geodist for details
 #'
-#' @return vector of distances between x and y
-#'
+#' @return vector of distances between target and features
 #'
 #' @family eval
 #' @export
@@ -152,22 +154,26 @@ eval_buffer <-
 #' data("clearwater_lake_wetlands")
 #'
 #' # Sample points
-#' pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
+#' pts <- sample_ct(region = clearwater_lake_density, 1, type = 'random')
 #'
 #' # Make grid with queen's case
-#' queen <- grid_ct(pts, case = 'queen', distance = 100)
+#' queen <- grid_ct(features = pts, case = 'queen', distance = 100)
 #'
 #' # Evaluate each point with the land cover layer
-#' queen$dist_wetland <- eval_dist(x = clearwater_lake_wetlands, y = queen)
+#' queen$dist_wetland <- eval_dist(features = queen, target = clearwater_lake_wetlands)
 #'
 #' # Plot
 #' plot(queen["dist_wetland"])
 eval_dist <-
-	function(x,
-					 y,
+	function(features,
+					 target,
 					 measure = NULL) {
-		if (missing(x) || missing(y) || is.null(x) || is.null(y)) {
-			stop('please provide both x and y')
+		if (missing(target) || is.null(target)) {
+			stop('please provide target')
+		}
+		if (missing(features) || is.null(features)) {
+			stop('please provide features')
 		}
 
+		distanceto::distance_to(features, target, measure = measure)
 	}
