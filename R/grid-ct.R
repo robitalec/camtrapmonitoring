@@ -4,7 +4,7 @@
 #' area with `sample_ct` then use `grid_ct` to establish a grid of camera traps
 #' around each.
 #'
-#' @inheritParams sample_ct
+#' @inheritParams eval_pt
 #' @param case "queen", "rook" or "bishop". Ignored if `n` is provided.
 #' @param distance distance between adjacent camera traps. Don't worry about
 #' the hypotenuse.
@@ -85,7 +85,7 @@ grid_ct <- function(features,
 #'
 #' @inheritParams grid_ct
 #'
-#' @return
+#' @return grid design data.frame
 #' @export
 #'
 #' @examples
