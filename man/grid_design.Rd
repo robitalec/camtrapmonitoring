@@ -15,6 +15,9 @@ the hypotenuse.}
 \item{n}{number of points around each focal point. \code{n} overrides the \code{case}
 argument, do not provide both - see Details.}
 }
+\value{
+grid design data.frame
+}
 \description{
 Helper function used internally by \code{grid_ct} to establish grids around
 focal locations. Provided to the user to explore grid design options before

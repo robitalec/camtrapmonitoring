@@ -4,28 +4,28 @@
 \alias{grid_ct}
 \title{Make camera trap grids}
 \usage{
-grid_ct(x, case, distance, id = "id_sample_ct", n)
+grid_ct(features, distance, case, n, id = "id_sample_ct")
 }
 \arguments{
-\item{x}{spatial feature object}
-
-\item{case}{"queen", "rook" or "bishop". Ignored if \code{n} is provided.}
+\item{features}{sf features}
 
 \item{distance}{distance between adjacent camera traps. Don't worry about
 the hypotenuse.}
 
-\item{id}{default: "id_sample_ct" generated automatically from \code{sample_ct}}
+\item{case}{"queen", "rook" or "bishop". Ignored if \code{n} is provided.}
 
 \item{n}{number of points around each focal point. \code{n} overrides the \code{case}
 argument, do not provide both - see Details.}
+
+\item{id}{default: "id_sample_ct" generated automatically from \code{sample_ct}}
 }
 \value{
-Extended sf object either nine times the length of input x for 'queen' case
-or 5 times the length of input DT for 'rook' or 'bishop' case. Otherwise
-n * number the length of input x. See examples.
+Extended sf object either nine times the length of input features for
+'queen' case or 5 times the length of input DT for 'rook' or 'bishop' case.
+Otherwise n * number the length of input features. See examples.
 
-The logical 'focal' column indicates which point is the focal or center
-camera trap.
+The logical 'focal' column indicates which point is the focal camera trap for
+each grid.
 }
 \description{
 Set up grids around focal points. For example, sample points in your study
@@ -37,12 +37,12 @@ data("clearwater_lake_density")
 pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
 
 # Make grid with case, eg. 'queen'
-queen <- grid_ct(pts, case = 'queen', distance = 100)
+queen <- grid_ct(features = pts, distance = 100, case = 'queen')
 
 # Plot
 plot(queen['focal'])
 
 # Make grid with n
-n_grid <- grid_ct(pts, n = 25, distance = 100)
+n_grid <- grid_ct(features = pts, distance = 100, n = 25)
 plot(n_grid['id_grid_ct'])
 }

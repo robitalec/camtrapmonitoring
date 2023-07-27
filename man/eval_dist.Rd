@@ -4,30 +4,28 @@
 \alias{eval_dist}
 \title{Evaluate distance-to}
 \usage{
-eval_dist(x, y, measure = NULL)
+eval_dist(features, target, measure = NULL)
 }
 \arguments{
-\item{x}{SpatRaster layer (terra package)}
+\item{features}{sf features}
 
-\item{y}{spatial feature object}
+\item{target}{sf target}
 
 \item{measure}{measure type see geodist::geodist for details}
 }
 \value{
-vector of distances between x and y
-
-Note attributes are returned like by \code{eval_pt} and \code{eval_buffer}. The
-\code{type} attribute for distance to a feature (layer) is "real" and the
-\code{direction} is left for the user to provide.
+vector of distances between target and features
 }
 \description{
-Evaluates locations in x by measuring the distance to the nearest feature
-in layer.
+Using camera trap locations generated with \code{camtrapmonitoring}
+functions \code{\link[=sample_ct]{sample_ct()}} and \code{\link[=grid_ct]{grid_ct()}}, evalaute the distance between
+features and camera trap locations to characterize and select locations,
+and quantify potential sampling bias.
 }
 \details{
 To avoid the large overhead of creating distance to rasters for small/medium
 number of sample points, this vector-based distance to determines the
-nearest feature (layer) to each x then calculates the distance between
+nearest feature (layer) to each target then calculates the distance between
 each pair.
 }
 \examples{
@@ -35,13 +33,13 @@ data("clearwater_lake_density")
 data("clearwater_lake_wetlands")
 
 # Sample points
-pts <- sample_ct(clearwater_lake_density, 1, type = 'random')
+pts <- sample_ct(region = clearwater_lake_density, 1, type = 'random')
 
 # Make grid with queen's case
-queen <- grid_ct(pts, case = 'queen', distance = 100)
+queen <- grid_ct(features = pts, case = 'queen', distance = 100)
 
 # Evaluate each point with the land cover layer
-queen$dist_wetland <- eval_dist(x = clearwater_lake_wetlands, y = queen)
+queen$dist_wetland <- eval_dist(features = queen, target = clearwater_lake_wetlands)
 
 # Plot
 plot(queen["dist_wetland"])
