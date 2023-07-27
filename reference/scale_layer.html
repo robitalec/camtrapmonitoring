@@ -14,7 +14,7 @@ and select locations based off of relative values instead of absolute values."><
     
     <a class="navbar-brand me-2" href="../index.html">camtrapmonitoring</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,13 @@ and select locations based off of relative values instead of absolute values."><
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/robitalec/camtrapmonitoring/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div>
 
     
   </div>
@@ -45,7 +51,7 @@ and select locations based off of relative values instead of absolute values."><
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Scale in region of interest</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/robitalec/camtrapmonitoring/blob/HEAD/R/scale-layer.R" class="external-link"><code>R/scale-layer.R</code></a></small>
       <div class="d-none name"><code>scale_layer.Rd</code></div>
     </div>
 
@@ -63,12 +69,12 @@ and select locations based off of relative values instead of absolute values.</p
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>target</dt>
-<dd><p>SpatRaster target</p></dd>
+<dd><p>SpatRaster target (see <code><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">terra::rast()</a></code>)</p></dd>
 
 
 <dt>region</dt>
 <dd><p>object which can be passed to <code><a href="https://rdrr.io/pkg/terra/man/ext.html" class="external-link">terra::ext()</a></code> including <code>sf</code>,
-<code>Spatial</code>, <code>Raster</code> objects and 2x2 matrices.</p></dd>
+<code>SpatRaster</code>, and 2x2 matrices.</p></dd>
 
 
 <dt>center</dt>

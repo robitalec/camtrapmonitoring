@@ -16,7 +16,7 @@ sampling bias."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/l
     
     <a class="navbar-brand me-2" href="../index.html">camtrapmonitoring</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +39,13 @@ sampling bias."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/l
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/robitalec/camtrapmonitoring/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div>
 
     
   </div>
@@ -47,7 +53,7 @@ sampling bias."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/l
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Evaluate camera trap locations by point sampling layers</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/robitalec/camtrapmonitoring/blob/HEAD/R/eval.R" class="external-link"><code>R/eval.R</code></a></small>
       <div class="d-none name"><code>eval_pt.Rd</code></div>
     </div>
 
@@ -66,15 +72,15 @@ sampling bias.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>features</dt>
-<dd><p>sf features</p></dd>
+<dd><p>sf features (see <code><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">sf::st_sf()</a></code>)</p></dd>
 
 
 <dt>target</dt>
-<dd><p>SpatRaster target</p></dd>
+<dd><p>SpatRaster target (see <code><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">terra::rast()</a></code>)</p></dd>
 
 
 <dt>layer</dt>
-<dd><p>default 1, see terra::extract</p></dd>
+<dd><p>default 1, see <code><a href="https://rdrr.io/pkg/terra/man/extract.html" class="external-link">terra::extract()</a></code></p></dd>
 
 </dl></div>
     <div class="section level2">
