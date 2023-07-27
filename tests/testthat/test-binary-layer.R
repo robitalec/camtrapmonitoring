@@ -16,12 +16,12 @@ test_that('arguments are checked', {
 
 	expect_true(inherits(bin, 'SpatRaster'))
 
-	expect_error(binary_layer(), 'x must be provided.')
+	expect_error(binary_layer(), 'target must be provided.')
 
 	expect_error(binary_layer(lc), 'value must be provided.')
 
 	expect_error(binary_layer('potato', fun = 'equals', 212),
-							 'x must be a SpatRaster.')
+							 'target must be a SpatRaster.')
 
 	expect_error(binary_layer(lc, fun = 'equals', value = 'potato'),
 							 'value must be a numeric.')
