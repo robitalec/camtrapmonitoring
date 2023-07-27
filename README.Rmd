@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![CRAN](https://www.r-pkg.org/badges/version/camtrapmonitoring)](https://cran.r-project.org/package=camtrapmonitoring)
 
 
-{camtrapmonitoring} is an R package for camera trap monitoring for estimating 
+{camtrapmonitoring} is an R package for camera trap monitoring and estimating 
 wildlife density. 
 
 - Candidate camera trap locations are sampled in a region of interest
