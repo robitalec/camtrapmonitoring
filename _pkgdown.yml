@@ -20,3 +20,15 @@ reference:
   contents:
   - scale_layer
   - binary_layer
+- subtitle: Data
+  contents:
+  - clearwater_lake_hydro
+  - clearwater_lake_elevation
+  - clearwater_lake_roads
+  - clearwater_lake_land_cover
+  - clearwater_lake_density
+  - clearwater_lake_wetlands
+  - clearwater_lake_extent
+- subtitle: Package
+  contents:
+  - camtrapmonitoring
