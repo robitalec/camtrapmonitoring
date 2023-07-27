@@ -51,7 +51,7 @@ grid_ct <- function(features,
 							sf::st_geometry_type(features, FALSE) == 'POINT')
 	stopifnot(id %in% colnames(features))
 
-	move <- grid_move(distance = distance, case = case, n = n)
+	move <- grid_design(distance = distance, case = case, n = n)
 
 	x_rep <- features[rep(seq.int(nrow(features)), each = nrow(move)), ]
 	x_rep_coords <- sf::st_coordinates(x_rep)
@@ -77,7 +77,21 @@ grid_ct <- function(features,
 
 
 
-grid_move <- function(distance, case, n) {
+#' Grid design
+#'
+#' Helper function used internally by `grid_ct` to establish grids around
+#' focal locations. Provided to the user to explore grid design options before
+#' applying to their data.
+#'
+#' @inheritParams grid_ct
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' plot(grid_design(distance = 100, case = 'queen'))
+#' plot(grid_design(distance = 100, n = 13))
+grid_design <- function(distance, case, n) {
 	if ((missing(n) & missing(case)) |
 			!missing(n) & !missing(case)) {
 		stop('provide one of n and case and not both.')
