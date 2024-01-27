@@ -1,6 +1,8 @@
 # camtrapmonitoring 0.12.1
 
-* added "triplet" case to `grid_design` and `grid_ct`
+* added "triplet" case to `grid_design` and `grid_ct` [#22](https://github.com/robitalec/camtrapmonitoring/pull/22)
+
+
 
 # camtrapmonitoring 0.12.0 (2023-07-27)
 
