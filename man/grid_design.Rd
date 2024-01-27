@@ -10,7 +10,7 @@ grid_design(distance, case, n)
 \item{distance}{distance between adjacent camera traps. Don't worry about
 the hypotenuse.}
 
-\item{case}{"queen", "rook" or "bishop". Ignored if \code{n} is provided.}
+\item{case}{"queen", "rook", "bishop", or "triplet". Ignored if \code{n} is provided.}
 
 \item{n}{number of points around each focal point. \code{n} overrides the \code{case}
 argument, do not provide both - see Details.}

@@ -5,7 +5,7 @@
 #' traps around each.
 #'
 #' @inheritParams eval_pt
-#' @param case "queen", "rook" or "bishop". Ignored if `n` is provided.
+#' @param case "queen", "rook", "bishop", or "triplet". Ignored if `n` is provided.
 #' @param distance distance between adjacent camera traps. Don't worry about
 #' the hypotenuse.
 #' @param id default: "id_sample_ct" generated automatically from [sample_ct()]
