@@ -121,6 +121,6 @@ grid_design <- function(distance, case, n) {
 								 Y = c(distance, 0, -distance, 0))
 		)
 	} else {
-		stop('case provided must be one of "queen", "rook" or "bishop"')
+		stop('case provided must be one of "queen", "rook", "bishop" or "triplet"')
 	}
 }
