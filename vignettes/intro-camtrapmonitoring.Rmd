@@ -218,6 +218,12 @@ or the 'n' argument.
 ```{r}
 plot(grid_design(distance = 100, case = 'queen'))
 
+plot(grid_design(distance = 100, case = 'bishop'))
+
+plot(grid_design(distance = 100, case = 'rook'))
+
+plot(grid_design(distance = 100, case = 'triplet'))
+
 plot(grid_design(distance = 250, n = 13))
 ```
 
