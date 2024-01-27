@@ -7,13 +7,13 @@
   "codeRepository": "https://github.com/robitalec/camtrapmonitoring",
   "issueTracker": "https://github.com/robitalec/camtrapmonitoring/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.1 (2023-06-16)",
+  "runtimePlatform": "R version 4.3.2 (2023-10-31)",
   "author": [
     {
       "@type": "Person",
@@ -164,7 +164,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "2956.652KB",
+  "fileSize": "2995.024KB",
   "relatedLink": "https://robitalec.github.io/camtrapmonitoring/",
   "releaseNotes": "https://github.com/robitalec/camtrapmonitoring/blob/master/NEWS.md",
   "readme": "https://github.com/robitalec/camtrapmonitoring/blob/main/README.md",
