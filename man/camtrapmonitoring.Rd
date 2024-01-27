@@ -2,8 +2,8 @@
 % Please edit documentation in R/camtrapmonitoring-pkg.R
 \docType{package}
 \name{camtrapmonitoring}
-\alias{camtrapmonitoring}
 \alias{camtrapmonitoring-package}
+\alias{camtrapmonitoring}
 \title{camtrapmonitoring}
 \description{
 Evaluating potential camera trap locations.
@@ -18,6 +18,7 @@ Soon - density estimation methods.
 Useful links:
 \itemize{
   \item \url{https://robitalec.github.io/camtrapmonitoring/}
+  \item Report bugs at \url{https://github.com/robitalec/camtrapmonitoring/issues}
 }
 
 }
