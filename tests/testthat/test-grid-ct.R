@@ -11,12 +11,14 @@ points <- sample_ct(clearwater_lake_density, 15, type = 'random')
 queen <- grid_ct(points, case = 'queen', distance = 100)
 rook <- grid_ct(points, case = 'rook', distance = 100)
 bishop <- grid_ct(points, case = 'bishop', distance = 100)
+triplet <- grid_ct(points, case = 'triplet', distance = 100)
+
 
 # tests
 test_that("grid_ct's arguments are checked", {
 	expect_error(
 		grid_ct(features = points, distance = 100, case = 'potato'),
-		'case provided must be one of "queen", "rook" or "bishop"'
+		'case provided must be one of "queen", "rook", "bishop" or "triplet"'
 	)
 
 	expect_error(
@@ -67,6 +69,11 @@ test_that("grid_ct returns expected lengths", {
 		nrow(grid_ct(features = points, distance = 100, case = 'bishop')),
 		nrow(points) * 5
 	)
+
+	expect_equal(
+		nrow(grid_ct(features = points, distance = 100, case = 'triplet')),
+		nrow(points) * 3
+	)
 })
 
 
@@ -84,6 +91,10 @@ test_that("grid_ct returns expected columns... for sf input", {
 		colnames(bishop)
 	)
 	expect_in(
+		'id_grid_ct',
+		colnames(triplet)
+	)
+	expect_in(
 		'focal',
 		colnames(queen)
 	)
@@ -94,6 +105,10 @@ test_that("grid_ct returns expected columns... for sf input", {
 	expect_in(
 		'focal',
 		colnames(bishop)
+	)
+	expect_in(
+		'focal',
+		colnames(triplet)
 	)
 
 
@@ -110,6 +125,9 @@ test_that("grid_ct returns expected columns... for sf input", {
 
 	expect_equal(
 		max(bishop$id_grid_ct), nrow(points) * 5
+	)
+	expect_equal(
+		max(bishop$id_grid_ct), nrow(points) * 3
 	)
 })
 
