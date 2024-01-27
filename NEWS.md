@@ -1,3 +1,7 @@
+# camtrapmonitoring 0.12.1
+
+* added "triplet" case to `grid_design` and `grid_ct`
+
 # camtrapmonitoring 0.12.0 (2023-07-27)
 
 First release with repo status = active, non-development version numbers
