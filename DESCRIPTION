@@ -1,6 +1,6 @@
 Package: camtrapmonitoring
 Title: Camera Trap Monitoring For Estimating Wildlife Density
-Version: 0.12.0
+Version: 0.12.1
 Authors@R: 
     person(given = "Alec L.",
            family = "Robitaille",
@@ -14,7 +14,7 @@ Description: Evaluating potential camera trap locations.
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.0
 Roxygen: list(markdown = TRUE)
 Suggests: 
     testthat,

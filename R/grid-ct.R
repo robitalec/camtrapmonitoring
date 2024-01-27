@@ -5,7 +5,7 @@
 #' traps around each.
 #'
 #' @inheritParams eval_pt
-#' @param case "queen", "rook" or "bishop". Ignored if `n` is provided.
+#' @param case "queen", "rook", "bishop", or "triplet". Ignored if `n` is provided.
 #' @param distance distance between adjacent camera traps. Don't worry about
 #' the hypotenuse.
 #' @param id default: "id_sample_ct" generated automatically from [sample_ct()]
@@ -120,7 +120,15 @@ grid_design <- function(distance, case, n) {
 			data.frame(X = c(0, distance, 0, -distance),
 								 Y = c(distance, 0, -distance, 0))
 		)
+	} else if (case == 'triplet') {
+		denom <- 2 * sqrt(3)
+		shift <- distance / sqrt(3)
+		rbind(
+			list(0, 0),
+			data.frame(X = c(-distance / 2, distance / 2),
+								 Y = c((-distance / denom) - shift, (-distance / denom) - shift))
+		)
 	} else {
-		stop('case provided must be one of "queen", "rook" or "bishop"')
+		stop('case provided must be one of "queen", "rook", "bishop" or "triplet"')
 	}
 }
