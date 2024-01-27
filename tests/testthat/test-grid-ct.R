@@ -127,7 +127,7 @@ test_that("grid_ct returns expected columns... for sf input", {
 		max(bishop$id_grid_ct), nrow(points) * 5
 	)
 	expect_equal(
-		max(bishop$id_grid_ct), nrow(points) * 3
+		max(triplet$id_grid_ct), nrow(points) * 3
 	)
 })
 
