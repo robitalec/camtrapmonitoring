@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   intro-camtrapmonitoring: intro-camtrapmonitoring.html
-last_built: 2024-01-27T15:54Z
+last_built: 2024-01-27T15:56Z
 urls:
   reference: https://robitalec.github.io/camtrapmonitoring/reference
   article: https://robitalec.github.io/camtrapmonitoring/articles
