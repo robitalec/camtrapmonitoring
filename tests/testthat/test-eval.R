@@ -9,6 +9,9 @@ data("clearwater_lake_density")
 data("clearwater_lake_hydro")
 clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))
 
+clearwater_lake_elevation_path <- system.file('extdata', 'clearwater_lake_elevation.tif', package = 'camtrapmonitoring')
+clearwater_lake_elevation <- rast(clearwater_lake_elevation_path)
+
 # Sample points
 points <- sample_ct(region = clearwater_lake_density, n = 15, type = 'random')
 
@@ -34,6 +37,13 @@ test_that("eval_pt's arguments are checked", {
 	)
 })
 
+test_that("eval_pt returns double when expected", {
+	expect_type(
+		eval_pt(features = points, target = clearwater_lake_elevation),
+		'double'
+	)
+})
+
 
 test_that("eval_buffer's arguments are checked", {
 	expect_error(
@@ -55,12 +65,17 @@ test_that("eval_buffer's arguments are checked", {
 	# )
 })
 
+test_that("eval_buffer returns double when expected", {
+	expect_type(
+		eval_buffer(features = points, target = clearwater_lake_elevation, 250),
+		'double'
+	)
+})
 
 
-## eval_dist
 test_that("eval_dist's arguments are checked", {
 	result <- eval_dist(points, clearwater_lake_hydro)
-	expect_equal(typeof(result), 'double')
+	expect_type(result, 'double')
 
 	expect_equal(length(result), nrow(points))
 

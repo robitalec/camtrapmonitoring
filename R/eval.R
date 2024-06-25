@@ -51,9 +51,9 @@ eval_pt <-
 			x = target,
 			y = features,
 			layer = layer,
-			simple = TRUE,
+			method = 'simple',
 			ID = FALSE
-		)[[layer]]
+		)$value
 	}
 
 
@@ -122,8 +122,9 @@ eval_buffer <-
 			y = sf::st_buffer(features, dist = buffer_size),
 			layer = layer,
 			fun = buffer_fun,
+			method = 'simple',
 			ID = FALSE
-		)[[layer]]
+		)$value
 	}
 
 
