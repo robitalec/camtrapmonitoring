@@ -9,6 +9,8 @@ data("clearwater_lake_density")
 data("clearwater_lake_hydro")
 clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_cover.tif', package = 'camtrapmonitoring'))
 
+clearwater_lake_elevation_path <- system.file('extdata', 'clearwater_lake_elevation.tif', package = 'camtrapmonitoring')
+clearwater_lake_elevation <- rast(clearwater_lake_elevation_path)
 # Sample points
 points <- sample_ct(region = clearwater_lake_density, n = 15, type = 'random')
 
