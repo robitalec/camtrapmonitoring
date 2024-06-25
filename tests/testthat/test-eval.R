@@ -11,6 +11,7 @@ clearwater_lake_land_cover <- rast(system.file('extdata', 'clearwater_lake_land_
 
 clearwater_lake_elevation_path <- system.file('extdata', 'clearwater_lake_elevation.tif', package = 'camtrapmonitoring')
 clearwater_lake_elevation <- rast(clearwater_lake_elevation_path)
+
 # Sample points
 points <- sample_ct(region = clearwater_lake_density, n = 15, type = 'random')
 
@@ -33,6 +34,13 @@ test_that("eval_pt's arguments are checked", {
 	expect_error(
 		eval_pt(features = lines, target = clearwater_lake_land_cover),
 		'features is not of geometry type POINT'
+	)
+})
+
+test_that("eval_pt returns numeric when expected", {
+	expect_type(
+		eval_pt(features = points, target = clearwater_lake_elevation),
+		'numeric'
 	)
 })
 
