@@ -37,10 +37,10 @@ test_that("eval_pt's arguments are checked", {
 	)
 })
 
-test_that("eval_pt returns numeric when expected", {
+test_that("eval_pt returns double when expected", {
 	expect_type(
 		eval_pt(features = points, target = clearwater_lake_elevation),
-		'numeric'
+		'double'
 	)
 })
 
@@ -65,15 +65,14 @@ test_that("eval_buffer's arguments are checked", {
 	# )
 })
 
-test_that("eval_buffer returns numeric when expected", {
+test_that("eval_buffer returns double when expected", {
 	expect_type(
-		eval_buffer(features = points, target = clearwater_lake_elevation),
-		'numeric'
+		eval_buffer(features = points, target = clearwater_lake_elevation, 250),
+		'double'
 	)
 })
 
 
-## eval_dist
 test_that("eval_dist's arguments are checked", {
 	result <- eval_dist(points, clearwater_lake_hydro)
 	expect_type(result, 'double')
