@@ -76,7 +76,7 @@ test_that("eval_buffer returns numeric when expected", {
 ## eval_dist
 test_that("eval_dist's arguments are checked", {
 	result <- eval_dist(points, clearwater_lake_hydro)
-	expect_equal(typeof(result), 'double')
+	expect_type(result, 'double')
 
 	expect_equal(length(result), nrow(points))
 
