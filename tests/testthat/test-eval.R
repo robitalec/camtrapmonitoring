@@ -65,6 +65,12 @@ test_that("eval_buffer's arguments are checked", {
 	# )
 })
 
+test_that("eval_buffer returns numeric when expected", {
+	expect_type(
+		eval_buffer(features = points, target = clearwater_lake_elevation),
+		'numeric'
+	)
+})
 
 
 ## eval_dist
